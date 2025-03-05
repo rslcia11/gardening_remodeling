@@ -151,7 +151,7 @@ export default function Home() {
         <div className="nav-container">
           <div className="logo">
             <Leaf className="logo-icon" />
-            <span>GreenSpace</span>
+            <span>Jimenez Landscaping</span>
           </div>
 
           <div className="mobile-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -211,7 +211,7 @@ export default function Home() {
             <Leaf className="logo-icon" />
             <span>GreenSpace</span>
           </div>
-          <h1 className="hero-title">Servicio de Jardinería | Venta de Plantas</h1>
+          <h1 className="hero-title">Service of the gardenering | Venta de Plantas</h1>
           <div className="hero-services">
             diseño <span>|</span> construcción <span>|</span> paisajismo <span>|</span> mantenimiento <span>|</span>{" "}
             riego <span>|</span> plantas
