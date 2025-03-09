@@ -1,15 +1,12 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
+import { Link } from "react-router-dom"
 import {
   Leaf,
   HomeIcon,
-  Phone,
-  Mail,
-  Clock,
   CheckCircle,
   ArrowRight,
-  Star,
   Camera,
   Users,
   Calendar,
@@ -19,9 +16,15 @@ import {
   Ruler,
   Award,
   ChevronDown,
-  MapPin,
   Send,
-  ShoppingCart,
+  Palette,
+  Hammer,
+  Sofa,
+  FlowerIcon,
+  TreePine,
+  Droplets,
+  Scissors,
+  Crown,
 } from "lucide-react"
 import "./home.css" // Import the CSS file
 
@@ -150,8 +153,12 @@ export default function Home() {
       <nav className="main-nav">
         <div className="nav-container">
           <div className="logo">
-            <Leaf className="logo-icon" />
-            <span>Jimenez Landscaping</span>
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-04%20at%2021.14.20-doLb43PNbRsdNXYnmyLK5ZKJQK8ySK.jpeg"
+              alt="Jimenez Services LLC Logo"
+              className="logo-image"
+            />
+            <span>Jimenez Services LLC.</span>
           </div>
 
           <div className="mobile-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -180,7 +187,7 @@ export default function Home() {
             </li>
             <li>
               <a href="#" onClick={() => scrollToSection(galleryRef)}>
-                Portfolio
+                Portafolio
               </a>
             </li>
             <li>
@@ -193,40 +200,84 @@ export default function Home() {
                 Contact
               </a>
             </li>
-            <li className="nav-cta">
-              <a href="#" className="cta-button">
-                Get Quote
-              </a>
-            </li>
           </ul>
         </div>
       </nav>
 
       {/* Hero Section */}
+      {/* Hero Section con título perfectamente centrado */}
       <section ref={heroRef} className="hero-section">
-        <div className="hero-background"></div>
         <div className="hero-overlay"></div>
+        {/* Título centrado sobre los contenedores */}
         <div className={`hero-content ${isVisible ? "visible" : ""}`}>
-          <div className="logo">
-            <Leaf className="logo-icon" />
-            <span>GreenSpace</span>
+          <div className="hero-title-container">
+            <Crown className="hero-icon" />
+            <h1 className="hero-title">¿Qué servicio buscas?</h1>
+            <Crown className="hero-icon" />
           </div>
-          <h1 className="hero-title">Service of the gardenering | Venta de Plantas</h1>
-          <div className="hero-services">
-            diseño <span>|</span> construcción <span>|</span> paisajismo <span>|</span> mantenimiento <span>|</span>{" "}
-            riego <span>|</span> plantas
+          <p className="hero-subtitle">
+            Selecciona el servicio que necesitas y descubre cómo podemos transformar tu espacio
+          </p>
+        </div>
+
+        <div className="services-split-container horizontal">
+          {/* Sección de Remodelación de Interiores con imagen real */}
+          <div className="service-split-item remodeling-bg">
+            <div className="service-split-overlay"></div>
+            <div className="service-split-content">
+
+              <h2>Remodelación de Interiores</h2>
+              <p>Transformamos espacios con diseños modernos y funcionales que reflejan tu estilo personal</p>
+              <div className="service-features-preview">
+                <div className="feature-preview">
+                  <Sofa className="feature-icon" />
+                  <span>Diseño de Interiores</span>
+                </div>
+                <div className="feature-preview">
+                  <Hammer className="feature-icon" />
+                  <span>Renovaciones</span>
+                </div>
+                <div className="feature-preview">
+                  <Tool className="feature-icon" />
+                  <span>Acabados Premium</span>
+                </div>
+              </div>
+              <Link to="/interiores" className="primary-button">
+                Ver servicios
+                <ArrowRight className="button-icon" />
+              </Link>
+            </div>
           </div>
-          <div className="hero-buttons">
-            <button className="primary-button">
-              <ShoppingCart className="button-icon" />
-              Ir a la tienda
-            </button>
-            <button className="secondary-button">
-              <Calendar className="button-icon" />
-              Agendar mantenimiento
-            </button>
+
+          {/* Sección de Jardinería con imagen real */}
+          <div className="service-split-item gardening-bg">
+            <div className="service-split-overlay"></div>
+            <div className="service-split-content">
+
+              <h2>Jardinería</h2>
+              <p>Creamos y mantenemos espacios verdes hermosos que armonizan con la naturaleza y tu estilo de vida</p>
+              <div className="service-features-preview">
+                <div className="feature-preview">
+                  <TreePine className="feature-icon" />
+                  <span>Paisajismo</span>
+                </div>
+                <div className="feature-preview">
+                  <Droplets className="feature-icon" />
+                  <span>Sistemas de Riego</span>
+                </div>
+                <div className="feature-preview">
+                  <Scissors className="feature-icon" />
+                  <span>Mantenimiento</span>
+                </div>
+              </div>
+              <Link to="/jardineria" className="primary-button">
+                Ver servicios
+                <ArrowRight className="button-icon" />
+              </Link>
+            </div>
           </div>
         </div>
+
         <div className="scroll-indicator" onClick={() => scrollToSection(aboutRef)}>
           <span>Descubre Más</span>
           <ChevronDown className="scroll-icon" />
@@ -237,26 +288,23 @@ export default function Home() {
       <section ref={aboutRef} className="about-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <span className="section-subtitle">About Us</span>
-            <h2 className="section-title">Your Vision, Our Expertise</h2>
             <div className="section-underline"></div>
           </div>
 
           <div className="about-content">
             <div className="about-image">
-              <img src="https://source.unsplash.com/random/600x400/?landscaping,team" alt="Our team at work" />
+              
               <div className="experience-badge">
-                <span className="years">10+</span>
-                <span className="text">Years of Excellence</span>
               </div>
             </div>
 
             <div className="about-text">
-              <h3>Creating Beautiful Spaces Since 2013</h3>
+              <h3>Excelencia en Diseño desde 2018</h3>
               <p>
-                At GreenSpace, we believe that every home deserves to be beautiful, both inside and out. Our team of
-                expert gardeners and remodeling professionals work together to transform your space into something
-                extraordinary.
+                En Jimenez Services LLC, creemos que cada hogar merece ser hermoso, tanto en su interior como en su
+                exterior. Nuestro equipo de profesionales altamente capacitados trabaja con dedicación y eficiencia para
+                transformar su espacio en algo extraordinario. Ubicados en Little Ferry, New Jersey, servimos con
+                orgullo a toda el área metropolitana con soluciones personalizadas de remodelación y jardinería.
               </p>
 
               <div className="about-features">
@@ -465,256 +513,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Portfolio/Gallery Section */}
-      <section ref={galleryRef} className="portfolio-section animate-on-scroll">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-subtitle">Our Work</span>
-            <h2 className="section-title">Recent Projects</h2>
-            <div className="section-underline"></div>
-          </div>
-
-          <div className="portfolio-filter">
-            <button className={activeTab === "all" ? "active" : ""} onClick={() => setActiveTab("all")}>
-              All Projects
-            </button>
-            <button className={activeTab === "gardening" ? "active" : ""} onClick={() => setActiveTab("gardening")}>
-              Gardening
-            </button>
-            <button className={activeTab === "remodeling" ? "active" : ""} onClick={() => setActiveTab("remodeling")}>
-              Remodeling
-            </button>
-          </div>
-
-          <div className="portfolio-grid">
-            {portfolioItems
-              .filter((item) => activeTab === "all" || item.category === activeTab)
-              .map((item, index) => (
-                <div className="portfolio-item" key={index}>
-                  <div className="portfolio-image">
-                    <img src={item.image || "/placeholder.svg"} alt={item.title} />
-                    <div className="portfolio-overlay">
-                      <div className="portfolio-category">{item.category}</div>
-                      <h3>{item.title}</h3>
-                      <p>{item.description}</p>
-                      <button className="portfolio-button">View Project</button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-
-          <div className="portfolio-cta">
-            <button className="secondary-button">
-              View All Projects
-              <ArrowRight className="button-icon" />
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section ref={testimonialsRef} className="testimonials-section animate-on-scroll">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-subtitle">Testimonials</span>
-            <h2 className="section-title">What Our Clients Say</h2>
-            <div className="section-underline"></div>
-          </div>
-
-          <div className="testimonials-grid">
-            {testimonials.map((testimonial, index) => (
-              <div className="testimonial-card" key={index}>
-                <div className="testimonial-rating">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star className="star-icon" key={i} />
-                  ))}
-                </div>
-                <p className="testimonial-text">{testimonial.text}</p>
-                <div className="testimonial-author">
-                  <img src={testimonial.image || "/placeholder.svg"} alt={testimonial.name} className="author-image" />
-                  <div className="author-info">
-                    <h4>{testimonial.name}</h4>
-                    <p>{testimonial.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="faq-section animate-on-scroll">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-subtitle">FAQ</span>
-            <h2 className="section-title">Frequently Asked Questions</h2>
-            <div className="section-underline"></div>
-          </div>
-
-          <div className="faq-grid">
-            <div className="faq-item">
-              <h3>How long does a typical remodeling project take?</h3>
-              <p>
-                Project timelines vary based on scope and complexity. A bathroom remodel might take 2-3 weeks, while a
-                full kitchen renovation could take 4-6 weeks. During your consultation, we'll provide a detailed
-                timeline specific to your project.
-              </p>
-            </div>
-
-            <div className="faq-item">
-              <h3>Do you offer maintenance plans for landscaping?</h3>
-              <p>
-                Yes, we offer customized maintenance plans to keep your garden looking its best year-round. These can
-                include weekly, bi-weekly, or monthly visits depending on your needs and the season.
-              </p>
-            </div>
-
-            <div className="faq-item">
-              <h3>Are you licensed and insured?</h3>
-              <p>
-                Absolutely. We maintain all required licenses for both our gardening and remodeling services, and we
-                carry comprehensive insurance coverage to protect your property and our team.
-              </p>
-            </div>
-
-            <div className="faq-item">
-              <h3>How do you handle project estimates?</h3>
-              <p>
-                We provide detailed, transparent estimates after an initial consultation. Our estimates break down
-                labor, materials, and timeline so you know exactly what to expect with no hidden costs.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section ref={contactRef} className="contact-section animate-on-scroll">
-        <div className="container">
-          <div className="contact-grid">
-            <div className="contact-info">
-              <div className="section-header left-aligned">
-                <span className="section-subtitle">Contact Us</span>
-                <h2 className="section-title">Get In Touch</h2>
-                <div className="section-underline"></div>
-              </div>
-
-              <p className="contact-intro">
-                Ready to transform your space? Contact us today for a free consultation and estimate. Our team is ready
-                to bring your vision to life.
-              </p>
-
-              <div className="contact-methods">
-                <div className="contact-method">
-                  <div className="method-icon">
-                    <Phone />
-                  </div>
-                  <div className="method-details">
-                    <h3>Phone</h3>
-                    <p>(555) 123-4567</p>
-                  </div>
-                </div>
-
-                <div className="contact-method">
-                  <div className="method-icon">
-                    <Mail />
-                  </div>
-                  <div className="method-details">
-                    <h3>Email</h3>
-                    <p>info@greenspace.com</p>
-                  </div>
-                </div>
-
-                <div className="contact-method">
-                  <div className="method-icon">
-                    <MapPin />
-                  </div>
-                  <div className="method-details">
-                    <h3>Office</h3>
-                    <p>
-                      123 Garden Street, Suite 101
-                      <br />
-                      Anytown, ST 12345
-                    </p>
-                  </div>
-                </div>
-
-                <div className="contact-method">
-                  <div className="method-icon">
-                    <Clock />
-                  </div>
-                  <div className="method-details">
-                    <h3>Hours</h3>
-                    <p>
-                      Monday-Friday: 8am-6pm
-                      <br />
-                      Saturday: 9am-3pm
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="contact-form-container">
-              <form className="contact-form">
-                <h3>Request a Free Consultation</h3>
-
-                <div className="form-group">
-                  <label htmlFor="name">Full Name</label>
-                  <input type="text" id="name" placeholder="Your name" required />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Email Address</label>
-                  <input type="email" id="email" placeholder="Your email" required />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="phone">Phone Number</label>
-                  <input type="tel" id="phone" placeholder="Your phone" />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="service">Service Interested In</label>
-                  <select id="service" required>
-                    <option value="">Select a service</option>
-                    <option value="landscape-design">Landscape Design</option>
-                    <option value="garden-maintenance">Garden Maintenance</option>
-                    <option value="outdoor-living">Outdoor Living Spaces</option>
-                    <option value="interior-renovation">Interior Renovation</option>
-                    <option value="kitchen-bath">Kitchen & Bath Remodeling</option>
-                    <option value="structural">Structural Modifications</option>
-                    <option value="other">Other (Please specify)</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="message">Project Details</label>
-                  <textarea id="message" rows="4" placeholder="Tell us about your project" required></textarea>
-                </div>
-
-                <button type="submit" className="primary-button">
-                  Send Message
-                  <Send className="button-icon" />
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="main-footer">
         <div className="container">
           <div className="footer-grid">
             <div className="footer-about">
               <div className="footer-logo">
-                <Leaf className="logo-icon" />
-                <span>GreenSpace</span>
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-04%20at%2021.14.20-doLb43PNbRsdNXYnmyLK5ZKJQK8ySK.jpeg"
+                  alt="Jimenez Services LLC Logo"
+                  className="footer-logo-image"
+                />
+                <span>Jimenez Services</span>
               </div>
-              <p>Transforming homes and gardens with expert craftsmanship and innovative design since 2013.</p>
+              <p>Transforming homes and gardens with expert craftsmanship and innovative design since 2018.</p>
               <div className="social-links">
                 <a href="#" className="social-link">
                   <i className="fab fa-facebook-f"></i>
@@ -735,19 +547,13 @@ export default function Home() {
               <h3>Quick Links</h3>
               <ul>
                 <li>
-                  <a href="#">Home</a>
+                  <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="#">About Us</a>
+                  <Link to="/interiores">Remodelación</Link>
                 </li>
                 <li>
-                  <a href="#">Services</a>
-                </li>
-                <li>
-                  <a href="#">Portfolio</a>
-                </li>
-                <li>
-                  <a href="#">Testimonials</a>
+                  <Link to="/jardineria">Jardinería</Link>
                 </li>
                 <li>
                   <a href="#">Contact</a>
@@ -792,7 +598,7 @@ export default function Home() {
           </div>
 
           <div className="footer-bottom">
-            <p>&copy; 2023 GreenSpace. All rights reserved.</p>
+            <p>&copy; 2023 Jimenez Services LLC. All rights reserved.</p>
             <div className="footer-bottom-links">
               <a href="#">Privacy Policy</a>
               <a href="#">Terms of Service</a>

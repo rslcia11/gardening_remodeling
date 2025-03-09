@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import "./App.css"
 import Home from "./pages/home"
+import Remodeling from "./pages/remodeling"
+import Gardening from "./pages/gardening"
+
 
 function App() {
   return (
@@ -11,6 +14,9 @@ function App() {
 
         {/* Home page route */}
         <Route path="/home" element={<Home />} />
+        <Route path="/interiores" element={<Remodeling />} />
+        <Route path="/jardineria" element={<Gardening />} />
+
 
         {/* Add more routes here as needed */}
         {/* <Route path="/about" element={<About />} /> */}
