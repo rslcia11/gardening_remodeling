@@ -14,6 +14,7 @@ import {
   Mail,
   MapPin,
   Send,
+  Award,
 } from "lucide-react"
 import "./remodeling.css"
 
@@ -450,6 +451,19 @@ export default function Remodeling() {
           </div>
         </div>
       </footer>
+
+      {/* Botón flotante de cotización */}
+      <div
+        className="floating-quote-button"
+        onClick={() => document.getElementById("contact").scrollIntoView({ behavior: "smooth" })}
+      >
+        <div className="quote-button-content">
+          <span className="quote-icon">
+            <Award className="quote-button-icon" />
+          </span>
+          <span className="quote-text">¡Cotiza Gratis!</span>
+        </div>
+      </div>
     </div>
   )
 }

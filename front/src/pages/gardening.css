@@ -1,637 +1,1102 @@
+/* Mejoras en la navegación para un aspecto más elegante y profesional */
+.main-nav {
+  backdrop-filter: blur(15px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 80px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-image {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.logo:hover .logo-image {
+  transform: scale(1.05);
+}
+
+.logo span {
+  font-size: 1.35rem;
+  font-weight: 800;
+  background: linear-gradient(to right, var(--secondary-color), var(--primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.01em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+}
+
+.nav-links li {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.nav-links a {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-color);
+  text-decoration: none;
+  position: relative;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--primary-dark);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a.active {
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-cta {
+  margin-left: 1rem;
+}
+
+.nav-cta .cta-button {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: var(--secondary-color) !important;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.nav-cta .cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.nav-cta .cta-button::after {
+  display: none;
+}
+
+/* Ajustes para el menú móvil */
+.mobile-menu-button {
+  display: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.hamburger {
+  width: 24px;
+  height: 18px;
+  position: relative;
+  transform: rotate(0deg);
+  transition: 0.5s ease-in-out;
+}
+
+.hamburger span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: var(--text-color);
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: 0.25s ease-in-out;
+}
+
+.hamburger span:nth-child(1) {
+  top: 0px;
+}
+
+.hamburger span:nth-child(2) {
+  top: 8px;
+}
+
+.hamburger span:nth-child(3) {
+  top: 16px;
+}
+
+.hamburger.open span:nth-child(1) {
+  top: 8px;
+  transform: rotate(135deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  left: -60px;
+}
+
+.hamburger.open span:nth-child(3) {
+  top: 8px;
+  transform: rotate(-135deg);
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-button {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    gap: 1.5rem;
+    transform: translateY(-150%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 999;
+    height: auto;
+  }
+
+  .nav-links.open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+    height: auto;
+  }
+
+  .nav-cta {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .nav-cta .cta-button {
+    width: 100%;
+    padding: 0.8rem;
+    display: block;
+  }
+}
+
 /* Mejoras de estilo para la página de jardinería */
 .gardening-page {
-    font-family: var(--font-sans);
+  font-family: var(--font-sans);
+}
+
+/* Hero Section - Mejoras para mayor impacto */
+.gardening-hero {
+  position: relative;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding-top: 80px;
+}
+
+.gardening-hero .hero-featured-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.gardening-hero .hero-featured-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.gardening-hero .hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.65));
+  z-index: 2;
+}
+
+.gardening-hero .hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  max-width: 900px;
+  padding: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: var(--border-radius-xl);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gardening-hero .hero-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gardening-hero .hero-badge {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: var(--secondary-color);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.gardening-hero .hero-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 1.75rem;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.gardening-hero .hero-benefits {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.gardening-hero .benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.gardening-hero .benefit-icon {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+
+.gardening-hero .hero-subtitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.gardening-hero .hero-subtitle strong {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.gardening-hero .hero-cta-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.gardening-hero .primary-button {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: var(--secondary-color);
+  border-radius: 50px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gardening-hero .primary-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+.gardening-hero .secondary-button {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: transparent;
+  color: white;
+  border: 2px solid var(--primary-color);
+  border-radius: 50px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.gardening-hero .secondary-button:hover {
+  background: rgba(255, 215, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Services Section - Mejoras */
+.gardening-services {
+  padding: 6rem 0;
+  background-color: white;
+}
+
+.gardening-services .section-header {
+  margin-bottom: 3.5rem;
+}
+
+.gardening-services .services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+  align-items: stretch;
+}
+
+.gardening-services .service-card {
+  background-color: white;
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  transition: all 0.4s ease;
+  border: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.gardening-services .service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.gardening-services .service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.gardening-services .service-card:hover::before {
+  opacity: 1;
+}
+
+.gardening-services .service-icon {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+  color: var(--secondary-color);
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.gardening-services .service-icon svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.gardening-services .service-card h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  line-height: 1.3;
+}
+
+.gardening-services .service-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: var(--text-light);
+  flex-grow: 1;
+}
+
+.gardening-services .service-features {
+  margin-top: auto;
+  padding: 0;
+}
+
+.gardening-services .service-features li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+.gardening-services .service-features li:last-child {
+  margin-bottom: 0;
+}
+
+.gardening-services .check-icon {
+  color: var(--primary-color);
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.2rem;
+}
+
+/* Ajuste para alineación perfecta en diferentes tamaños de pantalla */
+@media (min-width: 992px) {
+  .gardening-services .services-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
-  
-  /* Hero Section - Mejoras */
-  .gardening-hero {
-    position: relative;
-    height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: url("https://source.unsplash.com/random/1920x1080/?luxury,garden,landscape") center / cover no-repeat;
-    background-attachment: fixed;
-    padding-top: 80px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .gardening-services .services-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .gardening-hero .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.65));
-    z-index: 1;
-  }
-  
-  .gardening-hero .hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    max-width: 900px;
-    padding: 0 20px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  
-  .gardening-hero .hero-content.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .gardening-hero .hero-title-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .gardening-hero .hero-icon {
-    color: var(--primary-color);
-    width: 2.5rem;
-    height: 2.5rem;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-  }
-  
-  .gardening-hero .hero-title {
-    font-size: 4rem;
-    font-weight: 900;
-    color: white;
-    margin-bottom: 1.75rem;
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-  }
-  
-  .gardening-hero .hero-subtitle {
-    font-size: 1.35rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 2.5rem;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    max-width: 800px;
+}
+
+@media (max-width: 767px) {
+  .gardening-services .services-grid {
+    grid-template-columns: 1fr;
+    max-width: 450px;
     margin-left: auto;
     margin-right: auto;
-    line-height: 1.6;
   }
-  
-  .gardening-hero .primary-button {
-    padding: 1rem 2.5rem;
-    font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    color: var(--secondary-color);
-    border-radius: 50px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+}
+
+/* Gallery Section - Mejoras */
+.gardening-gallery {
+  padding: 8rem 0;
+  background-color: #fafafa;
+}
+
+.gardening-gallery .gallery-showcase {
+  margin-top: 4rem;
+}
+
+.gardening-gallery .gallery-main {
+  position: relative;
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  margin-bottom: 2rem;
+  height: 600px;
+}
+
+.gardening-gallery .gallery-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.gardening-gallery .gallery-main:hover .gallery-main-image {
+  transform: scale(1.05);
+}
+
+.gardening-gallery .gallery-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2.5rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+  color: white;
+}
+
+.gardening-gallery .gallery-info h3 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.gardening-gallery .gallery-info p {
+  font-size: 1.15rem;
+  max-width: 80%;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.gardening-gallery .gallery-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.gardening-gallery .gallery-thumbnail {
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  height: 120px;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.gardening-gallery .gallery-thumbnail.active {
+  opacity: 1;
+  border-color: var(--primary-color);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.gardening-gallery .gallery-thumbnail:hover {
+  opacity: 1;
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.gardening-gallery .gallery-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gardening-gallery .gallery-thumbnail:hover img {
+  transform: scale(1.1);
+}
+
+/* Process Section - Mejoras */
+.gardening-process {
+  padding: 8rem 0;
+  background-color: white;
+}
+
+.gardening-process .process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  margin-top: 4rem;
+}
+
+.gardening-process .process-step {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-radius: var(--border-radius-xl);
+  background-color: white;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.gardening-process .process-step:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+}
+
+.gardening-process .step-number {
+  width: 4.5rem;
+  height: 4.5rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: var(--secondary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0 auto 2rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.gardening-process .process-step h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1.25rem;
+  color: var(--text-color);
+}
+
+.gardening-process .process-step p {
+  color: var(--text-light);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+/* Testimonials Section - Mejoras */
+.gardening-testimonials {
+  padding: 8rem 0;
+  background-color: #fafafa;
+}
+
+.gardening-testimonials .testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2.5rem;
+  margin-top: 4rem;
+}
+
+.gardening-testimonials .testimonial-card {
+  background-color: white;
+  border-radius: var(--border-radius-xl);
+  padding: 3rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.gardening-testimonials .testimonial-card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+}
+
+.gardening-testimonials .quote-icon {
+  font-size: 5rem;
+  color: var(--primary-light);
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  opacity: 0.2;
+  font-family: serif;
+}
+
+.gardening-testimonials .testimonial-text {
+  font-style: italic;
+  margin-bottom: 2rem;
+  color: var(--text-light);
+  position: relative;
+  z-index: 1;
+  font-size: 1.15rem;
+  line-height: 1.8;
+}
+
+.gardening-testimonials .testimonial-author h4 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.gardening-testimonials .testimonial-author p {
+  font-size: 1rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* Contact Section - Mejoras */
+.gardening-contact {
+  padding: 8rem 0;
+  background-color: white;
+}
+
+.gardening-contact .contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 4rem;
+}
+
+.gardening-contact .contact-info {
+  padding-right: 2rem;
+}
+
+.gardening-contact .section-header.left-aligned {
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+.gardening-contact .section-header.left-aligned .section-underline {
+  margin: 0;
+  width: 5rem;
+}
+
+.gardening-contact .contact-intro {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+  color: var(--text-light);
+}
+
+.gardening-contact .contact-methods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.gardening-contact .contact-method {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.gardening-contact .method-icon {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+  color: var(--secondary-color);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.gardening-contact .method-details h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.gardening-contact .method-details p {
+  font-size: 1rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.gardening-contact .contact-form-container {
+  background-color: white;
+  border-radius: var(--border-radius-xl);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  border: none;
+}
+
+.gardening-contact .contact-form h3 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
+  color: var(--text-color);
+}
+
+.gardening-contact .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.gardening-contact .form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--text-color);
+}
+
+.gardening-contact .form-group input,
+.gardening-contact .form-group select,
+.gardening-contact .form-group textarea {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+}
+
+.gardening-contact .form-group input:focus,
+.gardening-contact .form-group select:focus,
+.gardening-contact .form-group textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+  background-color: white;
+}
+
+.gardening-contact .primary-button {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: var(--secondary-color);
+  border-radius: 50px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.gardening-contact .primary-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Styles - Mejoras */
+@media (max-width: 992px) {
+  .gardening-hero .hero-title {
+    font-size: 3rem;
   }
-  
-  .gardening-hero .primary-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
-  }
-  
-  /* Services Section - Mejoras */
-  .gardening-services {
-    padding: 8rem 0;
-    background-color: white;
-  }
-  
-  .gardening-services .section-header {
-    margin-bottom: 5rem;
-  }
-  
-  .gardening-services .section-subtitle {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    text-transform: uppercase;
-    letter-spacing: 0.15rem;
-  }
-  
-  .gardening-services .section-title {
-    font-size: 2.75rem;
-    font-weight: 900;
-    color: var(--text-color);
-    margin-bottom: 1.25rem;
-    letter-spacing: -0.02em;
-  }
-  
-  .gardening-services .section-underline {
-    width: 6rem;
-    height: 0.35rem;
-    background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
-    border-radius: 2rem;
-  }
-  
-  .gardening-services .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2.5rem;
-    margin-top: 4rem;
-  }
-  
-  .gardening-services .service-card {
-    background-color: white;
-    border-radius: var(--border-radius-xl);
-    padding: 3rem;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s ease;
-    border: none;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .gardening-services .service-card:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
-  }
-  
-  .gardening-services .service-icon {
-    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-    color: var(--secondary-color);
-    width: 5.5rem;
-    height: 5.5rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2.5rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  .gardening-services .service-icon svg {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-  
-  .gardening-services .service-card h3 {
-    font-size: 1.75rem;
-    font-weight: 800;
-    margin-bottom: 1.25rem;
-    color: var(--text-color);
-  }
-  
-  .gardening-services .service-card p {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 2rem;
-    color: var(--text-light);
-    flex-grow: 1;
-  }
-  
-  .gardening-services .service-features {
-    margin-top: auto;
-  }
-  
-  .gardening-services .service-features li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    font-size: 1.05rem;
-    color: var(--text-light);
-  }
-  
-  .gardening-services .check-icon {
-    color: var(--primary-color);
-    margin-right: 1rem;
-    flex-shrink: 0;
-    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.1));
-  }
-  
-  /* Gallery Section - Mejoras */
-  .gardening-gallery {
-    padding: 8rem 0;
-    background-color: #fafafa;
-  }
-  
-  .gardening-gallery .gallery-showcase {
-    margin-top: 4rem;
-  }
-  
+
   .gardening-gallery .gallery-main {
-    position: relative;
-    border-radius: var(--border-radius-xl);
-    overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-    margin-bottom: 2rem;
-    height: 600px;
+    height: 500px;
   }
-  
-  .gardening-gallery .gallery-main-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.7s ease;
-  }
-  
-  .gardening-gallery .gallery-main:hover .gallery-main-image {
-    transform: scale(1.05);
-  }
-  
-  .gardening-gallery .gallery-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 2.5rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
-    color: white;
-  }
-  
-  .gardening-gallery .gallery-info h3 {
-    font-size: 2.25rem;
-    font-weight: 800;
-    margin-bottom: 0.75rem;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  }
-  
-  .gardening-gallery .gallery-info p {
-    font-size: 1.15rem;
-    max-width: 80%;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  }
-  
+
   .gardening-gallery .gallery-thumbnails {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .gardening-gallery .gallery-thumbnail {
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
-    cursor: pointer;
-    height: 120px;
-    opacity: 0.7;
-    transition: all 0.3s ease;
-    border: 3px solid transparent;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  }
-  
-  .gardening-gallery .gallery-thumbnail.active {
-    opacity: 1;
-    border-color: var(--primary-color);
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-  }
-  
-  .gardening-gallery .gallery-thumbnail:hover {
-    opacity: 1;
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-  }
-  
-  .gardening-gallery .gallery-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-  
-  .gardening-gallery .gallery-thumbnail:hover img {
-    transform: scale(1.1);
-  }
-  
-  /* Process Section - Mejoras */
-  .gardening-process {
-    padding: 8rem 0;
-    background-color: white;
-  }
-  
-  .gardening-process .process-steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2.5rem;
-    margin-top: 4rem;
-  }
-  
-  .gardening-process .process-step {
-    text-align: center;
-    padding: 3rem 2rem;
-    border-radius: var(--border-radius-xl);
-    background-color: white;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s ease;
-    position: relative;
-  }
-  
-  .gardening-process .process-step:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
-  }
-  
-  .gardening-process .step-number {
-    width: 4.5rem;
-    height: 4.5rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    color: var(--secondary-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.75rem;
-    font-weight: 800;
-    margin: 0 auto 2rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  .gardening-process .process-step h3 {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 1.25rem;
-    color: var(--text-color);
-  }
-  
-  .gardening-process .process-step p {
-    color: var(--text-light);
-    font-size: 1.1rem;
-    line-height: 1.7;
-  }
-  
-  /* Testimonials Section - Mejoras */
-  .gardening-testimonials {
-    padding: 8rem 0;
-    background-color: #fafafa;
-  }
-  
-  .gardening-testimonials .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2.5rem;
-    margin-top: 4rem;
-  }
-  
-  .gardening-testimonials .testimonial-card {
-    background-color: white;
-    border-radius: var(--border-radius-xl);
-    padding: 3rem;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s ease;
-    position: relative;
-  }
-  
-  .gardening-testimonials .testimonial-card:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
-  }
-  
-  .gardening-testimonials .quote-icon {
-    font-size: 5rem;
-    color: var(--primary-light);
-    position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
-    opacity: 0.2;
-    font-family: serif;
-  }
-  
-  .gardening-testimonials .testimonial-text {
-    font-style: italic;
-    margin-bottom: 2rem;
-    color: var(--text-light);
-    position: relative;
-    z-index: 1;
-    font-size: 1.15rem;
-    line-height: 1.8;
-  }
-  
-  .gardening-testimonials .testimonial-author h4 {
-    font-size: 1.35rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-  }
-  
-  .gardening-testimonials .testimonial-author p {
-    font-size: 1rem;
-    color: var(--text-light);
-    font-weight: 500;
-  }
-  
-  /* Contact Section - Mejoras */
-  .gardening-contact {
-    padding: 8rem 0;
-    background-color: white;
-  }
-  
+
   .gardening-contact .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-    gap: 4rem;
+    grid-template-columns: 1fr;
   }
-  
+
   .gardening-contact .contact-info {
-    padding-right: 2rem;
+    padding-right: 0;
   }
-  
-  .gardening-contact .section-header.left-aligned {
-    text-align: left;
-    margin-bottom: 3rem;
+
+  .gardening-hero .hero-benefits {
+    gap: 1rem;
   }
-  
-  .gardening-contact .section-header.left-aligned .section-underline {
-    margin: 0;
-    width: 5rem;
+}
+
+@media (max-width: 768px) {
+  .gardening-hero .hero-title {
+    font-size: 2.5rem;
   }
-  
-  .gardening-contact .contact-intro {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    margin-bottom: 3rem;
-    color: var(--text-light);
-  }
-  
-  .gardening-contact .contact-methods {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-  }
-  
-  .gardening-contact .contact-method {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.25rem;
-  }
-  
-  .gardening-contact .method-icon {
-    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-    color: var(--secondary-color);
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  }
-  
-  .gardening-contact .method-details h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-  }
-  
-  .gardening-contact .method-details p {
-    font-size: 1rem;
-    color: var(--text-light);
-    line-height: 1.6;
-  }
-  
-  .gardening-contact .contact-form-container {
-    background-color: white;
-    border-radius: var(--border-radius-xl);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
-    padding: 3rem;
-    border: none;
-  }
-  
-  .gardening-contact .contact-form h3 {
-    font-size: 1.75rem;
-    font-weight: 800;
-    margin-bottom: 2.5rem;
-    color: var(--text-color);
-  }
-  
-  .gardening-contact .form-group {
-    margin-bottom: 1.5rem;
-  }
-  
-  .gardening-contact .form-group label {
-    display: block;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    color: var(--text-color);
-  }
-  
-  .gardening-contact .form-group input,
-  .gardening-contact .form-group select,
-  .gardening-contact .form-group textarea {
-    width: 100%;
-    padding: 1rem 1.25rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    font-size: 1.05rem;
-    transition: all 0.3s ease;
-    background-color: #fafafa;
-  }
-  
-  .gardening-contact .form-group input:focus,
-  .gardening-contact .form-group select:focus,
-  .gardening-contact .form-group textarea:focus {
-    border-color: var(--primary-color);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
-    background-color: white;
-  }
-  
-  .gardening-contact .primary-button {
-    padding: 1rem 2rem;
+
+  .gardening-hero .hero-subtitle {
     font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    color: var(--secondary-color);
-    border-radius: 50px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+  }
+
+  .gardening-hero .hero-content {
+    padding: 2rem;
+    max-width: 90%;
+  }
+
+  .gardening-gallery .gallery-main {
+    height: 400px;
+  }
+
+  .gardening-process .process-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 2.25rem;
+  }
+
+  .gardening-hero .benefit-item {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gardening-hero .hero-title {
+    font-size: 2rem;
+  }
+
+  .gardening-hero .hero-content {
+    padding: 1.5rem;
+  }
+
+  .gardening-gallery .gallery-thumbnails {
+    grid-template-columns: 1fr;
+  }
+
+  .gardening-gallery .gallery-thumbnail {
+    height: 100px;
+  }
+
+  .gardening-services .service-card {
+    padding: 2rem;
+  }
+
+  .gardening-contact .contact-form-container {
+    padding: 2rem;
+  }
+
+  .gardening-hero .hero-benefits {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .gardening-hero .hero-cta-container {
+    flex-direction: column;
     width: 100%;
-    margin-top: 1rem;
   }
-  
-  .gardening-contact .primary-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+
+  .gardening-hero .primary-button,
+  .gardening-hero .secondary-button {
+    width: 100%;
   }
-  
-  /* Responsive Styles - Mejoras */
-  @media (max-width: 992px) {
-    .gardening-hero .hero-title {
-      font-size: 3.5rem;
-    }
-  
-    .gardening-gallery .gallery-main {
-      height: 500px;
-    }
-  
-    .gardening-gallery .gallery-thumbnails {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  
-    .gardening-contact .contact-grid {
-      grid-template-columns: 1fr;
-    }
-  
-    .gardening-contact .contact-info {
-      padding-right: 0;
-    }
+}
+
+/* Ajuste del tamaño del logo */
+.logo-image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.footer-logo-image {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Estilos para el botón flotante de cotización */
+.floating-quote-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: var(--secondary-color);
+  border-radius: 50px;
+  padding: 12px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  animation: pulse-animation 2s infinite;
+}
+
+.floating-quote-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  animation: none;
+}
+
+.quote-button-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quote-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.1);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.quote-button-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.quote-text {
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
   }
-  
-  @media (max-width: 768px) {
-    .gardening-hero .hero-title {
-      font-size: 3rem;
-    }
-  
-    .gardening-hero .hero-subtitle {
-      font-size: 1.1rem;
-    }
-  
-    .gardening-gallery .gallery-main {
-      height: 400px;
-    }
-  
-    .gardening-process .process-steps {
-      grid-template-columns: 1fr;
-    }
-  
-    .section-title {
-      font-size: 2.25rem;
-    }
+  70% {
+    box-shadow: 0 0 0 15px rgba(255, 215, 0, 0);
   }
-  
-  @media (max-width: 480px) {
-    .gardening-hero .hero-title {
-      font-size: 2.5rem;
-    }
-  
-    .gardening-gallery .gallery-thumbnails {
-      grid-template-columns: 1fr;
-    }
-  
-    .gardening-gallery .gallery-thumbnail {
-      height: 100px;
-    }
-  
-    .gardening-services .service-card {
-      padding: 2rem;
-    }
-  
-    .gardening-contact .contact-form-container {
-      padding: 2rem;
-    }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
   }
-  
-  /* Ajuste del tamaño del logo */
-  .logo-image {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 50%;
+}
+
+/* Ajustes responsivos para el botón flotante */
+@media (max-width: 768px) {
+  .floating-quote-button {
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 16px;
   }
-  
-  .footer-logo-image {
-    width: 35px;
-    height: 35px;
-    object-fit: cover;
-    border-radius: 50%;
+
+  .quote-icon {
+    width: 25px;
+    height: 25px;
   }
-  
-  
+
+  .quote-button-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .quote-text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-quote-button {
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
