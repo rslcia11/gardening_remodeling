@@ -362,9 +362,9 @@ export default function Home() {
         <div className="hero-title-wrapper">
           <div className={`hero-content visible`}>
             <div className="hero-title-container">
-              
+              <Crown className="hero-icon" />
               <h1 className="hero-title">¿Qué servicio buscas?</h1>
-              
+              <Crown className="hero-icon" />
             </div>
             <p className="hero-subtitle">
               Transforma tu espacio con expertos que entienden tu visión y superan tus expectativas
@@ -503,11 +503,6 @@ export default function Home() {
                   <span className="stat-label">Expertos Certificados</span>
                 </div>
               </div>
-
-              <button className="primary-button">
-                Descubre Nuestra Historia
-                <ArrowRight className="button-icon" />
-              </button>
             </div>
           </div>
         </div>
