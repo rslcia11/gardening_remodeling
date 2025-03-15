@@ -8,50 +8,49 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2.5rem;
-  padding-top: 2rem;
+  margin-bottom: 1rem;
+  padding-top: 0;
+  margin-top: -2rem; /* Subir el título */
 }
 
+/* Mejorar el contenedor del título para que sea más legible pero menos intrusivo */
 .hero-content {
   position: relative;
   z-index: 20 !important;
   text-align: center;
   max-width: 900px;
-  padding: 1rem 20px;
+  padding: 1.5rem 2rem;
   margin: 0 auto;
   width: 100%;
   opacity: 1 !important;
   transform: translateY(0) !important;
   transition: none !important;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border-radius: 1.5rem;
+  margin-top: -1rem; /* Subir el contenido */
 }
 
-.hero-title-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
+/* Mejorar la visibilidad del título */
 .hero-title {
   font-size: 3.5rem;
   font-weight: 900;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 3px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.5);
   letter-spacing: -0.02em;
   color: white;
   margin: 0;
   padding: 0;
 }
 
+/* Mejorar la visibilidad del subtítulo */
 .hero-subtitle {
   font-size: 1.25rem;
   font-weight: 500;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8), 0 0 3px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 4px rgba(0, 0, 0, 0.5);
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0.75rem auto 0;
   color: white;
   padding: 0;
 }
@@ -63,32 +62,24 @@
   color: var(--primary-color);
 }
 
-/* Ajustar la sección hero para dar más espacio */
+/* Ajustar la sección hero para dar más espacio y mejorar la visibilidad de la imagen */
 .hero-section {
-  background-attachment: fixed;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  background-image: url("https://source.unsplash.com/random/1920x1080/?garden,home");
+  background-image: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2020.25.14-vj8oSnZMc7fvFXUZEO0d8cLubUGxdH.jpeg");
   background-size: cover;
   background-position: center;
   position: relative;
-  padding-top: 120px;
+  padding-top: 80px;
   padding-bottom: 2rem;
+  background-repeat: no-repeat;
 }
 
-/* Ajustar el contenedor de servicios para que no se superponga */
-.services-split-container.horizontal {
-  margin-top: 0;
-  position: relative;
-  z-index: 10;
-}
-
-/* Asegurar que el overlay no cubra el contenido */
 .hero-overlay {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7));
+  background: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -96,6 +87,27 @@
   height: 100%;
   z-index: 1;
 }
+
+/* Mejorar el espaciado del contenedor de servicios */
+.services-split-container.horizontal {
+  margin-top: 2rem;
+  position: relative;
+  z-index: 10;
+  padding: 0 2rem;
+}
+
+/* Asegurar que el overlay no cubra el contenido */
+/*
+.hero-overlay {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.75));
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+*/
 
 /* Base Styles */
 :root {
@@ -128,6 +140,10 @@
   font-family: var(--font-sans);
   color: var(--text-color);
   line-height: 1.5;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
 }
 
 a {
@@ -405,22 +421,22 @@ img {
 
 /* Mejoras en la sección hero */
 .hero-section {
-  background-attachment: fixed;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  background-image: url("https://source.unsplash.com/random/1920x1080/?garden,home");
+  background-image: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2020.25.14-vj8oSnZMc7fvFXUZEO0d8cLubUGxdH.jpeg");
   background-size: cover;
   background-position: center;
   position: relative;
-  padding-top: 120px;
+  padding-top: 80px;
   padding-bottom: 2rem;
+  background-repeat: no-repeat;
 }
 
 .hero-overlay {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7));
+  background: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -433,7 +449,7 @@ img {
 .hero-title {
   font-size: 3.5rem;
   font-weight: 900;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 3px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.5);
   letter-spacing: -0.02em;
   color: white;
   margin: 0;
@@ -443,7 +459,7 @@ img {
 .hero-subtitle {
   font-size: 1.25rem;
   font-weight: 500;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8), 0 0 3px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 4px rgba(0, 0, 0, 0.5);
   max-width: 800px;
   margin: 0 auto;
   color: white;
@@ -460,18 +476,16 @@ img {
 /* Mejoras en la sección hero y título para centrado perfecto */
 .hero-content {
   position: relative;
-  z-index: 20 !important;
+  z-index: 2;
   text-align: center;
   max-width: 900px;
-  padding: 1rem 20px;
+  padding: 2rem;
   margin: 0 auto;
-  width: 100%;
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  transition: none !important;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .hero-title-container {
@@ -479,7 +493,7 @@ img {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Mejoras en las tarjetas de servicio */
@@ -496,10 +510,15 @@ img {
   z-index: 2;
 }
 
+/* Mejorar el diseño de las tarjetas de servicio */
 .service-split-item {
   position: relative;
-  height: 480px; /* Reducido de 500px */
+  height: 450px;
   transition: all 0.3s ease;
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .service-split-item:hover .service-split-content {
@@ -621,53 +640,48 @@ img {
   position: relative;
   z-index: 10;
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* Aseguramos que sea row para mostrar elementos lado a lado */
   width: 100%;
-  max-width: 1400px;
+  max-width: 100%;
+  padding: 0 1rem;
   margin: 0 auto;
+  box-sizing: border-box;
   gap: 2rem;
-  padding: 0 2rem;
-  position: relative;
-  z-index: 2;
   min-height: 520px;
 }
 
 .services-split-container.horizontal .service-split-item {
-  flex: 1 1 50%;
+  flex: 1;
   height: auto;
   min-height: 480px;
-  max-height: none; /* Eliminado el máximo para permitir que crezca según el contenido */
+  max-height: none;
   position: relative;
   border-radius: var(--border-radius-xl);
   overflow: hidden;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
-/* Imágenes reales con efecto de difuminado sutil */
-.service-split-item.remodeling-bg {
-  background: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/remodelacion-d3hl1STnD6WNShTujIw1KutDABOyW5.png")
-    center / cover no-repeat;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
+/* Ajuste responsivo para dispositivos móviles */
+@media (max-width: 992px) {
+  .services-split-container.horizontal {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .service-split-item {
+    min-height: 400px;
+  }
 }
 
-.service-split-item.gardening-bg {
-  background: url("https://images.unsplash.com/photo-1558904541-efa843a96f01?q=80&w=1470&auto=format&fit=crop") center /
-    cover no-repeat;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-}
-
-/* Overlay sin ningún efecto de oscurecimiento */
+/* Mejorar el overlay de las tarjetas de servicio */
 .service-split-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(1px);
   transition: var(--transition);
   z-index: 1;
 }
@@ -676,88 +690,220 @@ img {
   background: rgba(0, 0, 0, 0.6);
 }
 
-/* Mejoras en la sección About */
-.about-section {
-  padding: 5rem 0; /* Increased padding for more vertical space */
+/* Ajustar el contenedor principal de servicios para que no tape la imagen */
+.services-main-container {
+  position: relative;
+  z-index: 10;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  margin-top: 1rem; /* Reducido de 2rem para compensar el título subido */
+}
+
+.services-buttons-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+/* Estilos para los botones de servicio con descripción */
+.service-button {
+  flex: 1;
+  max-width: 500px;
+  min-width: 300px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem;
+  border-radius: 20px;
+  color: white;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.service-button-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.service-button-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.service-button-description {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin: 0;
+  font-weight: 400;
+}
+
+.service-button:hover {
+  transform: translateY(-10px);
+  background: rgba(0, 0, 0, 0.5);
+  border-color: var(--primary-color);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+}
+
+.service-button-icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--primary-color);
+  background: rgba(255, 215, 0, 0.1);
+  padding: 0.75rem;
+  border-radius: 12px;
+  transition: all 0.4s ease;
+}
+
+.service-button:hover .service-button-icon {
+  transform: scale(1.1);
+  background: rgba(255, 215, 0, 0.2);
+}
+
+.service-button span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.button-arrow {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: transform 0.3s ease;
+  opacity: 0.7;
+}
+
+.service-button:hover .button-arrow {
+  transform: translateX(5px);
+  opacity: 1;
+}
+
+/* Mejoras en la sección About */
+//
+Modify
+  the
+  about
+  section
+  styles
+  to
+  fix
+  the
+  layout /* Modificar la sección About para que ocupe todo el ancho y elimine espacios innecesarios */
+  .about-section {
+  width: 100%;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  padding: 5rem 0;
   background-color: white;
-  overflow: hidden; /* Prevent any potential overflow issues */
+  overflow: hidden;
+}
+
+.about-section .container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .about-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 4rem;
-  max-width: 1400px; /* Increased max-width to match other full-width sections */
+  width: 100%;
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
   margin: 0 auto;
-  padding: 0 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 4rem;
 }
 
 .about-image {
-  flex: 0 0 45%;
   position: relative;
-  min-height: 500px; /* Ensure minimum height for visual impact */
+  min-height: 500px;
   border-radius: var(--border-radius-xl);
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.about-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .about-text {
-  flex: 0 0 55%;
-  padding-right: 2rem;
+  width: 100%;
+  padding: 2rem;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-  .about-content {
-    padding: 0 3rem;
-    gap: 3rem;
-  }
+/* Section Header - Updated */
+.section-header {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 3rem;
+  padding: 0 1rem;
 }
 
+/* Ajustes responsivos más específicos */
 @media (max-width: 992px) {
   .about-content {
-    flex-direction: column;
-    text-align: center;
+    grid-template-columns: 1fr;
     padding: 0 2rem;
   }
 
   .about-image {
-    flex: 0 0 100%;
-    width: 100%;
-    max-width: 600px;
-    min-height: 400px;
-    margin: 0 auto 3rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    padding: 0 1rem;
+  }
+}
+
+.about-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Asegurar que la sección About tenga el mismo estilo que la sección de servicios */
+@media (max-width: 992px) {
+  .about-content {
+    flex-direction: column;
+    padding: 0 2rem;
   }
 
+  .about-image,
   .about-text {
-    flex: 0 0 100%;
     width: 100%;
-    padding-right: 0;
   }
 
-  .about-features {
-    justify-content: center;
-  }
-
-  .feature {
-    text-align: left;
+  .about-image {
+    margin-bottom: 2rem;
   }
 }
 
 .section-header {
-  margin-bottom: 2rem; /* Reduced from 3rem */
+  text-align: center;
+  width: 100%;
+  margin-bottom: 4rem;
 }
 
 .section-subtitle {
@@ -955,6 +1101,99 @@ img {
 }
 
 /* Mejoras en la sección de servicios */
+/* Add these styles to make service sections full-width */
+
+/* Services Section - Full Width */
+.services-section {
+  width: 100%;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  padding: 5rem 0;
+  background-color: white;
+  overflow: hidden;
+}
+
+.services-section .container {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+/* Features Section - Full Width */
+.features-section {
+  width: 100%;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  padding: 5rem 0;
+  background-color: #fafafa;
+  overflow: hidden;
+}
+
+.features-section .container {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .services-section .container,
+  .features-section .container {
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .services-section .container,
+  .features-section .container {
+    padding: 0 1rem;
+  }
+}
+
+/* Update existing styles to ensure proper spacing */
+.section-header {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 3rem;
+  padding: 0 1rem;
+}
+
+.service-card,
+.feature-card {
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.service-card:hover,
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+}
+
 .services-section {
   padding: 3rem 0; /* Reduced from 4rem */
   background-color: white;
@@ -1141,6 +1380,14 @@ img {
 
 /* Mejoras en la sección de portfolio */
 .portfolio-section {
+  width: 100%;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
   padding: 3rem 0; /* Reduced from 4rem */
   background-color: #fafafa;
 }
@@ -1173,6 +1420,11 @@ img {
 }
 
 .portfolio-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 2rem;
@@ -1281,11 +1533,24 @@ img {
 
 /* Mejoras en la sección de testimonios */
 .testimonials-section {
+  width: 100%;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
   padding: 3rem 0; /* Reduced from 4rem */
   background-color: white;
 }
 
 .testimonials-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
@@ -1391,13 +1656,24 @@ img {
 
 /* Mejoras en la sección de contacto */
 .contact-section {
+  width: 100%;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
   padding: 3rem 0; /* Reduced from 4rem */
   background-color: #fafafa;
 }
 
 .contact-container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr; /* Cambiado a dos columnas iguales */
   gap: 3rem;
   background: white;
   border-radius: var(--border-radius-xl);
@@ -1409,6 +1685,9 @@ img {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   color: var(--secondary-color);
   padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .contact-info h3 {
@@ -1447,6 +1726,13 @@ img {
   font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 0.3rem;
+}
+
+/* Responsive adjustments for contact section */
+@media (max-width: 992px) {
+  .contact-container {
+    grid-template-columns: 1fr; /* Una columna en dispositivos más pequeños */
+  }
 }
 
 .social-links {
@@ -1535,6 +1821,11 @@ img {
 }
 
 .footer-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 3rem;
@@ -1671,235 +1962,27 @@ img {
   height: 1.25rem;
 }
 
-.footer-bottom {
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.footer-bottom p {
-  color: rgba(255, 255, 255, 0.6);
-  margin: 0;
-}
-
-.footer-bottom-links {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.footer-bottom-links a {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.footer-bottom-links a:hover {
-  color: var(--primary-color);
-}
-
-/* Botón flotante de cotización */
-.floating-quote-button {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  color: var(--secondary-color);
-  border-radius: 50px;
-  padding: 12px 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  animation: pulse-animation 2s infinite;
-}
-
-.floating-quote-button:hover {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  animation: none;
-}
-
-.quote-button-content {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.quote-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.1);
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-
-.quote-button-icon {
-  width: 18px;
-  height: 18px;
-}
-
-.quote-text {
-  font-size: 1rem;
-  letter-spacing: 0.5px;
-}
-
-@keyframes pulse-animation {
-  0% {
-    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 15px rgba(255, 215, 0, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
-  }
-}
-
-/* Indicador de scroll */
-.scroll-indicator {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.scroll-indicator span {
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.scroll-icon {
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
-  }
-}
-
-/* Contenedor principal */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-/* Animaciones */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.animate-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Mejoras en la sección about para que la imagen se vea correctamente */
-.about-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-/* Ensure the About section displays horizontally */
-.about-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-/* Strengthen the horizontal layout to override any conflicting styles */
-@media (min-width: 993px) {
-  .about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
-}
-
-.about-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Responsive Styles */
-@media (max-width: 1200px) {
-  .services-split-container.horizontal {
-    padding: 0 1rem;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .services-buttons-container {
+    flex-direction: column;
     gap: 1rem;
   }
 
-  .hero-title {
-    font-size: 3rem;
-  }
-}
-
-@media (max-width: 992px) {
-  .about-content {
-    grid-template-columns: 1fr;
-    gap: 4rem;
+  .service-button {
+    padding: 1.5rem;
   }
 
-  .contact-container {
-    grid-template-columns: 1fr;
+  .service-button-description {
+    display: none; /* Ocultar descripción en móviles para mantener el diseño limpio */
   }
 
-  .services-cta {
-    flex-direction: column;
-    text-align: center;
+  .service-button {
+    width: 100%;
+    min-width: 0;
+    padding: 1.5rem;
   }
 
-  .cta-stats {
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .services-split-container.horizontal {
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .service-split-item {
-    min-height: 400px;
-  }
-}
-
-@media (max-width: 768px) {
   .hero-title {
     font-size: 2.5rem;
   }
@@ -1908,49 +1991,27 @@ img {
     font-size: 1.1rem;
   }
 
-  .section-title {
-    font-size: 2rem;
+  .service-button-icon {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .footer-bottom-links {
-    justify-content: center;
+  .service-button span {
+    font-size: 1.25rem;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 480px) {
+  .hero-content {
+    padding: 1.5rem;
+  }
+
   .hero-title {
     font-size: 2rem;
   }
 
-  .tab-buttons {
-    flex-direction: column;
-  }
-
-  .portfolio-filter {
-    flex-direction: column;
-  }
-
-  .filter-button {
-    width: 100%;
-  }
-
-  .floating-quote-button {
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 15px;
-  }
-
-  .quote-text {
-    font-size: 0.9rem;
+  .service-button {
+    padding: 1.25rem;
   }
 }
 

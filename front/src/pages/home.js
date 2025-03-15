@@ -19,9 +19,6 @@ import {
   Send,
   Sofa,
   TreePine,
-  Droplets,
-  Scissors,
-  Crown,
   Phone,
   Mail,
   MapPin,
@@ -362,9 +359,7 @@ export default function Home() {
         <div className="hero-title-wrapper">
           <div className={`hero-content visible`}>
             <div className="hero-title-container">
-              <Crown className="hero-icon" />
               <h1 className="hero-title">¿Qué servicio buscas?</h1>
-              <Crown className="hero-icon" />
             </div>
             <p className="hero-subtitle">
               Transforma tu espacio con expertos que entienden tu visión y superan tus expectativas
@@ -372,75 +367,34 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="services-split-container horizontal">
-          {/* Sección de Remodelación de Interiores con imagen real */}
-          <div className="service-split-item remodeling-bg">
-            <div className="service-split-overlay"></div>
-            <div className="service-split-content">
-              <h2>Remodelación de Interiores</h2>
-              <p>
-                Espacios únicos que reflejan tu personalidad, aumentan el valor de tu propiedad y mejoran tu calidad de
-                vida
-              </p>
-              <div className="service-features-preview">
-                <div className="feature-preview">
-                  <Sofa className="feature-icon" />
-                  <span>Diseño Personalizado</span>
-                </div>
-                <div className="feature-preview">
-                  <Hammer className="feature-icon" />
-                  <span>Acabados Premium</span>
-                </div>
-                <div className="feature-preview">
-                  <Tool className="feature-icon" />
-                  <span>Garantía Superior</span>
-                </div>
+        <div className="services-main-container">
+          <div className="services-buttons-container">
+            <Link to="/interiores" className="service-button">
+              <Sofa className="service-button-icon" />
+              <div className="service-button-content">
+                <span className="service-button-title">Remodelación de Interiores</span>
+                <p className="service-button-description">Transformamos espacios con diseños modernos y funcionales</p>
               </div>
-              <Link to="/interiores" className="primary-button">
-                Descubrir Soluciones
-                <ArrowRight className="button-icon" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Sección de Jardinería con imagen real */}
-          <div className="service-split-item gardening-bg">
-            <div className="service-split-overlay"></div>
-            <div className="service-split-content">
-              <h2>Jardinería Profesional</h2>
-              <p>
-                Creamos paraísos exteriores que armonizan con la naturaleza, reducen mantenimiento y crean espacios para
-                disfrutar
-              </p>
-              <div className="service-features-preview">
-                <div className="feature-preview">
-                  <TreePine className="feature-icon" />
-                  <span>Diseño Exclusivo</span>
-                </div>
-                <div className="feature-preview">
-                  <Droplets className="feature-icon" />
-                  <span>Ahorro de Agua</span>
-                </div>
-                <div className="feature-preview">
-                  <Scissors className="feature-icon" />
-                  <span>Mantenimiento Fácil</span>
-                </div>
+              <ArrowRight className="button-arrow" />
+            </Link>
+            <Link to="/jardineria" className="service-button">
+              <TreePine className="service-button-icon" />
+              <div className="service-button-content">
+                <span className="service-button-title">Jardinería Profesional</span>
+                <p className="service-button-description">Creamos y mantenemos jardines hermosos y sostenibles</p>
               </div>
-              <Link to="/jardineria" className="primary-button">
-                Explorar Opciones
-                <ArrowRight className="button-icon" />
-              </Link>
-            </div>
+              <ArrowRight className="button-arrow" />
+            </Link>
           </div>
         </div>
 
         <div className="scroll-indicator" onClick={() => scrollToSection(aboutRef)}>
-          <span>Descubre Nuestra Excelencia</span>
+          <span>Descubre Más</span>
           <ChevronDown className="scroll-icon" />
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About Section - Modificada para ocupar todo el ancho */}
       <section ref={aboutRef} className="about-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
@@ -450,20 +404,48 @@ export default function Home() {
           </div>
 
           <div className="about-content">
-            <div className="about-image">
-              <img
-                src="https://source.unsplash.com/random/800x600/?team,landscaping"
-                alt="Nuestro equipo de expertos"
-                className="about-img"
-              />
-              <div className="experience-badge">
-                <div className="badge-content">
-                  <span className="years">5+</span>
-                  <span className="text">Años de Excelencia</span>
+            <div className="about-images-grid">
+              <div className="about-image-item">
+                <img
+                  src="https://source.unsplash.com/random/600x400/?landscaping,team"
+                  alt="Equipo trabajando en jardín"
+                  className="about-img"
+                />
+                <div className="image-overlay">
+                  <span>Diseño de Jardines</span>
+                </div>
+              </div>
+              <div className="about-image-item">
+                <img
+                  src="https://source.unsplash.com/random/600x400/?renovation,team"
+                  alt="Equipo de remodelación"
+                  className="about-img"
+                />
+                <div className="image-overlay">
+                  <span>Remodelación</span>
+                </div>
+              </div>
+              <div className="about-image-item">
+                <img
+                  src="https://source.unsplash.com/random/600x400/?garden,maintenance"
+                  alt="Mantenimiento de jardines"
+                  className="about-img"
+                />
+                <div className="image-overlay">
+                  <span>Mantenimiento</span>
+                </div>
+              </div>
+              <div className="about-image-item">
+                <img
+                  src="https://source.unsplash.com/random/600x400/?interior,design"
+                  alt="Diseño de interiores"
+                  className="about-img"
+                />
+                <div className="image-overlay">
+                  <span>Diseño Interior</span>
                 </div>
               </div>
             </div>
-
             <div className="about-text">
               <h3>Pasión por la Perfección en Cada Detalle</h3>
               <p>
@@ -720,7 +702,7 @@ export default function Home() {
                   </div>
                   <div className="contact-text">
                     <h4>Llámanos</h4>
-                    <p>(201) 555-0123</p>
+                    <p>551 587 9625</p>
                   </div>
                 </div>
 
@@ -730,7 +712,7 @@ export default function Home() {
                   </div>
                   <div className="contact-text">
                     <h4>Escríbenos</h4>
-                    <p>info@jimenezservices.com</p>
+                    <p>mjimenezlandscaping80@gmail.com</p>
                   </div>
                 </div>
 
@@ -992,4 +974,6 @@ const Pinterest = ({ className }) => (
     <circle cx="12" cy="12" r="10"></circle>
   </svg>
 )
+
+
 
