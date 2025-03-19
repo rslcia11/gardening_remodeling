@@ -16,7 +16,6 @@ import {
   Ruler,
   Award,
   ChevronDown,
-  Send,
   Sofa,
   TreePine,
   Phone,
@@ -26,6 +25,8 @@ import {
   Shield,
   ThumbsUp,
   Heart,
+  ZoomIn,
+  X,
 } from "lucide-react"
 import "./home.css" // Importamos el archivo CSS existente
 
@@ -41,6 +42,10 @@ export default function Home() {
   const galleryRef = useRef(null)
   const testimonialsRef = useRef(null)
   const contactRef = useRef(null)
+
+  // Añadir un nuevo estado para controlar el modal de imagen ampliada
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(null)
 
   // Efecto parallax para la sección hero
   useEffect(() => {
@@ -83,8 +88,12 @@ export default function Home() {
   }, [])
 
   const scrollToSection = (ref) => {
-    ref.current.scrollIntoView({ behavior: "smooth" })
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" })
+    }
   }
+
+  // Reemplazar con la definición directa de los arrays dentro del componente Home:
 
   const testimonials = [
     {
@@ -112,6 +121,14 @@ export default function Home() {
 
   const portfolioItems = [
     {
+      title: "Transformación Total de Baño",
+      category: "remodeling",
+      image: "/images/bathroom-after.jpeg",
+      beforeImage: "/images/bathroom-before.jpeg",
+      description:
+        "Renovación completa de baño con acabados de mármol, gabinetes modernos y ducha de vidrio que maximiza el espacio y aporta elegancia contemporánea.",
+    },
+    {
       title: "Oasis de Jardín Moderno",
       category: "gardening",
       image: "https://source.unsplash.com/random/600x400/?garden",
@@ -135,7 +152,7 @@ export default function Home() {
     {
       title: "Baño Tipo Spa de Lujo",
       category: "remodeling",
-      image: "https://source.unsplash.com/random/600x400/?bathroom",
+      image: "/images/bathroom-before.jpeg",
       description:
         "Transformación completa con ducha walk-in, iluminación personalizada y acabados de mármol que convirtió un baño ordinario en un santuario de relajación.",
     },
@@ -255,8 +272,38 @@ export default function Home() {
     },
   ]
 
+  // Añadir esta función para abrir el modal con la imagen seleccionada
+  const openImageModal = (image) => {
+    setSelectedImage(image)
+    setIsImageModalOpen(true)
+    // Añadir un pequeño retraso para permitir que el modal se abra antes de aplicar la clase fullscreen
+    setTimeout(() => {
+      document.body.classList.add("modal-open")
+    }, 10)
+  }
+
+  // Añadir esta función para cerrar el modal
+  const closeImageModal = () => {
+    document.body.classList.remove("modal-open")
+    setIsImageModalOpen(false)
+    setSelectedImage(null)
+  }
+
   const filteredPortfolio =
-    activeFilter === "all" ? portfolioItems : portfolioItems.filter((item) => item.category === activeFilter)
+    activeFilter === "all"
+      ? portfolioItems
+      : activeFilter === "before-after"
+        ? [
+            {
+              title: "Transformación Completa de Baño",
+              category: "remodeling",
+              image: "/images/bathroom-after.jpeg",
+              beforeImage: "/images/bathroom-before.jpeg",
+              description:
+                "Renovación total que convirtió un baño anticuado en un espacio moderno con acabados de mármol y diseño contemporáneo.",
+            },
+          ]
+        : portfolioItems.filter((item) => item.category === activeFilter)
 
   return (
     <div className="home-container">
@@ -283,8 +330,9 @@ export default function Home() {
           <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
             <li>
               <a
-                href="#"
-                onClick={() => {
+                href="#inicio"
+                onClick={(e) => {
+                  e.preventDefault()
                   scrollToSection(heroRef)
                   setIsMenuOpen(false)
                 }}
@@ -294,8 +342,9 @@ export default function Home() {
             </li>
             <li>
               <a
-                href="#"
-                onClick={() => {
+                href="#nosotros"
+                onClick={(e) => {
+                  e.preventDefault()
                   scrollToSection(aboutRef)
                   setIsMenuOpen(false)
                 }}
@@ -305,8 +354,9 @@ export default function Home() {
             </li>
             <li>
               <a
-                href="#"
-                onClick={() => {
+                href="#servicios"
+                onClick={(e) => {
+                  e.preventDefault()
                   scrollToSection(servicesRef)
                   setIsMenuOpen(false)
                 }}
@@ -316,8 +366,9 @@ export default function Home() {
             </li>
             <li>
               <a
-                href="#"
-                onClick={() => {
+                href="#portafolio"
+                onClick={(e) => {
+                  e.preventDefault()
                   scrollToSection(galleryRef)
                   setIsMenuOpen(false)
                 }}
@@ -327,8 +378,9 @@ export default function Home() {
             </li>
             <li>
               <a
-                href="#"
-                onClick={() => {
+                href="#testimonios"
+                onClick={(e) => {
+                  e.preventDefault()
                   scrollToSection(testimonialsRef)
                   setIsMenuOpen(false)
                 }}
@@ -338,8 +390,9 @@ export default function Home() {
             </li>
             <li>
               <a
-                href="#"
-                onClick={() => {
+                href="#contacto"
+                onClick={(e) => {
+                  e.preventDefault()
                   scrollToSection(contactRef)
                   setIsMenuOpen(false)
                 }}
@@ -583,19 +636,66 @@ export default function Home() {
             >
               Remodelación
             </button>
+            <button
+              className={`filter-button ${activeFilter === "before-after" ? "active" : ""}`}
+              onClick={() => setActiveFilter("before-after")}
+            >
+              Antes y Después
+            </button>
           </div>
 
           <div className="portfolio-grid">
             {filteredPortfolio.map((item, index) => (
               <div key={index} className="portfolio-item">
                 <div className="portfolio-image">
-                  <img src={item.image || "/placeholder.svg"} alt={item.title} />
+                  {item.beforeImage ? (
+                    <div
+                      className="before-after-container"
+                      onClick={() => openImageModal({ before: item.beforeImage, after: item.image, title: item.title })}
+                    >
+                      <div className="before-after-comparison">
+                        <div className="comparison-wrapper">
+                          <div className="image-wrapper before-wrapper">
+                            <img
+                              src={item.beforeImage || "/placeholder.svg"}
+                              alt={`Antes: ${item.title}`}
+                              className="comparison-image"
+                            />
+                            <div className="image-overlay-label before-label">Antes</div>
+                          </div>
+                          <div className="image-wrapper after-wrapper">
+                            <img
+                              src={item.image || "/placeholder.svg"}
+                              alt={`Después: ${item.title}`}
+                              className="comparison-image"
+                            />
+                            <div className="image-overlay-label after-label">Después</div>
+                          </div>
+                          <div className="comparison-divider">
+                            <div className="divider-line"></div>
+                            <div className="divider-handle">
+                              <div className="handle-icon">
+                                <span></span>
+                                <span></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <img
+                      src={item.image || "/placeholder.svg"}
+                      alt={item.title}
+                      onClick={() => openImageModal({ single: item.image, title: item.title })}
+                    />
+                  )}
                   <div className="portfolio-overlay">
                     <div className="portfolio-content">
                       <span className="portfolio-category">
                         {item.category === "gardening" ? "Jardinería Exclusiva" : "Remodelación Premium"}
                       </span>
-                      <h3 className="portfolio-title">{item.title}</h3>
+                      {/* Eliminar el título que aparecía aquí */}
                       <Link
                         to={item.category === "gardening" ? "/jardineria" : "/interiores"}
                         className="portfolio-link"
@@ -853,20 +953,6 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-
-            <div className="footer-newsletter">
-              <h3>Inspiración Mensual</h3>
-              <p>
-                Suscríbete para recibir ideas exclusivas, tendencias de diseño y ofertas especiales directamente en tu
-                bandeja de entrada.
-              </p>
-              <form className="newsletter-form">
-                <input type="email" placeholder="Tu correo electrónico" required />
-                <button type="submit" className="newsletter-button">
-                  <Send className="newsletter-icon" />
-                </button>
-              </form>
-            </div>
           </div>
 
           <div className="footer-bottom">
@@ -889,6 +975,68 @@ export default function Home() {
           <span className="quote-text">¡Cotiza Gratis!</span>
         </div>
       </div>
+
+      {isImageModalOpen && (
+        <div className="image-modal-overlay" onClick={closeImageModal}>
+          <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close-button" onClick={closeImageModal}>
+              <X className="modal-close-icon" />
+            </button>
+
+            {selectedImage?.title && <h3 className="modal-title">{selectedImage.title}</h3>}
+
+            {selectedImage?.before ? (
+              <div className="modal-before-after">
+                <div className="modal-image-container">
+                  <div className="modal-comparison-wrapper">
+                    <div className="modal-image-side modal-before">
+                      <div className="modal-image-badge">Antes</div>
+                      <img
+                        src={selectedImage.before || "/placeholder.svg"}
+                        alt={`Antes: ${selectedImage.title}`}
+                        className="modal-comparison-image"
+                      />
+                      <div className="modal-image-zoom">
+                        <ZoomIn className="zoom-icon" />
+                      </div>
+                    </div>
+                    <div className="modal-image-side modal-after">
+                      <div className="modal-image-badge">Después</div>
+                      <img
+                        src={selectedImage.after || "/placeholder.svg"}
+                        alt={`Después: ${selectedImage.title}`}
+                        className="modal-comparison-image"
+                      />
+                      <div className="modal-image-zoom">
+                        <ZoomIn className="zoom-icon" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="modal-image-description">
+                    <p>
+                      Desliza el cursor sobre las imágenes para ampliar los detalles. Haz clic para ver en pantalla
+                      completa.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="modal-single-image">
+                <div className="modal-image-wrapper">
+                  <img
+                    src={selectedImage?.single || "/placeholder.svg"}
+                    alt={selectedImage?.title}
+                    className="modal-single-image-content"
+                  />
+                  <div className="modal-image-zoom">
+                    <ZoomIn className="zoom-icon" />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -954,7 +1102,7 @@ const Twitter = ({ className }) => (
     strokeLinejoin="round"
     className={className}
   >
-    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 23 3z"></path>
   </svg>
 )
 

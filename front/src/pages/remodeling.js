@@ -23,6 +23,10 @@ export default function Remodeling() {
   const [activeGalleryItem, setActiveGalleryItem] = useState(0)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+  // Añadir un nuevo estado para controlar el modal de imagen ampliada
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(null)
+
   useEffect(() => {
     setIsVisible(true)
 
@@ -87,14 +91,14 @@ export default function Remodeling() {
 
   const galleryItems = [
     {
-      image: "https://source.unsplash.com/random/1200x800/?luxury,kitchen",
-      title: "Cocina de Lujo",
-      description: "Renovación completa con gabinetes personalizados y electrodomésticos de alta gama.",
+      image: "/images/bathroom-after.jpeg",
+      title: "Transformación Total de Baño",
+      description: "Renovación completa con acabados de mármol, gabinetes modernos y ducha de vidrio templado.",
     },
     {
-      image: "https://source.unsplash.com/random/1200x800/?modern,bathroom",
-      title: "Baño Moderno",
-      description: "Transformación de baño con ducha de cristal y acabados de mármol.",
+      image: "/images/bathroom-before.jpeg",
+      title: "Antes y Después: Baño Renovado",
+      description: "Vea la dramática transformación de este baño antiguo a un espacio moderno y elegante.",
     },
     {
       image: "https://source.unsplash.com/random/1200x800/?living,room,design",
@@ -120,6 +124,18 @@ export default function Remodeling() {
       text: "Contratamos a Jimenez Services para remodelar nuestra oficina. La atención al detalle y la calidad del trabajo fueron excepcionales.",
     },
   ]
+
+  // Añadir esta función para abrir el modal con la imagen seleccionada
+  const openImageModal = (image) => {
+    setSelectedImage(image)
+    setIsImageModalOpen(true)
+  }
+
+  // Añadir esta función para cerrar el modal
+  const closeImageModal = () => {
+    setIsImageModalOpen(false)
+    setSelectedImage(null)
+  }
 
   return (
     <div className="remodeling-page">
@@ -244,6 +260,65 @@ export default function Remodeling() {
                   <img src={item.image || "/placeholder.svg"} alt={item.title} />
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Before & After Section */}
+      <section className="remodeling-before-after animate-on-scroll">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-subtitle">Transformaciones Reales</span>
+            <h2 className="section-title">Antes y Después</h2>
+            <div className="section-underline"></div>
+          </div>
+
+          <div className="before-after-showcase">
+            <div className="before-after-item">
+              <div
+                className="before-after-images"
+                onClick={() =>
+                  openImageModal({
+                    before: "/images/bathroom-before.jpeg",
+                    after: "/images/bathroom-after.jpeg",
+                    title: "Renovación Completa de Baño",
+                  })
+                }
+              >
+                <div className="before-image">
+                  <img src="/images/bathroom-before.jpeg" alt="Baño antes de la remodelación" />
+                  <div className="image-label">Antes</div>
+                </div>
+                <div className="after-image">
+                  <img src="/images/bathroom-after.jpeg" alt="Baño después de la remodelación" />
+                  <div className="image-label">Después</div>
+                </div>
+                <div className="click-to-expand">
+                  <span>Click para ampliar</span>
+                </div>
+              </div>
+              <div className="transformation-details">
+                <h3>Renovación Completa de Baño</h3>
+                <p>
+                  Esta transformación total convirtió un baño anticuado en un espacio moderno y elegante con acabados de
+                  mármol, gabinetes personalizados y una ducha de vidrio templado que maximiza el espacio disponible.
+                </p>
+                <ul className="transformation-features">
+                  <li>
+                    <CheckCircle className="check-icon" /> Reemplazo completo de azulejos y accesorios
+                  </li>
+                  <li>
+                    <CheckCircle className="check-icon" /> Instalación de gabinetes a medida
+                  </li>
+                  <li>
+                    <CheckCircle className="check-icon" /> Ducha moderna con puertas de vidrio templado
+                  </li>
+                  <li>
+                    <CheckCircle className="check-icon" /> Iluminación LED empotrada
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -464,6 +539,27 @@ export default function Remodeling() {
           <span className="quote-text">¡Cotiza Gratis!</span>
         </div>
       </div>
+      {isImageModalOpen && (
+        <div className="image-modal-overlay" onClick={closeImageModal}>
+          <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close-button" onClick={closeImageModal}>
+              ×
+            </button>
+            <h3 className="modal-title">{selectedImage?.title}</h3>
+
+            <div className="modal-before-after">
+              <div className="modal-before">
+                <img src={selectedImage?.before || "/placeholder.svg"} alt={`Antes: ${selectedImage?.title}`} />
+                <div className="modal-image-label">Antes</div>
+              </div>
+              <div className="modal-after">
+                <img src={selectedImage?.after || "/placeholder.svg"} alt={`Después: ${selectedImage?.title}`} />
+                <div className="modal-image-label">Después</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
