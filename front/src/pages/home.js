@@ -25,7 +25,6 @@ import {
   Shield,
   ThumbsUp,
   Heart,
-  ZoomIn,
   X,
 } from "lucide-react"
 import "./home.css" // Importamos el archivo CSS existente
@@ -119,56 +118,17 @@ export default function Home() {
     },
   ]
 
+  // Modificar el array portfolioItems para incluir el nuevo proyecto de baño
   const portfolioItems = [
     {
-      title: "Transformación Total de Baño",
+      title: "Transformación Completa de Baño",
       category: "remodeling",
-      image: "/images/bathroom-after.jpeg",
-      beforeImage: "/images/bathroom-before.jpeg",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.25-CpCQmn9D9nAUd3qFaCTU2I9Iw9dKfo.jpeg",
+      beforeImage:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26-xCpRvT859Z09XQxaNHHY5tb13vMa6K.jpeg",
       description:
-        "Renovación completa de baño con acabados de mármol, gabinetes modernos y ducha de vidrio que maximiza el espacio y aporta elegancia contemporánea.",
-    },
-    {
-      title: "Oasis de Jardín Moderno",
-      category: "gardening",
-      image: "https://source.unsplash.com/random/600x400/?garden",
-      description:
-        "Transformación completa con diseño sostenible que redujo el consumo de agua en un 40% mientras creaba un espacio de ensueño para esta familia de Little Ferry.",
-    },
-    {
-      title: "Cocina de Lujo Personalizada",
-      category: "remodeling",
-      image: "https://source.unsplash.com/random/600x400/?kitchen",
-      description:
-        "Renovación integral con materiales premium que aumentó el valor de la propiedad y creó el espacio perfecto para reuniones familiares y entretenimiento.",
-    },
-    {
-      title: "Jardín Zen Japonés",
-      category: "gardening",
-      image: "https://source.unsplash.com/random/600x400/?zen,garden",
-      description:
-        "Espacio de meditación que combina elementos auténticos japoneses con técnicas modernas de paisajismo, creando un refugio de tranquilidad en medio de la ciudad.",
-    },
-    {
-      title: "Baño Tipo Spa de Lujo",
-      category: "remodeling",
-      image: "/images/bathroom-before.jpeg",
-      description:
-        "Transformación completa con ducha walk-in, iluminación personalizada y acabados de mármol que convirtió un baño ordinario en un santuario de relajación.",
-    },
-    {
-      title: "Jardín Ecológico Resistente",
-      category: "gardening",
-      image: "https://source.unsplash.com/random/600x400/?landscape",
-      description:
-        "Diseño innovador con plantas nativas que eliminó la necesidad de riego constante, reduciendo costos de mantenimiento mientras embellece el entorno.",
-    },
-    {
-      title: "Concepto Abierto Multifuncional",
-      category: "remodeling",
-      image: "https://source.unsplash.com/random/600x400/?living,room",
-      description:
-        "Rediseño estructural que transformó espacios compartimentados en un área de vida fluida y luminosa, perfecta para familias modernas que valoran la conexión.",
+        "Renovación total de baño con diseño moderno que incluye azulejos en patrón de espiga, ducha con regadera tipo lluvia, mueble con acabado de madera y encimera de mármol blanco.",
     },
   ]
 
@@ -274,7 +234,17 @@ export default function Home() {
 
   // Añadir esta función para abrir el modal con la imagen seleccionada
   const openImageModal = (image) => {
-    setSelectedImage(image)
+    // Si la imagen tiene beforeImage, configurar before/after correctamente
+    if (image.beforeImage) {
+      setSelectedImage({
+        title: image.title,
+        before: image.beforeImage,
+        after: image.image,
+      })
+    } else {
+      setSelectedImage(image)
+    }
+
     setIsImageModalOpen(true)
     // Añadir un pequeño retraso para permitir que el modal se abra antes de aplicar la clase fullscreen
     setTimeout(() => {
@@ -290,20 +260,7 @@ export default function Home() {
   }
 
   const filteredPortfolio =
-    activeFilter === "all"
-      ? portfolioItems
-      : activeFilter === "before-after"
-        ? [
-            {
-              title: "Transformación Completa de Baño",
-              category: "remodeling",
-              image: "/images/bathroom-after.jpeg",
-              beforeImage: "/images/bathroom-before.jpeg",
-              description:
-                "Renovación total que convirtió un baño anticuado en un espacio moderno con acabados de mármol y diseño contemporáneo.",
-            },
-          ]
-        : portfolioItems.filter((item) => item.category === activeFilter)
+    activeFilter === "all" ? portfolioItems : portfolioItems.filter((item) => item.category === activeFilter)
 
   return (
     <div className="home-container">
@@ -458,44 +415,83 @@ export default function Home() {
 
           <div className="about-content">
             <div className="about-images-grid">
-              <div className="about-image-item">
+              <div
+                className="about-image-item"
+                onClick={() =>
+                  openImageModal({
+                    single:
+                      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2020.25.15-IeRxiFOPgLISDQGOlZewhpSH0uPm7k.jpeg",
+                    title: "Equipo Profesional de Marcos Jimenez Services LLC",
+                  })
+                }
+              >
                 <img
-                  src="https://source.unsplash.com/random/600x400/?landscaping,team"
-                  alt="Equipo trabajando en jardín"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2020.25.15-IeRxiFOPgLISDQGOlZewhpSH0uPm7k.jpeg"
+                  alt="Camión y trailer de Marcos Jimenez Services LLC"
                   className="about-img"
                 />
                 <div className="image-overlay">
-                  <span>Diseño de Jardines</span>
+                  <span>Nuestro Equipo Profesional</span>
                 </div>
               </div>
-              <div className="about-image-item">
+
+              <div
+                className="about-image-item"
+                onClick={() =>
+                  openImageModal({
+                    single:
+                      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-SO1uzOSv574OMbCkD6aeSIWTJqec7R.jpeg",
+                    title: "Instalación de Mantillo y Paisajismo Profesional",
+                  })
+                }
+              >
                 <img
-                  src="https://source.unsplash.com/random/600x400/?renovation,team"
-                  alt="Equipo de remodelación"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-SO1uzOSv574OMbCkD6aeSIWTJqec7R.jpeg"
+                  alt="Equipo de Jimenez Services instalando mantillo en un jardín"
+                  className="about-img"
+                />
+                <div className="image-overlay">
+                  <span>Paisajismo Profesional</span>
+                </div>
+              </div>
+
+              <div
+                className="about-image-item"
+                onClick={() =>
+                  openImageModal({
+                    single:
+                      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.30-reCfkY0qNcuPQoRYvWvbGyLWthgSqj.jpeg",
+                    title: "Remodelación de Interiores en Proceso",
+                  })
+                }
+              >
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.30-reCfkY0qNcuPQoRYvWvbGyLWthgSqj.jpeg"
+                  alt="Trabajador realizando remodelación de ático"
                   className="about-img"
                 />
                 <div className="image-overlay">
                   <span>Remodelación</span>
                 </div>
               </div>
-              <div className="about-image-item">
+
+              <div
+                className="about-image-item"
+                onClick={() =>
+                  openImageModal({
+                    single:
+                      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27-EqiOMY03IlblCJkSzaIHSZu2GPcI9r.jpeg",
+                    title: "Cocina Moderna Remodelada",
+                  })
+                }
+              >
                 <img
-                  src="https://source.unsplash.com/random/600x400/?garden,maintenance"
-                  alt="Mantenimiento de jardines"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27-EqiOMY03IlblCJkSzaIHSZu2GPcI9r.jpeg"
+                  alt="Cocina moderna con gabinetes de dos tonos"
                   className="about-img"
                 />
                 <div className="image-overlay">
-                  <span>Mantenimiento</span>
-                </div>
-              </div>
-              <div className="about-image-item">
-                <img
-                  src="https://source.unsplash.com/random/600x400/?interior,design"
-                  alt="Diseño de interiores"
-                  className="about-img"
-                />
-                <div className="image-overlay">
-                  <span>Diseño Interior</span>
+                  <span>Cocinas de Diseño</span>
                 </div>
               </div>
             </div>
@@ -636,12 +632,6 @@ export default function Home() {
             >
               Remodelación
             </button>
-            <button
-              className={`filter-button ${activeFilter === "before-after" ? "active" : ""}`}
-              onClick={() => setActiveFilter("before-after")}
-            >
-              Antes y Después
-            </button>
           </div>
 
           <div className="portfolio-grid">
@@ -649,45 +639,21 @@ export default function Home() {
               <div key={index} className="portfolio-item">
                 <div className="portfolio-image">
                   {item.beforeImage ? (
+                    // Asegurarse de que toda la div sea clickable y pase el objeto item completo
                     <div
                       className="before-after-container"
-                      onClick={() => openImageModal({ before: item.beforeImage, after: item.image, title: item.title })}
+                      onClick={() => openImageModal(item)}
+                      style={{ cursor: "pointer" }}
                     >
-                      <div className="before-after-comparison">
-                        <div className="comparison-wrapper">
-                          <div className="image-wrapper before-wrapper">
-                            <img
-                              src={item.beforeImage || "/placeholder.svg"}
-                              alt={`Antes: ${item.title}`}
-                              className="comparison-image"
-                            />
-                            <div className="image-overlay-label before-label">Antes</div>
-                          </div>
-                          <div className="image-wrapper after-wrapper">
-                            <img
-                              src={item.image || "/placeholder.svg"}
-                              alt={`Después: ${item.title}`}
-                              className="comparison-image"
-                            />
-                            <div className="image-overlay-label after-label">Después</div>
-                          </div>
-                          <div className="comparison-divider">
-                            <div className="divider-line"></div>
-                            <div className="divider-handle">
-                              <div className="handle-icon">
-                                <span></span>
-                                <span></span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <img src={item.image || "/placeholder.svg"} alt={item.title} className="main-portfolio-image" />
+                      <div className="comparison-badge">Ver antes y después</div>
                     </div>
                   ) : (
                     <img
                       src={item.image || "/placeholder.svg"}
                       alt={item.title}
                       onClick={() => openImageModal({ single: item.image, title: item.title })}
+                      style={{ cursor: "pointer" }}
                     />
                   )}
                   <div className="portfolio-overlay">
@@ -695,7 +661,6 @@ export default function Home() {
                       <span className="portfolio-category">
                         {item.category === "gardening" ? "Jardinería Exclusiva" : "Remodelación Premium"}
                       </span>
-                      {/* Eliminar el título que aparecía aquí */}
                       <Link
                         to={item.category === "gardening" ? "/jardineria" : "/interiores"}
                         className="portfolio-link"
@@ -928,29 +893,6 @@ export default function Home() {
                 <li>
                   <Link to="/jardineria">Jardinería</Link>
                 </li>
-                <li>
-                  <a href="#" onClick={() => scrollToSection(contactRef)}>
-                    Contacto
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="footer-services">
-              <h3>Nuestras Soluciones</h3>
-              <ul>
-                <li>
-                  <Link to="/jardineria">Diseño de Paisajes Exclusivos</Link>
-                </li>
-                <li>
-                  <Link to="/jardineria">Mantenimiento Premium</Link>
-                </li>
-                <li>
-                  <Link to="/interiores">Renovación Interior Integral</Link>
-                </li>
-                <li>
-                  <Link to="/interiores">Cocinas y Baños de Ensueño</Link>
-                </li>
               </ul>
             </div>
           </div>
@@ -985,39 +927,26 @@ export default function Home() {
 
             {selectedImage?.title && <h3 className="modal-title">{selectedImage.title}</h3>}
 
-            {selectedImage?.before ? (
-              <div className="modal-before-after">
-                <div className="modal-image-container">
-                  <div className="modal-comparison-wrapper">
-                    <div className="modal-image-side modal-before">
-                      <div className="modal-image-badge">Antes</div>
-                      <img
-                        src={selectedImage.before || "/placeholder.svg"}
-                        alt={`Antes: ${selectedImage.title}`}
-                        className="modal-comparison-image"
-                      />
-                      <div className="modal-image-zoom">
-                        <ZoomIn className="zoom-icon" />
-                      </div>
-                    </div>
-                    <div className="modal-image-side modal-after">
-                      <div className="modal-image-badge">Después</div>
-                      <img
-                        src={selectedImage.after || "/placeholder.svg"}
-                        alt={`Después: ${selectedImage.title}`}
-                        className="modal-comparison-image"
-                      />
-                      <div className="modal-image-zoom">
-                        <ZoomIn className="zoom-icon" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="modal-image-description">
-                    <p>
-                      Desliza el cursor sobre las imágenes para ampliar los detalles. Haz clic para ver en pantalla
-                      completa.
-                    </p>
-                  </div>
+            {selectedImage?.beforeImage ? (
+              <div className="modal-before-after horizontal">
+                <div className="modal-before">
+                  <img src={selectedImage.beforeImage || "/placeholder.svg"} alt={`Antes: ${selectedImage.title}`} />
+                  <div className="modal-image-label">Antes</div>
+                </div>
+                <div className="modal-after">
+                  <img src={selectedImage.image || "/placeholder.svg"} alt={`Después: ${selectedImage.title}`} />
+                  <div className="modal-image-label">Después</div>
+                </div>
+              </div>
+            ) : selectedImage?.before ? (
+              <div className="modal-before-after horizontal">
+                <div className="modal-before">
+                  <img src={selectedImage.before || "/placeholder.svg"} alt={`Antes: ${selectedImage.title}`} />
+                  <div className="modal-image-label">Antes</div>
+                </div>
+                <div className="modal-after">
+                  <img src={selectedImage.after || "/placeholder.svg"} alt={`Después: ${selectedImage.title}`} />
+                  <div className="modal-image-label">Después</div>
                 </div>
               </div>
             ) : (
@@ -1028,9 +957,6 @@ export default function Home() {
                     alt={selectedImage?.title}
                     className="modal-single-image-content"
                   />
-                  <div className="modal-image-zoom">
-                    <ZoomIn className="zoom-icon" />
-                  </div>
                 </div>
               </div>
             )}
