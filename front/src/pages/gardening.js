@@ -107,6 +107,13 @@ export default function Gardening() {
 
   const galleryItems = [
     {
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-SO1uzOSv574OMbCkD6aeSIWTJqec7R.jpeg",
+      title: "Instalación de Mantillo y Paisajismo",
+      description:
+        "Nuestro equipo profesional realizando trabajos de paisajismo con materiales premium para crear jardines duraderos y de bajo mantenimiento.",
+    },
+    {
       image: "https://source.unsplash.com/random/1200x800/?luxury,garden,landscape",
       title: "Jardín Contemporáneo de Lujo",
       description:

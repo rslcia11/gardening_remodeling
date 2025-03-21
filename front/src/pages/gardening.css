@@ -29,8 +29,8 @@
 }
 
 .logo-image {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
   border-radius: 50%;
   border: 2px solid var(--primary-color);
@@ -247,101 +247,92 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  background-image: url("https://source.unsplash.com/random/1920x1080/?luxury,garden,landscape");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   padding-top: 80px;
+  overflow: hidden;
 }
 
-.gardening-hero .hero-featured-image {
+.gardening-hero::before {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%);
   z-index: 1;
 }
 
-.gardening-hero .hero-featured-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.gardening-hero .hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.65));
-  z-index: 2;
-}
-
-.gardening-hero .hero-content {
+.hero-content {
   position: relative;
-  z-index: 3;
+  z-index: 2;
+  max-width: 1000px;
   text-align: center;
-  max-width: 900px;
   padding: 3rem;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: var(--border-radius-xl);
-  backdrop-filter: blur(5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-.gardening-hero .hero-content.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.gardening-hero .hero-badge {
+.hero-badge {
+  display: inline-block;
+  padding: 0.75rem 2rem;
   background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   color: var(--secondary-color);
   font-weight: 700;
-  font-size: 1rem;
-  padding: 0.5rem 1.5rem;
   border-radius: 50px;
-  display: inline-block;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-20px);
+  opacity: 0;
+  animation: slideDown 0.6s ease forwards;
 }
 
-.gardening-hero .hero-title {
-  font-size: 3.5rem;
+.hero-title {
+  font-size: 4rem;
   font-weight: 900;
   color: white;
-  margin-bottom: 1.75rem;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
   line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(-20px);
+  opacity: 0;
+  animation: slideDown 0.6s ease 0.2s forwards;
 }
 
-.gardening-hero .hero-benefits {
+.hero-benefits {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  transform: translateY(-20px);
+  opacity: 0;
+  animation: slideDown 0.6s ease 0.4s forwards;
 }
 
-.gardening-hero .benefit-item {
+.benefit-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   color: white;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 
-.gardening-hero .benefit-icon {
+.benefit-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: rgba(255, 215, 0, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--primary-color);
-  font-size: 1.2rem;
 }
 
 .gardening-hero .hero-subtitle {
@@ -409,38 +400,34 @@
 
 /* Services Section - Mejoras */
 .gardening-services {
-  padding: 6rem 0;
+  padding: 4rem 0; /* Reducido de 6rem */
   background-color: white;
 }
 
 .gardening-services .section-header {
-  margin-bottom: 3.5rem;
+  margin-bottom: 2rem; /* Reducido de 3.5rem */
 }
 
 .gardening-services .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
-  margin-top: 3rem;
+  margin-top: 2rem; /* Reducido de 3rem */
   align-items: stretch;
 }
 
-.gardening-services .service-card {
-  background-color: white;
-  border-radius: var(--border-radius-lg);
-  padding: 2rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+.service-card {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
   transition: all 0.4s ease;
-  border: none;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.gardening-services .service-card::before {
+.service-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -452,31 +439,36 @@
   transition: opacity 0.4s ease;
 }
 
-.gardening-services .service-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+.service-card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-.gardening-services .service-card:hover::before {
+.service-card:hover::before {
   opacity: 1;
 }
 
-.gardening-services .service-icon {
+.service-icon {
+  width: 80px;
+  height: 80px;
   background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-  color: var(--secondary-color);
-  width: 4.5rem;
-  height: 4.5rem;
-  border-radius: 50%;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.75rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  transform: rotate(-10deg);
+  transition: all 0.4s ease;
 }
 
-.gardening-services .service-icon svg {
-  width: 2rem;
-  height: 2rem;
+.service-card:hover .service-icon {
+  transform: rotate(0deg) scale(1.1);
+}
+
+.service-icon svg {
+  width: 40px;
+  height: 40px;
+  color: var(--secondary-color);
 }
 
 .gardening-services .service-card h3 {
@@ -545,40 +537,40 @@
 
 /* Gallery Section - Mejoras */
 .gardening-gallery {
-  padding: 8rem 0;
+  padding: 4rem 0; /* Reducido de 8rem */
   background-color: #fafafa;
 }
 
-.gardening-gallery .gallery-showcase {
-  margin-top: 4rem;
+.gallery-showcase {
+  position: relative;
+  margin-top: 2rem; /* Reducido de 4rem */
 }
 
-.gardening-gallery .gallery-main {
+.gallery-main {
   position: relative;
-  border-radius: var(--border-radius-xl);
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-  margin-bottom: 2rem;
   height: 600px;
 }
 
-.gardening-gallery .gallery-main-image {
+.gallery-main-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.7s ease;
 }
 
-.gardening-gallery .gallery-main:hover .gallery-main-image {
+.gallery-main:hover .gallery-main-image {
   transform: scale(1.05);
 }
 
-.gardening-gallery .gallery-info {
+.gallery-info {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
-  padding: 2.5rem;
+  right: 0;
+  padding: 3rem;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
   color: white;
 }
@@ -596,28 +588,26 @@
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.gardening-gallery .gallery-thumbnails {
+.gallery-thumbnails {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-.gardening-gallery .gallery-thumbnail {
-  border-radius: var(--border-radius-lg);
+.gallery-thumbnail {
+  position: relative;
+  height: 150px;
+  border-radius: 15px;
   overflow: hidden;
   cursor: pointer;
-  height: 120px;
-  opacity: 0.7;
   transition: all 0.3s ease;
-  border: 3px solid transparent;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .gardening-gallery .gallery-thumbnail.active {
-  opacity: 1;
-  border-color: var(--primary-color);
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  border: 3px solid var(--primary-color);
 }
 
 .gardening-gallery .gallery-thumbnail:hover {
@@ -639,45 +629,60 @@
 
 /* Process Section - Mejoras */
 .gardening-process {
-  padding: 8rem 0;
+  padding: 4rem 0; /* Reducido de 8rem */
   background-color: white;
 }
 
-.gardening-process .process-steps {
+.process-steps {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2.5rem;
-  margin-top: 4rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 2rem; /* Reducido de 4rem */
 }
 
-.gardening-process .process-step {
+.process-step {
   text-align: center;
   padding: 3rem 2rem;
-  border-radius: var(--border-radius-xl);
-  background-color: white;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
   transition: all 0.4s ease;
   position: relative;
 }
 
-.gardening-process .process-step:hover {
+.process-step:hover {
   transform: translateY(-15px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
 }
 
-.gardening-process .step-number {
-  width: 4.5rem;
-  height: 4.5rem;
+.step-number {
+  width: 70px;
+  height: 70px;
   background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   color: var(--secondary-color);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 800;
   margin: 0 auto 2rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.step-number::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+}
+
+.process-step:last-child .step-number::after {
+  display: none;
 }
 
 .gardening-process .process-step h3 {
@@ -695,7 +700,7 @@
 
 /* Testimonials Section - Mejoras */
 .gardening-testimonials {
-  padding: 8rem 0;
+  padding: 4rem 0; /* Reducido de 8rem */
   background-color: #fafafa;
 }
 
@@ -703,21 +708,33 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2.5rem;
-  margin-top: 4rem;
+  margin-top: 2rem; /* Reducido de 4rem */
 }
 
-.gardening-testimonials .testimonial-card {
-  background-color: white;
-  border-radius: var(--border-radius-xl);
+.testimonial-card {
+  background: white;
+  border-radius: 20px;
   padding: 3rem;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
   transition: all 0.4s ease;
   position: relative;
 }
 
-.gardening-testimonials .testimonial-card:hover {
+.testimonial-card::before {
+  content: "\201C"; /* Código Unicode para comilla doble de apertura */
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-size: 8rem;
+  font-family: serif;
+  color: var(--primary-color);
+  opacity: 0.1;
+  line-height: 1;
+}
+
+.testimonial-card:hover {
   transform: translateY(-15px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
 }
 
 .gardening-testimonials .quote-icon {
@@ -755,7 +772,7 @@
 
 /* Contact Section - Mejoras */
 .gardening-contact {
-  padding: 8rem 0;
+  padding: 4rem 0; /* Reducido de 8rem */
   background-color: white;
 }
 
@@ -892,6 +909,16 @@
 }
 
 /* Responsive Styles - Mejoras */
+@media (max-width: 1200px) {
+  .process-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .step-number::after {
+    display: none;
+  }
+}
+
 @media (max-width: 992px) {
   .gardening-hero .hero-title {
     font-size: 3rem;
@@ -919,6 +946,23 @@
 }
 
 @media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .hero-benefits {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .process-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-thumbnails {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .gardening-hero .hero-title {
     font-size: 2.5rem;
   }
@@ -1098,5 +1142,53 @@
     bottom: 15px;
     right: 15px;
   }
+}
+
+/* Animaciones */
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Reducir el espacio entre elementos dentro de las secciones */
+.gallery-showcase {
+  margin-top: 2rem; /* Reducido de 4rem */
+}
+
+.process-steps {
+  margin-top: 2rem; /* Reducido de 4rem */
+}
+
+.gardening-testimonials .testimonials-grid {
+  margin-top: 2rem; /* Reducido de 4rem */
+}
+
+/* Reducir el espacio entre las tarjetas de servicio y el encabezado de sección */
+.gardening-services .services-grid {
+  margin-top: 2rem; /* Reducido de 3rem */
+}
+
+/* Reducir el espacio del encabezado de sección */
+.section-header {
+  margin-bottom: 2rem; /* Ajustado para todas las secciones */
+}
+
+.gardening-services .section-header {
+  margin-bottom: 2rem; /* Reducido de 3.5rem */
 }
 

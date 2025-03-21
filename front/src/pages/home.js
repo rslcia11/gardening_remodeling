@@ -120,6 +120,7 @@ export default function Home() {
 
   // Modificar el array portfolioItems para incluir el nuevo proyecto de baño
   const portfolioItems = [
+    // 3 proyectos de remodelación
     {
       title: "Transformación Completa de Baño",
       category: "remodeling",
@@ -129,6 +130,50 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26-xCpRvT859Z09XQxaNHHY5tb13vMa6K.jpeg",
       description:
         "Renovación total de baño con diseño moderno que incluye azulejos en patrón de espiga, ducha con regadera tipo lluvia, mueble con acabado de madera y encimera de mármol blanco.",
+    },
+    {
+      title: "Renovación de Ático",
+      category: "remodeling",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.28-dQrMCrAbMJVpnsehimsIoXyo0V3kwi.jpeg",
+      beforeImage:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27%20%281%29-2cc09hsVgCuxBXpuiRoxHEiAr4GH2v.jpeg",
+      description:
+        "Transformación completa de ático sin usar a un espacio habitable con pisos de madera, iluminación empotrada y acabados de alta calidad que maximizan el espacio disponible.",
+    },
+    {
+      title: "Renovación de Cocina Moderna",
+      category: "remodeling",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg",
+      beforeImage:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%281%29-3xLNhK99Bak6DL5NFisMyLQl1FUBbL.jpeg",
+      description:
+        "Transformación completa de cocina con encimeras de cuarzo blanco, gabinetes de dos tonos, azulejos hexagonales de mármol y electrodomésticos de acero inoxidable.",
+    },
+
+    // 3 proyectos de jardinería
+    {
+      title: "Oasis de Jardín Moderno",
+      category: "gardening",
+      image: "https://source.unsplash.com/random/600x400/?garden",
+      description:
+        "Transformación completa con diseño sostenible que redujo el consumo de agua en un 40% mientras creaba un espacio de ensueño para esta familia de Little Ferry.",
+    },
+    {
+      title: "Instalación de Mantillo Profesional",
+      category: "gardening",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-SO1uzOSv574OMbCkD6aeSIWTJqec7R.jpeg",
+      description:
+        "Instalación profesional de mantillo y paisajismo que transforma completamente el aspecto exterior de la propiedad, mejorando su valor estético y funcional.",
+    },
+    {
+      title: "Jardín Zen Japonés",
+      category: "gardening",
+      image: "https://source.unsplash.com/random/600x400/?zen,garden",
+      description:
+        "Espacio de meditación que combina elementos auténticos japoneses con técnicas modernas de paisajismo, creando un refugio de tranquilidad en medio de la ciudad.",
     },
   ]
 

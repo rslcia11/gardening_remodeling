@@ -2963,215 +2963,46 @@ body.modal-open {
   letter-spacing: 0.05em;
 }
 
-/* Ajustar el contenedor de imagen única */
-.modal-single-image {
-  padding: 20px;
-  text-align: center; /* Centrar la imagen */
+/* Reducir el espacio entre secciones */
+.about-section,
+.services-section,
+.portfolio-section,
+.testimonials-section,
+.contact-section {
+  padding: 4rem 0; /* Reducido de 5rem o más */
 }
 
-.modal-single-image-content {
-  max-width: 100%;
-  max-height: 60vh; /* Limitar altura pero permitir que se vea completa */
-  object-fit: contain; /* Asegurar que la imagen se muestre completa */
-  margin: 0 auto; /* Centrar horizontalmente */
+/* Reducir el espacio entre elementos dentro de las secciones */
+.section-header {
+  margin-bottom: 2rem; /* Reducido */
 }
 
-/* Ajustar el contenedor de imagen para mejor visualización */
-.modal-image-wrapper {
-  position: relative;
-  display: inline-block; /* Para que se ajuste al tamaño de la imagen */
-  margin: 0 auto; /* Centrar horizontalmente */
+.portfolio-grid,
+.testimonials-grid,
+.services-grid {
+  margin-top: 2rem; /* Reducido */
 }
 
-/* Mejorar los estilos para asegurar que el contenedor sea clickable */
-.before-after-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  cursor: pointer !important;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  background: transparent;
-  z-index: 5; /* Asegurar que esté por encima de outros elementos */
+/* Reducir el espacio entre las tarjetas de características */
+.about-features {
+  gap: 1rem; /* Reducido de 1.5rem */
+  margin-bottom: 2rem; /* Reducido de 2.5rem */
 }
 
-/* Hacer que la imagen principal sea clickable */
-.main-portfolio-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-  cursor: pointer;
+/* Reducir el espacio entre las estadísticas */
+.about-stats {
+  gap: 1rem; /* Reducido de 1.5rem o 2rem */
+  margin-bottom: 1.5rem; /* Reducido de 2rem o 2.5rem */
 }
 
-/* Asegurar que el badge de comparación sea visible */
-.comparison-badge {
-  position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  color: var(--secondary-color);
-  font-weight: 700;
-  padding: 8px 20px;
-  border-radius: 30px;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  z-index: 6;
-  letter-spacing: 0.05em;
-  opacity: 0.9; /* Hacerlo más visible */
-  transition: opacity 0.3s ease, transform 0.3s ease;
+/* Reducir el espacio entre las imágenes en la cuadrícula de about */
+.about-images-grid {
+  gap: 1rem; /* Reducido de 1.5rem */
+  margin-bottom: 2rem; /* Reducido de 3rem */
 }
 
-/* Mejorar la visibilidad del badge al pasar el cursor */
-.before-after-container:hover .comparison-badge {
-  opacity: 1;
-  transform: translateX(-50%) translateY(-5px);
-}
-
-/* Asegurar que el modal tenga un z-index alto */
-.image-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  padding: 0;
-  animation: modalFadeIn 0.3s ease;
-  backdrop-filter: blur(5px);
-}
-
-/* Asegurar que el overlay del portafolio no interfiera con el clic */
-.portfolio-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 4; /* Asegurar que esté por debajo del contenedor clickable */
-}
-
-/* Modificar los estilos del modal para mostrar las imágenes horizontalmente y completas */
-
-/* Asegurar que el modal tenga suficiente espacio */
-.image-modal-content {
-  background-color: #111;
-  border-radius: 20px;
-  width: 90vw; /* Aumentado para dar más espacio */
-  max-width: 1200px; /* Aumentado para dar más espacio */
-  height: auto;
-  overflow: visible;
-  position: relative;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-  animation: modalContentSlideUp 0.4s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Forzar que las imágenes se muestren horizontalmente */
-.modal-before-after.horizontal {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  padding: 20px;
-  justify-content: center;
-}
-
-/* Ajustar el tamaño de los contenedores de imágenes */
-.modal-before-after.horizontal .modal-before,
-.modal-before-after.horizontal .modal-after {
-  flex: 1;
-  max-width: 45%; /* Limitar el ancho para que no se estiren demasiado */
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-}
-
-/* Asegurar que las imágenes se muestren completas */
-.modal-before-after.horizontal .modal-before img,
-.modal-before-after.horizontal .modal-after img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  max-height: 70vh; /* Limitar altura para que se vea completa */
-  display: block;
-}
-
-/* Ajustar el responsive para pantallas pequeñas */
-@media (max-width: 768px) {
-  .modal-before-after.horizontal {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .modal-before-after.horizontal .modal-before,
-  .modal-before-after.horizontal .modal-after {
-    max-width: 100%;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .modal-before-after.horizontal .modal-before img,
-  .modal-before-after.horizontal .modal-after img {
-    max-height: 40vh;
-  }
-}
-
-/* Mejorar la visibilidad de las etiquetas */
-.modal-image-label {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  color: var(--secondary-color);
-  font-weight: 700;
-  padding: 8px 20px;
-  border-radius: 30px;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  z-index: 5;
-}
-
-/* Añadir estilos para el efecto hover de antes/después */
-.before-after-hover-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  overflow: hidden;
-}
-
-.before-after-hover-container img {
-  transition: all 0.5s ease;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.before-after-hover-container:hover img {
-  transform: scale(1.05);
-}
-
-/* Estilos para la etiqueta de antes/después */
-.before-after-hover-container .absolute {
-  transition: all 0.3s ease;
-  opacity: 0.8;
-  z-index: 10;
-}
-
-.before-after-hover-container:hover .absolute {
-  opacity: 1;
+/* Reducir el espacio del CTA en servicios */
+.services-cta {
+  margin-top: 2rem; /* Reducido de 4rem */
 }
 

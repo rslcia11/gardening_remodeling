@@ -91,6 +91,20 @@ export default function Remodeling() {
 
   const galleryItems = [
     {
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27-EqiOMY03IlblCJkSzaIHSZu2GPcI9r.jpeg",
+      title: "Cocina Moderna de Dos Tonos",
+      description:
+        "Renovación completa con gabinetes de dos tonos, encimeras de cuarzo y electrodomésticos de acero inoxidable.",
+    },
+    {
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.30-reCfkY0qNcuPQoRYvWvbGyLWthgSqj.jpeg",
+      title: "Remodelación de Ático en Proceso",
+      description:
+        "Transformación de espacios no utilizados en áreas funcionales con acabados de alta calidad y atención al detalle.",
+    },
+    {
       image: "/images/bathroom-after.jpeg",
       title: "Transformación Total de Baño",
       description: "Renovación completa con acabados de mármol, gabinetes modernos y ducha de vidrio templado.",
@@ -99,16 +113,6 @@ export default function Remodeling() {
       image: "/images/bathroom-before.jpeg",
       title: "Antes y Después: Baño Renovado",
       description: "Vea la dramática transformación de este baño antiguo a un espacio moderno y elegante.",
-    },
-    {
-      image: "https://source.unsplash.com/random/1200x800/?living,room,design",
-      title: "Sala de Estar Contemporánea",
-      description: "Diseño de interiores con enfoque en confort y elegancia.",
-    },
-    {
-      image: "https://source.unsplash.com/random/1200x800/?bedroom,luxury",
-      title: "Dormitorio Principal",
-      description: "Renovación completa con vestidor y baño en suite.",
     },
   ]
 
@@ -275,49 +279,156 @@ export default function Remodeling() {
           </div>
 
           <div className="before-after-showcase">
-            <div className="before-after-item">
-              <div
-                className="before-after-images"
-                onClick={() =>
-                  openImageModal({
-                    before: "/images/bathroom-before.jpeg",
-                    after: "/images/bathroom-after.jpeg",
-                    title: "Renovación Completa de Baño",
-                  })
-                }
-              >
-                <div className="before-image">
-                  <img src="/images/bathroom-before.jpeg" alt="Baño antes de la remodelación" />
-                  <div className="image-label">Antes</div>
+            <div className="before-after-showcase">
+              <div className="before-after-item">
+                <div
+                  className="before-after-images"
+                  onClick={() =>
+                    openImageModal({
+                      before: "/images/bathroom-before.jpeg",
+                      after: "/images/bathroom-after.jpeg",
+                      title: "Renovación Completa de Baño",
+                    })
+                  }
+                >
+                  <div className="before-image">
+                    <img src="/images/bathroom-before.jpeg" alt="Baño antes de la remodelación" />
+                    <div className="image-label">Antes</div>
+                  </div>
+                  <div className="after-image">
+                    <img src="/images/bathroom-after.jpeg" alt="Baño después de la remodelación" />
+                    <div className="image-label">Después</div>
+                  </div>
+                  <div className="click-to-expand">Ver en detalle</div>
                 </div>
-                <div className="after-image">
-                  <img src="/images/bathroom-after.jpeg" alt="Baño después de la remodelación" />
-                  <div className="image-label">Después</div>
-                </div>
-                <div className="click-to-expand">
-                  <span>Click para ampliar</span>
+                <div className="transformation-details">
+                  <h3>Renovación Completa de Baño</h3>
+                  <p>
+                    Esta transformación total convirtió un baño anticuado en un espacio moderno y elegante con acabados
+                    de mármol, gabinetes personalizados y una ducha de vidrio templado que maximiza el espacio
+                    disponible.
+                  </p>
+                  <ul className="transformation-features">
+                    <li>
+                      <CheckCircle className="check-icon" /> Reemplazo completo de azulejos y accesorios
+                    </li>
+                    <li>
+                      <CheckCircle className="check-icon" /> Instalación de gabinetes a medida
+                    </li>
+                    <li>
+                      <CheckCircle className="check-icon" /> Ducha moderna con puertas de vidrio templado
+                    </li>
+                    <li>
+                      <CheckCircle className="check-icon" /> Iluminación LED empotrada
+                    </li>
+                  </ul>
                 </div>
               </div>
-              <div className="transformation-details">
-                <h3>Renovación Completa de Baño</h3>
-                <p>
-                  Esta transformación total convirtió un baño anticuado en un espacio moderno y elegante con acabados de
-                  mármol, gabinetes personalizados y una ducha de vidrio templado que maximiza el espacio disponible.
-                </p>
-                <ul className="transformation-features">
-                  <li>
-                    <CheckCircle className="check-icon" /> Reemplazo completo de azulejos y accesorios
-                  </li>
-                  <li>
-                    <CheckCircle className="check-icon" /> Instalación de gabinetes a medida
-                  </li>
-                  <li>
-                    <CheckCircle className="check-icon" /> Ducha moderna con puertas de vidrio templado
-                  </li>
-                  <li>
-                    <CheckCircle className="check-icon" /> Iluminación LED empotrada
-                  </li>
-                </ul>
+
+              <div className="before-after-item">
+                <div
+                  className="before-after-images"
+                  onClick={() =>
+                    openImageModal({
+                      before:
+                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27%20%281%29-2cc09hsVgCuxBXpuiRoxHEiAr4GH2v.jpeg",
+                      after:
+                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.28-dQrMCrAbMJVpnsehimsIoXyo0V3kwi.jpeg",
+                      title: "Renovación Completa de Ático",
+                    })
+                  }
+                >
+                  <div className="before-image">
+                    <img
+                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27%20%281%29-2cc09hsVgCuxBXpuiRoxHEiAr4GH2v.jpeg"
+                      alt="Ático antes de la remodelación"
+                    />
+                    <div className="image-label">Antes</div>
+                  </div>
+                  <div className="after-image">
+                    <img
+                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.28-dQrMCrAbMJVpnsehimsIoXyo0V3kwi.jpeg"
+                      alt="Ático después de la remodelación"
+                    />
+                    <div className="image-label">Después</div>
+                  </div>
+                  <div className="click-to-expand">Ver en detalle</div>
+                </div>
+                <div className="transformation-details">
+                  <h3>Renovación Completa de Ático</h3>
+                  <p>
+                    Esta transformación convirtió un ático sin utilizar en un espacio habitable luminoso y funcional con
+                    pisos de madera de alta calidad, iluminación empotrada y acabados modernos que maximizan el espacio
+                    disponible bajo el techo inclinado.
+                  </p>
+                  <ul className="transformation-features">
+                    <li>
+                      <CheckCircle className="check-icon" /> Instalación de pisos de madera de alta calidad
+                    </li>
+                    <li>
+                      <CheckCircle className="check-icon" /> Sistema de iluminación empotrada
+                    </li>
+                    <li>
+                      <CheckCircle className="check-icon" /> Aislamiento térmico y acústico premium
+                    </li>
+                    <li>
+                      <CheckCircle className="check-icon" /> Acabados de paredes y techos perfectos
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="before-after-item">
+                <div
+                  className="before-after-images"
+                  onClick={() =>
+                    openImageModal({
+                      before:
+                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%281%29-3xLNhK99Bak6DL5NFisMyLQl1FUBbL.jpeg",
+                      after:
+                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg",
+                      title: "Renovación de Cocina Moderna",
+                    })
+                  }
+                >
+                  <div className="before-image">
+                    <img
+                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%281%29-3xLNhK99Bak6DL5NFisMyLQl1FUBbL.jpeg"
+                      alt="Cocina antes de la remodelación"
+                    />
+                    <div className="image-label">Antes</div>
+                  </div>
+                  <div className="after-image">
+                    <img
+                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg"
+                      alt="Cocina después de la remodelación"
+                    />
+                    <div className="image-label">Después</div>
+                  </div>
+                  <div className="click-to-expand">Ver en detalle</div>
+                </div>
+                <div className="transformation-details">
+                  <h3>Renovación de Cocina Moderna</h3>
+                  <p>
+                    Esta transformación completa convirtió una cocina anticuada en un espacio elegante y funcional con
+                    encimeras de cuarzo blanco, gabinetes de dos tonos, azulejos hexagonales de mármol y
+                    electrodomésticos de acero inoxidable.
+                  </p>
+                  <ul className="transformation-features">
+                    <li>
+                      <CheckCircle className="check-icon" /> Instalación de encimeras de cuarzo de alta calidad
+                    </li>
+                    <li>
+                      <CheckCircle className="check-icon" /> Gabinetes de dos tonos con herrajes modernos
+                    </li>
+                    <li>
+                      <CheckCircle className="check-icon" /> Backsplash de azulejos hexagonales de mármol
+                    </li>
+                    <li>
+                      <CheckCircle className="check-icon" /> Electrodomésticos de acero inoxidable de alta gama
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -547,7 +658,7 @@ export default function Remodeling() {
             </button>
             <h3 className="modal-title">{selectedImage?.title}</h3>
 
-            <div className="modal-before-after">
+            <div className="modal-before-after horizontal">
               <div className="modal-before">
                 <img src={selectedImage?.before || "/placeholder.svg"} alt={`Antes: ${selectedImage?.title}`} />
                 <div className="modal-image-label">Antes</div>
