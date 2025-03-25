@@ -12,8 +12,8 @@ import {
   Phone,
   Mail,
   MapPin,
-  Send,
   Award,
+  Crown,
 } from "lucide-react"
 import "./gardening.css"
 
@@ -41,16 +41,19 @@ export default function Gardening() {
       observer.observe(section)
     })
 
-    // Gallery auto-scroll
-    const interval = setInterval(() => {
-      setActiveGalleryItem((prev) => (prev + 1) % galleryItems.length)
-    }, 5000)
+    // Gallery auto-scroll - Asegurarse de que galleryItems tenga elementos antes de configurar el intervalo
+    const interval =
+      galleryItems.length > 0
+        ? setInterval(() => {
+            setActiveGalleryItem((prev) => (prev + 1) % galleryItems.length)
+          }, 5000)
+        : null
 
     return () => {
       document.querySelectorAll(".animate-on-scroll").forEach((section) => {
         observer.unobserve(section)
       })
-      clearInterval(interval)
+      if (interval) clearInterval(interval)
     }
   }, [])
 
@@ -114,28 +117,25 @@ export default function Gardening() {
         "Nuestro equipo profesional realizando trabajos de paisajismo con materiales premium para crear jardines duraderos y de bajo mantenimiento.",
     },
     {
-      image: "https://source.unsplash.com/random/1200x800/?luxury,garden,landscape",
-      title: "Jardín Contemporáneo de Lujo",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.30-sSuA8aE5YRtU40hUQT3wjnyT8obYmO.jpeg",
+      title: "Diseño de Camino Lateral con Privacidad",
       description:
-        "Diseño exclusivo con líneas limpias, plantas arquitectónicas y elementos de agua que crean un espacio sofisticado y relajante.",
+        "Transformación de un espacio lateral estrecho con árboles de hoja perenne para privacidad, cerca decorativa, iluminación solar y mantillo de calidad.",
     },
     {
-      image: "https://source.unsplash.com/random/1200x800/?zen,garden",
-      title: "Santuario Zen Personalizado",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.26-78p413j3LMqwgT63kJy72TCkUe4WGZ.jpeg",
+      title: "Mantenimiento de Jardín Residencial",
       description:
-        "Espacio de meditación con elementos japoneses tradicionales que transforman tu jardín en un refugio de tranquilidad y belleza.",
+        "Servicio profesional de mantenimiento de jardín que incluye corte de césped, poda de arbustos y cuidado de plantas ornamentales.",
     },
     {
-      image: "https://source.unsplash.com/random/1200x800/?backyard,patio",
-      title: "Área de Entretenimiento Exterior",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20%20%281%29-bqk7asm0NPvOV85HOVI9G9YgvRAdAV.jpeg",
+      title: "Transformación Completa de Jardín",
       description:
-        "Espacio multifuncional con cocina exterior, zona de fogata y áreas de estar que extienden tu hogar hacia la naturaleza.",
-    },
-    {
-      image: "https://source.unsplash.com/random/1200x800/?vegetable,garden",
-      title: "Huerto Orgánico de Diseñador",
-      description:
-        "Jardín comestible que combina belleza y funcionalidad, permitiéndote cultivar alimentos frescos y orgánicos en un entorno estético.",
+        "Renovación integral de jardín residencial que incluye instalación de mantillo negro, definición de bordes y plantación de flores ornamentales.",
     },
   ]
 
@@ -154,7 +154,7 @@ export default function Gardening() {
 
   return (
     <div className="gardening-page">
-      {/* Navigation */}
+      {/* Navegación */}
       <nav className="main-nav">
         <div className="nav-container">
           <div className="logo">
@@ -197,45 +197,21 @@ export default function Gardening() {
 
       {/* Hero Section */}
       <section className="gardening-hero">
-        <div className="hero-featured-image">
-          <img
-            src="https://images.unsplash.com/photo-1558904541-efa843a96f01?q=80&w=1470&auto=format&fit=crop"
-            alt="Jardín de lujo diseñado por Jimenez Services"
-          />
-        </div>
         <div className="hero-overlay"></div>
         <div className={`hero-content ${isVisible ? "visible" : ""}`}>
-          <div className="hero-badge">
-            <span>Expertos en Jardinería Profesional</span>
-          </div>
-          <h1 className="hero-title">Transformamos Tu Espacio Exterior en un Paraíso de Ensueño</h1>
-          <div className="hero-benefits">
-            <div className="benefit-item">
-              <span className="benefit-icon">✓</span>
-              <span>Diseños Exclusivos</span>
-            </div>
-            <div className="benefit-item">
-              <span className="benefit-icon">✓</span>
-              <span>Materiales Premium</span>
-            </div>
-            <div className="benefit-item">
-              <span className="benefit-icon">✓</span>
-              <span>Garantía de Satisfacción</span>
-            </div>
+          <div className="hero-title-container">
+            <Crown className="hero-icon" />
+            <h1 className="hero-title">Jardinería Profesional</h1>
+            <Crown className="hero-icon" />
           </div>
           <p className="hero-subtitle">
-            Más de <strong>250 clientes satisfechos</strong> en Little Ferry y alrededores confían en nosotros para
-            crear espacios exteriores que aumentan el valor de su propiedad y mejoran su calidad de vida
+            Transformamos espacios exteriores en oasis de belleza y funcionalidad que reflejan tu estilo personal y
+            mejoran tu calidad de vida
           </p>
-          <div className="hero-cta-container">
-            <a href="#services" className="primary-button">
-              Ver Nuestras Soluciones
-              <ArrowRight className="button-icon" />
-            </a>
-            <a href="#contact" className="secondary-button">
-              Consulta Gratuita
-            </a>
-          </div>
+          <Link to="#services" className="primary-button">
+            Explorar Servicios
+            <ArrowRight className="button-icon" />
+          </Link>
         </div>
       </section>
 
@@ -243,8 +219,8 @@ export default function Gardening() {
       <section id="services" className="gardening-services animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <span className="section-subtitle">Experiencia y Excelencia</span>
-            <h2 className="section-title">Nuestras Soluciones Premium</h2>
+            <span className="section-subtitle">Nuestros Servicios</span>
+            <h2 className="section-title">Soluciones de Jardinería</h2>
             <div className="section-underline"></div>
           </div>
 
@@ -271,35 +247,39 @@ export default function Gardening() {
       <section className="gardening-gallery animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <span className="section-subtitle">Transformaciones Reales</span>
-            <h2 className="section-title">Nuestras Creaciones Exclusivas</h2>
+            <span className="section-subtitle">Nuestro Trabajo</span>
+            <h2 className="section-title">Proyectos Destacados</h2>
             <div className="section-underline"></div>
           </div>
 
           <div className="gallery-showcase">
-            <div className="gallery-main">
-              <img
-                src={galleryItems[activeGalleryItem].image || "/placeholder.svg"}
-                alt={galleryItems[activeGalleryItem].title}
-                className="gallery-main-image"
-              />
-              <div className="gallery-info">
-                <h3>{galleryItems[activeGalleryItem].title}</h3>
-                <p>{galleryItems[activeGalleryItem].description}</p>
-              </div>
-            </div>
-
-            <div className="gallery-thumbnails">
-              {galleryItems.map((item, index) => (
-                <div
-                  key={index}
-                  className={`gallery-thumbnail ${index === activeGalleryItem ? "active" : ""}`}
-                  onClick={() => setActiveGalleryItem(index)}
-                >
-                  <img src={item.image || "/placeholder.svg"} alt={item.title} />
+            {galleryItems.length > 0 && (
+              <>
+                <div className="gallery-main">
+                  <img
+                    src={galleryItems[activeGalleryItem]?.image || "/placeholder.svg"}
+                    alt={galleryItems[activeGalleryItem]?.title || "Proyecto de jardinería"}
+                    className="gallery-main-image"
+                  />
+                  <div className="gallery-info">
+                    <h3>{galleryItems[activeGalleryItem]?.title || "Proyecto de jardinería"}</h3>
+                    <p>{galleryItems[activeGalleryItem]?.description || "Transformación de espacios exteriores."}</p>
+                  </div>
                 </div>
-              ))}
-            </div>
+
+                <div className="gallery-thumbnails">
+                  {galleryItems.map((item, index) => (
+                    <div
+                      key={index}
+                      className={`gallery-thumbnail ${index === activeGalleryItem ? "active" : ""}`}
+                      onClick={() => setActiveGalleryItem(index)}
+                    >
+                      <img src={item?.image || "/placeholder.svg"} alt={item?.title || "Miniatura de proyecto"} />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -308,45 +288,40 @@ export default function Gardening() {
       <section className="gardening-process animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <span className="section-subtitle">Metodología Comprobada</span>
-            <h2 className="section-title">Nuestro Proceso de Excelencia</h2>
+            <span className="section-subtitle">Nuestro Proceso</span>
+            <h2 className="section-title">Cómo Trabajamos</h2>
             <div className="section-underline"></div>
           </div>
 
           <div className="process-steps">
             <div className="process-step">
               <div className="step-number">1</div>
-              <h3>Consulta Personalizada</h3>
+              <h3>Consulta Inicial</h3>
               <p>
-                Iniciamos con una evaluación detallada de tu espacio, escuchando atentamente tus necesidades,
-                preferencias y visión para crear un plan perfecto.
+                Nos reunimos para entender tus necesidades, preferencias y presupuesto para tu proyecto de jardinería.
               </p>
             </div>
 
             <div className="process-step">
               <div className="step-number">2</div>
-              <h3>Diseño Exclusivo</h3>
-              <p>
-                Nuestros diseñadores crean un concepto a medida con visualizaciones 3D, selección de plantas ideales
-                para tu clima y elementos paisajísticos únicos.
-              </p>
+              <h3>Diseño y Planificación</h3>
+              <p>Creamos diseños detallados y planes que reflejan tu visión y cumplen con tus objetivos.</p>
             </div>
 
             <div className="process-step">
               <div className="step-number">3</div>
-              <h3>Implementación Experta</h3>
+              <h3>Ejecución del Proyecto</h3>
               <p>
-                Nuestro equipo de especialistas ejecuta cada detalle con precisión, utilizando técnicas avanzadas y
-                materiales premium para resultados excepcionales.
+                Nuestro equipo de expertos realiza la transformación con atención al detalle y materiales de calidad.
               </p>
             </div>
 
             <div className="process-step">
               <div className="step-number">4</div>
-              <h3>Mantenimiento Superior</h3>
+              <h3>Mantenimiento Continuo</h3>
               <p>
-                Ofrecemos programas personalizados de cuidado continuo que mantienen tu inversión en condiciones óptimas
-                durante todas las estaciones del año.
+                Ofrecemos programas de mantenimiento personalizados para asegurar que tu jardín luzca impecable todo el
+                año.
               </p>
             </div>
           </div>
@@ -357,8 +332,8 @@ export default function Gardening() {
       <section className="gardening-testimonials animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <span className="section-subtitle">Clientes Satisfechos</span>
-            <h2 className="section-title">Experiencias Reales</h2>
+            <span className="section-subtitle">Testimonios</span>
+            <h2 className="section-title">Lo Que Dicen Nuestros Clientes</h2>
             <div className="section-underline"></div>
           </div>
 
@@ -378,102 +353,88 @@ export default function Gardening() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="gardening-contact animate-on-scroll">
+      <section id="contact" className="contact-section animate-on-scroll">
         <div className="container">
-          <div className="contact-grid">
-            <div className="contact-info">
-              <div className="section-header left-aligned">
-                <span className="section-subtitle">Comienza Tu Transformación</span>
-                <h2 className="section-title">¿Listo para un Jardín Extraordinario?</h2>
-                <div className="section-underline"></div>
-              </div>
+          <div className="section-header">
+            <span className="section-subtitle">Estamos Listos</span>
+            <h2 className="section-title">Comienza Tu Transformación Hoy</h2>
+            <div className="section-underline"></div>
+          </div>
 
-              <p className="contact-intro">
-                Estamos a solo un mensaje de distancia para convertir tu espacio exterior en un paraíso personalizado.
-                Contáctanos hoy para una consulta gratuita y descubre cómo podemos transformar tu visión en realidad.
+          <div className="contact-container">
+            <div className="contact-info">
+              <h3>¿Listo para Transformar tu Espacio?</h3>
+              <p>
+                Estamos a solo un mensaje de distancia para convertir tus ideas en realidad. Contáctanos hoy mismo para
+                una consulta personalizada sin compromiso.
               </p>
 
-              <div className="contact-methods">
-                <div className="contact-method">
-                  <div className="method-icon">
-                    <Phone />
-                  </div>
-                  <div className="method-details">
-                    <h3>Llámanos</h3>
-                    <p>(201) 555-0123</p>
-                  </div>
-                </div>
-
-                <div className="contact-method">
-                  <div className="method-icon">
-                    <Mail />
-                  </div>
-                  <div className="method-details">
-                    <h3>Escríbenos</h3>
-                    <p>info@jimenezservices.com</p>
-                  </div>
-                </div>
-
-                <div className="contact-method">
-                  <div className="method-icon">
+              <div className="contact-details">
+                <div className="contact-item">
+                  <div className="contact-icon">
                     <MapPin />
                   </div>
-                  <div className="method-details">
-                    <h3>Visítanos</h3>
-                    <p>
-                      Little Ferry 07643
-                      <br />
-                      New Jersey, Estados Unidos
-                    </p>
+                  <div className="contact-text">
+                    <h4>Ubicación</h4>
+                    <p>Little Ferry, NJ 07643</p>
+                  </div>
+                </div>
+
+                <div className="contact-item">
+                  <div className="contact-icon">
+                    <Phone />
+                  </div>
+                  <div className="contact-text">
+                    <h4>Llámanos</h4>
+                    <p>551-587-9625</p>
+                  </div>
+                </div>
+
+                <div className="contact-item">
+                  <div className="contact-icon">
+                    <Mail />
+                  </div>
+                  <div className="contact-text">
+                    <h4>Escríbenos</h4>
+                    <p>mjimenezlandscaping80@gmail.com</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="contact-form-container">
+              <h3>Solicita una Consulta Gratuita</h3>
               <form className="contact-form">
-                <h3>Solicita tu Consulta Gratuita</h3>
-
                 <div className="form-group">
                   <label htmlFor="name">Nombre Completo</label>
                   <input type="text" id="name" placeholder="Tu nombre completo" required />
                 </div>
-
                 <div className="form-group">
                   <label htmlFor="email">Correo Electrónico</label>
                   <input type="email" id="email" placeholder="Tu correo electrónico" required />
                 </div>
-
                 <div className="form-group">
-                  <label htmlFor="phone">Número de Teléfono</label>
+                  <label htmlFor="phone">Teléfono</label>
                   <input type="tel" id="phone" placeholder="Para contactarte rápidamente" />
                 </div>
-
                 <div className="form-group">
                   <label htmlFor="service">¿Qué Servicio Te Interesa?</label>
-                  <select id="service" required>
+                  <select id="service">
                     <option value="">Selecciona un servicio</option>
-                    <option value="diseno">Diseño de Paisajes Exclusivos</option>
-                    <option value="mantenimiento">Mantenimiento Premium</option>
-                    <option value="paisajismo">Paisajismo Transformador</option>
-                    <option value="riego">Sistemas de Riego Inteligentes</option>
-                    <option value="otro">Otro (Por favor especifica)</option>
+                    <option value="landscaping">Diseño de Paisajes</option>
+                    <option value="garden-maintenance">Mantenimiento de Jardines</option>
+                    <option value="interior-remodeling">Remodelación de Interiores</option>
+                    <option value="kitchen-bath">Cocinas y Baños</option>
+                    <option value="other">Otro Servicio</option>
                   </select>
                 </div>
-
                 <div className="form-group">
                   <label htmlFor="message">Tu Visión</label>
-                  <textarea
-                    id="message"
-                    rows="4"
-                    placeholder="Cuéntanos sobre el jardín de tus sueños"
-                    required
-                  ></textarea>
+                  <textarea id="message" placeholder="Cuéntanos sobre tu proyecto ideal" rows="5" required></textarea>
                 </div>
-
                 <button type="submit" className="primary-button">
-                  Iniciar Mi Transformación
-                  <Send className="button-icon" />
+                  ¡Cotiza Gratis!
+                  <ArrowRight className="button-icon" />
                 </button>
               </form>
             </div>
@@ -494,10 +455,7 @@ export default function Gardening() {
                 />
                 <span>Jimenez Services</span>
               </div>
-              <p>
-                Transformando espacios ordinarios en extraordinarios desde 2018. Nuestro compromiso: excelencia,
-                innovación y satisfacción garantizada en cada proyecto.
-              </p>
+              <p>Transformando jardines con artesanía experta y diseño innovador desde 2018.</p>
             </div>
 
             <div className="footer-links">
@@ -523,12 +481,15 @@ export default function Gardening() {
       </footer>
 
       {/* Botón flotante de cotización */}
-      <div className="floating-quote-button" onClick={scrollToContact}>
+      <div
+        className="floating-quote-button"
+        onClick={() => document.getElementById("contact").scrollIntoView({ behavior: "smooth" })}
+      >
         <div className="quote-button-content">
           <span className="quote-icon">
             <Award className="quote-button-icon" />
           </span>
-          <span className="quote-text">¡Cotiza Gratis!</span>
+          <span className="quote-text">¡Solicita Cotización Gratis!</span>
         </div>
       </div>
     </div>

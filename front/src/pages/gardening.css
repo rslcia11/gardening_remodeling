@@ -29,8 +29,8 @@
 }
 
 .logo-image {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   object-fit: cover;
   border-radius: 50%;
   border: 2px solid var(--primary-color);
@@ -240,19 +240,18 @@
   font-family: var(--font-sans);
 }
 
-/* Hero Section - Mejoras para mayor impacto */
+/* Hero Section */
 .gardening-hero {
   position: relative;
   height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("https://source.unsplash.com/random/1920x1080/?luxury,garden,landscape");
+  background-image: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.30-sSuA8aE5YRtU40hUQT3wjnyT8obYmO.jpeg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   padding-top: 80px;
-  overflow: hidden;
 }
 
 .gardening-hero::before {
@@ -262,8 +261,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
   z-index: 1;
+}
+
+.gardening-hero .hero-overlay {
+  display: none; /* Ocultar completamente el overlay */
 }
 
 .hero-content {
@@ -271,68 +274,42 @@
   z-index: 2;
   max-width: 1000px;
   text-align: center;
-  padding: 3rem;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
+  padding: 4rem;
+  background: rgba(0, 0, 0, 0.6); /* Fondo oscuro solo para el contenedor del texto */
+  backdrop-filter: blur(5px);
+  border-radius: 30px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-.hero-badge {
-  display: inline-block;
-  padding: 0.75rem 2rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  color: var(--secondary-color);
-  font-weight: 700;
-  border-radius: 50px;
-  margin-bottom: 2rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  transform: translateY(-20px);
-  opacity: 0;
-  animation: slideDown 0.6s ease forwards;
+.gardening-hero .hero-content.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.hero-title {
-  font-size: 4rem;
-  font-weight: 900;
-  color: white;
-  margin-bottom: 2rem;
-  line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  transform: translateY(-20px);
-  opacity: 0;
-  animation: slideDown 0.6s ease 0.2s forwards;
-}
-
-.hero-benefits {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 2.5rem;
-  transform: translateY(-20px);
-  opacity: 0;
-  animation: slideDown 0.6s ease 0.4s forwards;
-}
-
-.benefit-item {
+.gardening-hero .hero-title-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 600;
+  margin-bottom: 1.5rem;
 }
 
-.benefit-icon {
+.gardening-hero .hero-icon {
+  color: var(--primary-color);
   width: 2.5rem;
   height: 2.5rem;
-  background: rgba(255, 215, 0, 0.2);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary-color);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+.gardening-hero .hero-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
 }
 
 .gardening-hero .hero-subtitle {
@@ -345,18 +322,6 @@
   margin-left: auto;
   margin-right: auto;
   line-height: 1.6;
-}
-
-.gardening-hero .hero-subtitle strong {
-  color: var(--primary-color);
-  font-weight: 700;
-}
-
-.gardening-hero .hero-cta-container {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
 }
 
 .gardening-hero .primary-button {
@@ -379,23 +344,12 @@
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
 }
 
-.gardening-hero .secondary-button {
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  background: transparent;
-  color: white;
-  border: 2px solid var(--primary-color);
-  border-radius: 50px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+.button-icon {
+  transition: transform 0.3s ease;
 }
 
-.gardening-hero .secondary-button:hover {
-  background: rgba(255, 215, 0, 0.1);
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+.primary-button:hover .button-icon {
+  transform: translateX(5px);
 }
 
 /* Services Section - Mejoras */
@@ -908,6 +862,82 @@
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
+/* Estilos para la sección de contacto unificada */
+.contact-section {
+  padding: 4rem 0;
+  background-color: white;
+}
+
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  background: white;
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: var(--secondary-color);
+  padding: 3rem;
+}
+
+.contact-info h3 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+.contact-info p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.contact-details {
+  margin-bottom: 2rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+.contact-icon {
+  background: rgba(0, 0, 0, 0.1);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.contact-text h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+@media (max-width: 992px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Responsive Styles - Mejoras */
 @media (max-width: 1200px) {
   .process-steps {
@@ -1037,8 +1067,8 @@
 
 /* Ajuste del tamaño del logo */
 .logo-image {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -1058,7 +1088,7 @@
   background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   color: var(--secondary-color);
   border-radius: 50px;
-  padding: 12px 20px;
+  padding: 12px 25px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   z-index: 1000;
@@ -1068,6 +1098,7 @@
   justify-content: center;
   font-weight: 700;
   animation: pulse-animation 2s infinite;
+  border: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .floating-quote-button:hover {
@@ -1098,8 +1129,9 @@
 }
 
 .quote-text {
-  font-size: 1rem;
+  font-size: 1.1rem;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 @keyframes pulse-animation {
@@ -1190,5 +1222,43 @@
 
 .gardening-services .section-header {
   margin-bottom: 2rem; /* Reducido de 3.5rem */
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+.contact-icon {
+  background: rgba(0, 0, 0, 0.1);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.contact-text h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.contact-text p {
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 

@@ -13,12 +13,12 @@ import {
   Phone,
   Mail,
   MapPin,
-  Send,
   Award,
 } from "lucide-react"
 import "./remodeling.css"
 
 export default function Remodeling() {
+  // Modificar la sección hero para usar la nueva imagen de fondo
   const [isVisible, setIsVisible] = useState(false)
   const [activeGalleryItem, setActiveGalleryItem] = useState(0)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -502,97 +502,88 @@ export default function Remodeling() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="remodeling-contact animate-on-scroll">
+      <section id="contact" className="contact-section animate-on-scroll">
         <div className="container">
-          <div className="contact-grid">
-            <div className="contact-info">
-              <div className="section-header left-aligned">
-                <span className="section-subtitle">Contacto</span>
-                <h2 className="section-title">¿Listo para Transformar tu Espacio?</h2>
-                <div className="section-underline"></div>
-              </div>
+          <div className="section-header">
+            <span className="section-subtitle">Estamos Listos</span>
+            <h2 className="section-title">Comienza Tu Transformación Hoy</h2>
+            <div className="section-underline"></div>
+          </div>
 
-              <p className="contact-intro">
-                Contáctanos hoy para una consulta gratuita y presupuesto. Nuestro equipo está listo para hacer realidad
-                tu visión.
+          <div className="contact-container">
+            <div className="contact-info">
+              <h3>¿Listo para Transformar tu Espacio?</h3>
+              <p>
+                Estamos a solo un mensaje de distancia para convertir tus ideas en realidad. Contáctanos hoy mismo para
+                una consulta personalizada sin compromiso.
               </p>
 
-              <div className="contact-methods">
-                <div className="contact-method">
-                  <div className="method-icon">
-                    <Phone />
-                  </div>
-                  <div className="method-details">
-                    <h3>Teléfono</h3>
-                    <p>(555) 123-4567</p>
-                  </div>
-                </div>
-
-                <div className="contact-method">
-                  <div className="method-icon">
-                    <Mail />
-                  </div>
-                  <div className="method-details">
-                    <h3>Email</h3>
-                    <p>info@jimenezservices.com</p>
-                  </div>
-                </div>
-
-                <div className="contact-method">
-                  <div className="method-icon">
+              <div className="contact-details">
+                <div className="contact-item">
+                  <div className="contact-icon">
                     <MapPin />
                   </div>
-                  <div className="method-details">
-                    <h3>Oficina</h3>
-                    <p>
-                      Little Ferry 07643
-                      <br />
-                      New Jersey, Estados Unidos
-                    </p>
+                  <div className="contact-text">
+                    <h4>Ubicación</h4>
+                    <p>Little Ferry, NJ 07643</p>
+                  </div>
+                </div>
+
+                <div className="contact-item">
+                  <div className="contact-icon">
+                    <Phone />
+                  </div>
+                  <div className="contact-text">
+                    <h4>Llámanos</h4>
+                    <p>551-587-9625</p>
+                  </div>
+                </div>
+
+                <div className="contact-item">
+                  <div className="contact-icon">
+                    <Mail />
+                  </div>
+                  <div className="contact-text">
+                    <h4>Escríbenos</h4>
+                    <p>mjimenezlandscaping80@gmail.com</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="contact-form-container">
+              <h3>Solicita una Consulta Gratuita</h3>
               <form className="contact-form">
-                <h3>Solicita una Consulta Gratuita</h3>
-
                 <div className="form-group">
                   <label htmlFor="name">Nombre Completo</label>
-                  <input type="text" id="name" placeholder="Tu nombre" required />
+                  <input type="text" id="name" placeholder="Tu nombre completo" required />
                 </div>
-
                 <div className="form-group">
                   <label htmlFor="email">Correo Electrónico</label>
-                  <input type="email" id="email" placeholder="Tu email" required />
+                  <input type="email" id="email" placeholder="Tu correo electrónico" required />
                 </div>
-
                 <div className="form-group">
-                  <label htmlFor="phone">Número de Teléfono</label>
-                  <input type="tel" id="phone" placeholder="Tu teléfono" />
+                  <label htmlFor="phone">Teléfono</label>
+                  <input type="tel" id="phone" placeholder="Para contactarte rápidamente" />
                 </div>
-
                 <div className="form-group">
-                  <label htmlFor="service">Servicio de Interés</label>
-                  <select id="service" required>
+                  <label htmlFor="service">¿Qué Servicio Te Interesa?</label>
+                  <select id="service">
                     <option value="">Selecciona un servicio</option>
-                    <option value="renovacion">Renovación Completa</option>
-                    <option value="diseno">Diseño de Interiores</option>
-                    <option value="cocinas">Cocinas y Baños</option>
-                    <option value="estructural">Modificaciones Estructurales</option>
-                    <option value="otro">Otro (Por favor especifica)</option>
+                    <option value="landscaping">Diseño de Paisajes</option>
+                    <option value="garden-maintenance">Mantenimiento de Jardines</option>
+                    <option value="interior-remodeling">Remodelación de Interiores</option>
+                    <option value="kitchen-bath">Cocinas y Baños</option>
+                    <option value="other">Otro Servicio</option>
                   </select>
                 </div>
-
                 <div className="form-group">
-                  <label htmlFor="message">Detalles del Proyecto</label>
-                  <textarea id="message" rows="4" placeholder="Cuéntanos sobre tu proyecto" required></textarea>
+                  <label htmlFor="message">Tu Visión</label>
+                  <textarea id="message" placeholder="Cuéntanos sobre tu proyecto ideal" rows="5" required></textarea>
                 </div>
-
                 <button type="submit" className="primary-button">
-                  Enviar Mensaje
-                  <Send className="button-icon" />
+                  ¡Cotiza Gratis!
+                  <ArrowRight className="button-icon" />
                 </button>
               </form>
             </div>
@@ -647,7 +638,7 @@ export default function Remodeling() {
           <span className="quote-icon">
             <Award className="quote-button-icon" />
           </span>
-          <span className="quote-text">¡Cotiza Gratis!</span>
+          <span className="quote-text">¡Solicita Cotización Gratis!</span>
         </div>
       </div>
       {isImageModalOpen && (
