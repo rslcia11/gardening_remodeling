@@ -5,13 +5,11 @@ import {
   Leaf,
   HomeIcon,
   CheckCircle,
-  Camera,
   Users,
   Calendar,
   PenToolIcon as Tool,
   Paintbrush,
   Shovel,
-  Ruler,
   Award,
   Phone,
   Mail,
@@ -27,6 +25,8 @@ import {
   ChevronDown,
   TreePine,
   Hammer,
+  Droplets,
+  ArrowRight,
 } from "lucide-react"
 import "./home.css" // Importamos el archivo CSS existente
 import { Link } from "react-router-dom" // Cambiado a react-router-dom
@@ -192,81 +192,60 @@ export default function Home() {
     },
   ]
 
+  // Reemplazar el objeto services con los nuevos servicios en español
   const services = {
     gardening: [
       {
         icon: <Leaf className="service-icon-svg" />,
-        title: "Diseño de Paisajes Exclusivos",
+        title: "Mantenimiento de Césped",
         description:
-          "Creamos jardines únicos que reflejan su personalidad y estilo de vida, transformando espacios ordinarios en paraísos personalizados que aumentan el valor de su propiedad.",
-        features: [
-          "Diseños personalizados con visualización 3D",
-          "Selección experta de plantas para cada clima",
-          "Soluciones sostenibles que ahorran agua",
-        ],
-        image: "https://source.unsplash.com/random/600x400/?landscape,design",
+          "Cuidamos su jardín con un servicio integral de mantenimiento que incluye corte, fertilización y tratamientos personalizados para mantener su césped verde y saludable durante todo el año.",
+        features: ["Corte profesional de césped", "Fertilización programada", "Tratamiento contra malezas"],
+      },
+      {
+        icon: <Droplets className="service-icon-svg" />,
+        title: "Sistemas de Riego",
+        description:
+          "Instalamos y reparamos sistemas de riego eficientes que aseguran la correcta hidratación de su jardín, ahorrando agua y manteniendo sus plantas en óptimas condiciones.",
+        features: ["Instalación de sistemas automáticos", "Reparación y mantenimiento", "Soluciones de ahorro de agua"],
       },
       {
         icon: <Shovel className="service-icon-svg" />,
-        title: "Mantenimiento Premium",
+        title: "Plantación y Paisajismo",
         description:
-          "Cuidamos su inversión con un servicio integral que mantiene su jardín impecable durante todo el año, permitiéndole disfrutar sin preocupaciones de su espacio exterior.",
+          "Transformamos su espacio exterior con diseños personalizados que incluyen selección e instalación de plantas, árboles y arbustos adaptados a su entorno y preferencias.",
         features: [
-          "Programas personalizados de cuidado estacional",
-          "Técnicas profesionales de poda y nutrición",
-          "Control preventivo de plagas y enfermedades",
+          "Diseño personalizado de jardines",
+          "Plantación de árboles y arbustos",
+          "Instalación de césped (sodding)",
         ],
-        image: "https://source.unsplash.com/random/600x400/?garden,maintenance",
-      },
-      {
-        icon: <Camera className="service-icon-svg" />,
-        title: "Espacios Exteriores Funcionales",
-        description:
-          "Extendemos su hogar hacia la naturaleza con áreas exteriores diseñadas para vivir, entretener y relajarse, creando recuerdos inolvidables con familiares y amigos.",
-        features: [
-          "Patios y terrazas con materiales premium",
-          "Cocinas exteriores completamente equipadas",
-          "Elementos acuáticos y de fuego personalizados",
-        ],
-        image: "https://source.unsplash.com/random/600x400/?outdoor,living",
       },
     ],
     remodeling: [
       {
         icon: <Paintbrush className="service-icon-svg" />,
-        title: "Renovación Interior Integral",
+        title: "Remodelación de Interiores",
         description:
-          "Transformamos completamente sus espacios con diseños modernos y funcionales que reflejan su estilo personal y mejoran su calidad de vida diaria.",
+          "Transformamos completamente sus espacios interiores con diseños modernos y funcionales que reflejan su estilo personal y mejoran su calidad de vida diaria.",
         features: [
-          "Remodelaciones completas con gestión de proyecto",
-          "Soluciones personalizadas para cada espacio",
-          "Acabados premium que marcan la diferencia",
+          "Renovación de cocinas y baños",
+          "Instalación de pisos y acabados",
+          "Diseño personalizado de espacios",
         ],
-        image: "https://source.unsplash.com/random/600x400/?interior,renovation",
+      },
+      {
+        icon: <Hammer className="service-icon-svg" />,
+        title: "Construcción y Ampliaciones",
+        description:
+          "Realizamos proyectos de construcción y ampliación que aumentan el valor de su propiedad, desde nuevas habitaciones hasta estructuras completas con los más altos estándares de calidad.",
+        features: ["Ampliaciones de viviendas", "Construcción de estructuras", "Renovación de fachadas"],
       },
       {
         icon: <Tool className="service-icon-svg" />,
-        title: "Cocinas y Baños de Ensueño",
+        title: "Acabados y Detalles",
         description:
-          "Convertimos las áreas más importantes de su hogar en espacios excepcionales que combinan belleza, funcionalidad y la última tecnología.",
-        features: [
-          "Diseños ergonómicos que optimizan el espacio",
-          "Materiales de alta calidad con garantía",
-          "Instalaciones impecables por expertos certificados",
-        ],
-        image: "https://source.unsplash.com/random/600x400/?kitchen,bathroom",
-      },
-      {
-        icon: <Ruler className="service-icon-svg" />,
-        title: "Transformaciones Estructurales",
-        description:
-          "Reinventamos la distribución de su hogar para crear espacios abiertos, luminosos y perfectamente adaptados a su estilo de vida moderno.",
-        features: [
-          "Análisis estructural profesional",
-          "Maximización de espacio y luz natural",
-          "Soluciones innovadoras para cada necesidad",
-        ],
-        image: "https://source.unsplash.com/random/600x400/?home,structure",
+          "Nos especializamos en acabados de alta calidad y detalles que marcan la diferencia, desde trabajos de pintura profesional hasta instalaciones eléctricas y de plomería.",
+        features: ["Pintura interior y exterior", "Instalaciones eléctricas", "Carpintería y detalles personalizados"],
       },
     ],
   }
@@ -461,15 +440,35 @@ export default function Home() {
           )
         }
       >
-        {/* Eliminar el div con clase hero-overlay */}
         <div className="hero-content" onClick={(e) => e.stopPropagation()}>
           <h1 className="hero-title">¿Qué servicio buscas?</h1>
-          <div className="hero-buttons">
-            <Link to="/jardineria" className="hero-button">
-              <TreePine className="hero-button-icon" /> Jardinería
+          <div className="service-options">
+            <Link to="/jardineria" className="service-option">
+              <div className="service-option-icon-container">
+                <TreePine className="service-option-icon" />
+              </div>
+              <h2 className="service-option-title">Jardinería</h2>
+              <p className="service-option-desc">
+                Creamos y mantenemos espacios verdes hermosos que armonizan con la naturaleza y tu estilo de vida
+              </p>
+              <div className="service-option-button">
+                <span>Explorar Servicios</span>
+                <ArrowRight className="service-option-arrow" />
+              </div>
             </Link>
-            <Link to="/interiores" className="hero-button">
-              <Hammer className="hero-button-icon" /> Remodelación
+
+            <Link to="/interiores" className="service-option">
+              <div className="service-option-icon-container">
+                <Hammer className="service-option-icon" />
+              </div>
+              <h2 className="service-option-title">Remodelación</h2>
+              <p className="service-option-desc">
+                Transformamos espacios con diseños modernos y funcionales que reflejan tu estilo personal
+              </p>
+              <div className="service-option-button">
+                <span>Explorar Servicios</span>
+                <ArrowRight className="service-option-arrow" />
+              </div>
             </Link>
           </div>
         </div>
@@ -566,14 +565,14 @@ export default function Home() {
               onClick={() => setActiveTab("gardening")}
             >
               <Leaf className="tab-icon" />
-              Jardinería
+              Servicios de Jardinería
             </button>
             <button
               className={`tab-button ${activeTab === "remodeling" ? "active" : ""}`}
               onClick={() => setActiveTab("remodeling")}
             >
               <HomeIcon className="tab-icon" />
-              Remodelación
+              Servicios de Remodelación y Construcción
             </button>
           </div>
           <div className="services-grid">
@@ -589,22 +588,6 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                {service.image && (
-                  <div
-                    className="service-image"
-                    onClick={() =>
-                      openImageModal({
-                        single: service.image,
-                        title: service.title,
-                      })
-                    }
-                  >
-                    <img src={service.image || "/placeholder.svg"} alt={service.title} />
-                    <div className="service-image-overlay">
-                      <div className="service-image-title">{service.title}</div>
-                    </div>
-                  </div>
-                )}
               </div>
             ))}
           </div>
