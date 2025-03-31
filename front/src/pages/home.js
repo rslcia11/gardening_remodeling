@@ -101,21 +101,21 @@ export default function Home() {
     {
       name: "Maria Rodriguez",
       role: "Propietaria en Little Ferry",
-      image: "https://source.unsplash.com/random/100x100/?woman",
+      image:  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010019-z39kWRQp0E8pqugGzNzkgsWztQSFKe.png",
       text: "¡Increíble transformación! Jimenez Services convirtió mi jardín en un oasis de ensueño. Su atención al detalle y profesionalismo superaron todas mis expectativas. Ahora disfruto cada minuto en mi nuevo espacio exterior.",
       rating: 5,
     },
     {
       name: "John Davis",
       role: "Dueño de Negocio",
-      image: "https://source.unsplash.com/random/100x100/?man",
+      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010101-3DJmFwAevTyPlHr3vsIrA7weXnQmqw.png",
       text: "La remodelación de nuestra oficina fue impecable. El equipo de Jimenez entendió exactamente lo que necesitábamos y entregaron resultados excepcionales en tiempo récord. Nuestros clientes no paran de elogiar el nuevo diseño.",
       rating: 5,
     },
     {
       name: "Sarah Thompson",
       role: "Administradora de Propiedades",
-      image: "https://source.unsplash.com/random/100x100/?person",
+      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010143-g5zhIrqdafbDUWXWkoL9Ibua5dguNG.png",
       text: "Como administradora de múltiples propiedades, valoro la consistencia y confiabilidad. Jimenez Services siempre cumple con excelencia, transformando cada espacio con un toque único y manteniendo la más alta calidad en cada proyecto.",
       rating: 5,
     },
@@ -320,7 +320,7 @@ export default function Home() {
       document.body.classList.remove("modal-open")
       setIsImageModalOpen(false)
       setSelectedImage(null)
-    }, 300)
+    }, 300) // Reducir el tiempo para que coincida con la duración de la transición
   }
 
   const filteredPortfolio =
@@ -440,20 +440,22 @@ export default function Home() {
           )
         }
       >
-        <div className="hero-content" onClick={(e) => e.stopPropagation()}>
-          <h1 className="hero-title">¿Qué servicio buscas?</h1>
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
+        <div className="hero-content z-10" onClick={(e) => e.stopPropagation()}>
+          <h1 className="mb-16 text-4xl font-light tracking-wide text-white md:text-5xl">¿Qué servicio buscas?</h1>
+
           <div className="service-options">
             <Link to="/jardineria" className="service-option">
               <div className="service-option-icon-container">
-                <TreePine className="service-option-icon" />
+                <Leaf className="service-option-icon" />
               </div>
-              <h2 className="service-option-title">Jardinería</h2>
+              <h3 className="service-option-title">Jardinería</h3>
               <p className="service-option-desc">
-                Creamos y mantenemos espacios verdes hermosos que armonizan con la naturaleza y tu estilo de vida
+                Creamos y mantenemos espacios verdes hermosos que armonizan con la naturaleza
               </p>
               <div className="service-option-button">
-                <span>Explorar Servicios</span>
-                <ArrowRight className="service-option-arrow" />
+                Explorar Servicios
+                <ArrowRight className="service-option-arrow" size={16} />
               </div>
             </Link>
 
@@ -461,13 +463,13 @@ export default function Home() {
               <div className="service-option-icon-container">
                 <Hammer className="service-option-icon" />
               </div>
-              <h2 className="service-option-title">Remodelación</h2>
+              <h3 className="service-option-title">Remodelación</h3>
               <p className="service-option-desc">
-                Transformamos espacios con diseños modernos y funcionales que reflejan tu estilo personal
+                Transformamos espacios con diseños modernos y funcionales que reflejan tu estilo
               </p>
               <div className="service-option-button">
-                <span>Explorar Servicios</span>
-                <ArrowRight className="service-option-arrow" />
+                Explorar Servicios
+                <ArrowRight className="service-option-arrow" size={16} />
               </div>
             </Link>
           </div>
@@ -902,18 +904,15 @@ export default function Home() {
         <div className="image-modal-overlay" onClick={closeImageModal}>
           <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close-button" onClick={closeImageModal}>
-              <X size={18} />
+              <X size={20} />
             </button>
-            {selectedImage?.title && <h3 className="modal-title">{selectedImage.title}</h3>}
             {selectedImage?.before ? (
               <div className="modal-before-after">
                 <div className="modal-before">
                   <img src={selectedImage.before || "/placeholder.svg"} alt={`Antes: ${selectedImage.title}`} />
-                  <div className="modal-image-label">Antes</div>
                 </div>
                 <div className="modal-after">
                   <img src={selectedImage.after || "/placeholder.svg"} alt={`Después: ${selectedImage.title}`} />
-                  <div className="modal-image-label">Después</div>
                 </div>
               </div>
             ) : selectedImage?.single ? (

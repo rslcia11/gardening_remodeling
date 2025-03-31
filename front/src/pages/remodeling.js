@@ -79,39 +79,48 @@ export default function Remodeling() {
 
   // Función para abrir el modal con la imagen seleccionada
   const openImageModal = (image) => {
+    // Si la imagen es un string (URL directa), convertirla al formato adecuado
     if (typeof image === "string") {
       setSelectedImage({
         single: image,
         title: "Imagen de Jimenez Services",
       })
-    } else if (image.beforeImage) {
+    }
+    // Si la imagen tiene beforeImage, configurar before/after correctamente
+    else if (image.beforeImage) {
       setSelectedImage({
         title: image.title,
         before: image.beforeImage,
         after: image.image,
       })
-    } else {
+    }
+    // Si es un objeto con single, usarlo directamente
+    else {
       setSelectedImage(image)
     }
 
     setIsImageModalOpen(true)
+    // Añadir un pequeño retraso para permitir que el modal se abra antes de aplicar la clase fullscreen
     setTimeout(() => {
       document.body.classList.add("modal-open")
+      // Seleccionar el overlay y añadir la clase open para la animación
       const overlay = document.querySelector(".image-modal-overlay")
       if (overlay) overlay.classList.add("open")
     }, 10)
   }
 
-  // Función para cerrar el modal
+  // Modificar la función closeImageModal para mejorar la animación de cierre
   const closeImageModal = () => {
+    // Seleccionar el overlay y remover la clase open para la animación
     const overlay = document.querySelector(".image-modal-overlay")
     if (overlay) overlay.classList.remove("open")
 
+    // Añadir un pequeño retraso para permitir que la animación termine antes de cerrar el modal
     setTimeout(() => {
       document.body.classList.remove("modal-open")
       setIsImageModalOpen(false)
       setSelectedImage(null)
-    }, 300)
+    }, 400) // Aumentar el tiempo para que coincida con la duración de la transición
   }
 
   const services = [
