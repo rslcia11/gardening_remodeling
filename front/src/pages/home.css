@@ -2,7 +2,7 @@
 :root {
   --primary-color: #5c3a1d; /* Marrón elegante */
   --primary-dark: #3a2512; /* Marrón oscuro */
-  --primary-light: #8c6e4e; /* Marrón claro */
+  --primary_light: #8c6e4e; /* Marrón claro */
   --secondary-color: #f5f5f5; /* Gris muy claro */
   --text-color: #333333; /* Gris oscuro para texto */
   --text_light: #666666; /* Gris medio para texto secundario */
@@ -337,14 +337,15 @@ a {
 
 /* Asegurar que el overlay del hero sea más ligero */
 .hero-section::before {
-  display: none !important; /* Eliminar completamente el overlay */
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.4) !important; /* Overlay oscuro semi-transparente */
+  z-index: 1 !important;
 }
-
-/* Eliminar el icono de lupa y el comportamiento de clic en la imagen de fondo */
-.hero-section::after {
-  display: none !important; /* Eliminar completamente el icono de lupa */
-}
-
 /* Modificar el estilo del hero-content para que sea más transparente */
 .hero-content {
   position: relative;
@@ -367,7 +368,7 @@ a {
   font-weight: 900 !important;
   color: #ffffff !important; /* Blanco puro forzado */
   margin-bottom: 2.5rem;
-  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 4px 8px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.9), 0 0 10px rgba(255, 255, 255, 0.8);
   background-color: transparent; /* Sin fondo */
   padding: 0.5rem 1rem;
   border-radius: 0;
@@ -1192,6 +1193,9 @@ a {
   50% {
     transform: scale(1.3) translateY(-5px);
   }
+  100% {
+    transform: scale(1.3) translateY(0);
+  }
 }
 
 @keyframes floatParticle {
@@ -1540,106 +1544,25 @@ a {
   font-family: var(--font-serif);
 }
 
+/* Eliminar el icono de lupa para about-image-item y service-image */
 .about-image-item::after,
 .service-image::after {
-  content: "🔍";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  width: 50px;
-  height: 50px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
-  font-size: 1.2rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  z-index: 5;
+  display: none; /* Eliminar completamente el icono de lupa */
 }
 
-.about-image-item:hover::after,
-.service-image:hover::after {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+/* Asegurar que el portfolio-image también no muestre lupa */
+.portfolio-image::after {
+  display: none;
 }
 
-/* Estilos para la imagen del autor del testimonio */
-.testimonial-author {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.testimonial-author-image {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  border: 3px solid var(--primary-color);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.testimonial-author-image:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.testimonial-author-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.testimonial-author-image:hover img {
-  transform: scale(1.1);
-}
-
-.testimonial-author-info {
-  text-align: center;
-}
-
-/* Estilos para las imágenes de servicios */
-.service-image {
-  margin-top: 1.5rem;
-  height: 200px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.service-image:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-.service-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.service-image:hover img {
-  transform: scale(1.05);
-}
-
-/* Hacer que el fondo del hero sea clicable */
-.hero-section {
-  cursor: default; /* Cambiar el cursor a default en lugar de pointer */
-  position: relative;
-}
-
-/* Eliminar el icono de lupa y el comportamiento de clic en la imagen de fondo */
-.hero-section::after {
-  display: none !important; /* Eliminar completamente el icono de lupa */
+/* Eliminar cualquier otro icono de lupa que pueda estar presente */
+.testimonial-author-image::after,
+.portfolio-item::after,
+.about-image-item::after,
+.service-image::after,
+.hero-section::after,
+.portfolio-image::after {
+  display: none !important;
 }
 
 /* Estilos para la imagen del autor del testimonio */
@@ -1967,5 +1890,1073 @@ a {
   font-family: var(--font-sans);
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.5);
+}
+
+/* Estilos para modales de imágenes */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.95);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.modal.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+}
+
+.modal-content {
+  max-width: 95%;
+  max-height: 95vh;
+  margin: 0;
+  display: block;
+  box-shadow: none;
+  border: none !important;
+  background: transparent !important;
+  padding: 0;
+  position: relative;
+}
+
+/* Eliminar cualquier contenedor blanco alrededor de las imágenes */
+.modal-container {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilos para modales con imágenes antes/después */
+.modal-before-after {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 95%;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.modal-before-after img {
+  max-width: calc(50% - 10px);
+  max-height: 90vh;
+  object-fit: contain;
+  height: auto;
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Asegurar que las imágenes antes/después tengan el mismo tamaño */
+.modal-before,
+.modal-after {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.modal-before img,
+.modal-after img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: none !important;
+  background: transparent !important;
+}
+
+.modal-label {
+  color: white;
+  font-family: var(--font-serif);
+  margin-top: 10px;
+  font-size: 1.2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.modal-close:hover {
+  transform: rotate(90deg);
+  color: #d4af37;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Asegurar que las imágenes en el modal sean lo más grandes posible */
+.modal img {
+  max-width: 95vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Estilos para modales de imágenes - COMPLETAMENTE REESCRITOS */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.95);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.modal.show {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  opacity: 1 !important;
+}
+
+/* Eliminar CUALQUIER contenedor blanco */
+.modal > div,
+.modal > section,
+.modal > article,
+.modal > main,
+.modal > aside,
+.modal > figure,
+.modal > .modal-content,
+.modal > .modal-container,
+.modal > * {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Estilos para las imágenes dentro del modal */
+.modal img {
+  max-width: 90vw !important;
+  max-height: 85vh !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Estilos específicos para modales con imágenes antes/después */
+.modal-before-after {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 20px !important;
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.modal-before-after img {
+  max-width: 45vw !important;
+  max-height: 85vh !important;
+  object-fit: contain !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.modal-before,
+.modal-after {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.modal-close {
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  color: white !important;
+  font-size: 30px !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  border: none !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  z-index: 10000 !important;
+}
+
+.modal-close:hover {
+  transform: rotate(90deg) !important;
+  color: #d4af37 !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Estilos para galerías de imágenes en el modal */
+.modal-gallery {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 20px !important;
+  width: 90vw !important;
+  max-height: 85vh !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.modal-gallery-item {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.modal-gallery-item img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Animación para la entrada del modal */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content,
+.modal-before-after,
+.modal img {
+  animation: modalFadeIn 0.3s ease forwards !important;
+}
+
+.floating-quote-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: auto; /* Cambiar de tamaño fijo a automático */
+  height: 60px;
+  background-color: #d4af37;
+  color: white;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  padding: 0 20px; /* Añadir padding horizontal */
+}
+
+.floating-quote-button:hover {
+  background-color: #b8860b;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.quote-button-icon {
+  font-size: 24px;
+  margin-right: 10px; /* Añadir margen a la derecha del icono */
+}
+
+.quote-button-text {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .floating-quote-button {
+    width: auto;
+    height: 50px;
+    padding: 0 15px;
+  }
+
+  .quote-button-text {
+    font-size: 14px;
+  }
+}
+
+/* Estilos para el botón flotante de cotización */
+.floating-quote-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: auto;
+  height: 56px;
+  background-color: #2e7d32; /* Verde elegante */
+  color: white;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(46, 125, 50, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1000;
+  padding: 0 24px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  font-family: var(--font-sans);
+}
+
+.floating-quote-button:hover {
+  background-color: #1b5e20; /* Verde más oscuro al hover */
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(46, 125, 50, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.floating-quote-button:active {
+  transform: translateY(-2px) scale(0.98);
+  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+}
+
+.quote-button-icon {
+  font-size: 20px;
+  margin-right: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  transition: transform 0.3s ease;
+}
+
+.floating-quote-button:hover .quote-button-icon {
+  transform: translateY(-2px);
+  color: white;
+}
+
+.quote-button-text {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.9);
+  transition: color 0.3s ease;
+}
+
+.floating-quote-button:hover .quote-button-text {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .floating-quote-button {
+    width: auto;
+    height: 48px;
+    padding: 0 18px;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .quote-button-text {
+    font-size: 14px;
+  }
+
+  .quote-button-icon {
+    font-size: 18px;
+    margin-right: 8px;
+  }
+}
+
+/* Estilos para el nuevo botón flotante rectangular con animaciones */
+.new-floating-estimate-btn {
+  position: fixed !important;
+  bottom: 30px !important;
+  right: 30px !important;
+  width: auto !important;
+  min-width: 180px !important;
+  height: 56px !important;
+  background-color: #2e7d32 !important; /* Verde elegante */
+  color: white !important;
+  border-radius: 8px !important; /* Rectangular con bordes redondeados */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 20px rgba(46, 125, 50, 0.4) !important;
+  z-index: 9999 !important;
+  padding: 0 24px !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  overflow: hidden !important;
+  font-family: var(--font-sans) !important;
+  animation: pulse 2s infinite !important;
+}
+
+/* Efecto de pulso para el botón */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 20px rgba(46, 125, 50, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(46, 125, 50, 0.6);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 4px 20px rgba(46, 125, 50, 0.4);
+    transform: scale(1);
+  }
+}
+
+/* Efecto de brillo que se mueve a través del botón */
+.new-floating-estimate-btn::before {
+  content: "" !important;
+  position: absolute !important;
+  top: -50% !important;
+  left: -50% !important;
+  width: 200% !important;
+  height: 200% !important;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+  transform: rotate(30deg) !important;
+  animation: shine 3s infinite !important;
+  z-index: 1 !important;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    left: 100%;
+    opacity: 0;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+.new-floating-estimate-btn:hover {
+  background-color: #1b5e20 !important; /* Verde más oscuro al hover */
+  transform: translateY(-5px) !important;
+  box-shadow: 0 8px 25px rgba(46, 125, 50, 0.6) !important;
+  animation: none !important; /* Detener la animación de pulso al hacer hover */
+}
+
+.new-floating-estimate-btn:active {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.5) !important;
+}
+
+.estimate-btn-icon {
+  font-size: 20px !important;
+  margin-right: 12px !important;
+  color: white !important;
+  position: relative !important;
+  z-index: 2 !important;
+  animation: bounce 2s infinite !important;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.new-floating-estimate-btn:hover .estimate-btn-icon {
+  animation: none !important; /* Detener la animación al hacer hover */
+  transform: rotate(15deg) !important;
+}
+
+.estimate-btn-text {
+  font-family: var(--font-sans) !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  letter-spacing: 0.5px !important;
+  white-space: nowrap !important;
+  color: white !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+@media (max-width: 768px) {
+  .new-floating-estimate-btn {
+    width: auto !important;
+    min-width: 160px !important;
+    height: 48px !important;
+    padding: 0 18px !important;
+    bottom: 20px !important;
+    right: 20px !important;
+  }
+
+  .estimate-btn-text {
+    font-size: 14px !important;
+  }
+
+  .estimate-btn-icon {
+    font-size: 18px !important;
+    margin-right: 8px !important;
+  }
+}
+
+/* Ocultar el botón flotante original para evitar duplicados */
+.floating-quote-button {
+  display: none !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Importamos la fuente Cinzel de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+
+/* Modificamos la clase hero-title para usar Cinzel */
+.hero-section {
+  font-family: 'Cinzel', serif !important;
+  font-size: 3.0rem !important;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+
+
+
+
+
+
+
+.hero-section, 
+.hero-section h1, 
+.hero-section h2, 
+.hero-section h3, 
+.hero-section h4, 
+.hero-section p, 
+.hero-section span {
+  color: white !important;
+}
+
+
+
+
+
+
+/* Significantly reduced section spacing */
+.section {
+  padding: 1.5rem 0 !important; /* Dramatically reduced from original 5rem */
+}
+
+.about-section {
+  padding: 1.5rem 0 !important;
+}
+
+.services-section {
+  padding: 1.5rem 0 !important;
+}
+
+.portfolio-section {
+  padding: 1.5rem 0 !important;
+}
+
+.testimonials-section {
+  padding: 1.5rem 0 !important;
+}
+
+.contact-section {
+  padding: 1.5rem 0 !important;
+}
+
+/* Minimal header spacing */
+.section-header {
+  margin-bottom: 1rem !important; /* Significantly reduced */
+}
+
+.section-title {
+  margin-bottom: 0.5rem !important; /* Minimal spacing */
+}
+
+.section-underline {
+  margin: 0.5rem auto !important; /* Reduced from 1.5rem to 0.5rem */
+}
+
+/* Tighter grid spacing */
+.about-content {
+  gap: 1.25rem !important; /* Significantly reduced */
+}
+
+.contact-container {
+  gap: 1.25rem !important;
+}
+
+.services-grid {
+  gap: 1rem !important; /* Minimal spacing between cards */
+}
+
+.portfolio-grid {
+  gap: 1rem !important;
+}
+
+.testimonials-grid {
+  gap: 1rem !important;
+}
+
+/* Compact card and content spacing */
+.service-card {
+  padding: 1.5rem !important; /* Reduced from 2.5rem to 1.5rem */
+}
+
+.service-icon {
+  margin: 0 auto 0.75rem !important; /* Minimal spacing */
+}
+
+.service-card h3 {
+  margin-bottom: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.service-card p {
+  margin-bottom: 0.75rem !important;
+}
+
+/* Tighter feature spacing */
+.about-features {
+  margin-top: 1rem !important; /* Reduced from 2rem to 1rem */
+  gap: 0.75rem !important; /* Minimal gap */
+}
+
+.feature {
+  gap: 0.5rem !important; /* Very tight spacing */
+}
+
+.feature-text h4 {
+  margin-bottom: 0.25rem !important; /* Minimal spacing */
+}
+
+/* Compact footer */
+.main-footer {
+  padding: 2rem 0 1rem !important; /* Significantly reduced */
+}
+
+.footer-grid {
+  gap: 2rem !important; /* Reduced from 4rem to 2rem */
+  margin-bottom: 1rem !important; /* Minimal margin */
+}
+
+.footer-about p {
+  margin-bottom: 0.75rem !important; /* Reduced spacing */
+}
+
+.footer-logo {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.footer-links h3,
+.footer-contact h3 {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+  padding-bottom: 0.5rem !important; /* Reduced padding */
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem !important; /* Reduced from 0.75rem */
+}
+
+.footer-contact p {
+  margin-bottom: 0.5rem !important; /* Reduced from 0.75rem */
+}
+
+.footer-bottom {
+  padding-top: 1rem !important; /* Reduced from 2rem */
+}
+
+/* Compact tab buttons */
+.tab-buttons,
+.portfolio-filter {
+  margin: 0 auto 1.25rem !important; /* Reduced from 2.5rem */
+  gap: 1rem !important; /* Reduced from 1.5rem */
+}
+
+.tab-button,
+.filter-button {
+  padding: 0.75rem 1.5rem !important; /* Reduced padding */
+}
+
+/* Compact hero section */
+.service-options {
+  margin-top: 0.75rem !important; /* Reduced from 1.5rem */
+  gap: 0.75rem !important; /* Minimal gap */
+}
+
+.service-option {
+  padding: 1rem !important; /* Reduced from 1.5rem */
+}
+
+.service-option-title {
+  margin-bottom: 0.5rem !important; /* Reduced from 0.75rem */
+  padding-bottom: 0.5rem !important; /* Reduced padding */
+}
+
+.service-option-desc {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.25rem */
+}
+
+/* Compact testimonials */
+.testimonial-card {
+  padding: 1.5rem !important; /* Reduced from 2.5rem */
+}
+
+.testimonial-text {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.testimonial-author-image {
+  margin-bottom: 0.5rem !important; /* Reduced from 1rem */
+}
+
+/* Compact contact form */
+.form-group {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.contact-info h3 {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.contact-info p {
+  margin-bottom: 1rem !important; /* Reduced from 2rem */
+}
+
+.contact-details {
+  margin-bottom: 1rem !important; /* Reduced from 2rem */
+}
+
+.contact-item {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.contact-form-container h3 {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+/* Ensure consistent minimal vertical rhythm */
+p {
+  margin-bottom: 0.5rem !important; /* Minimal paragraph spacing */
+}
+
+h3 {
+  margin-bottom: 0.75rem !important; /* Reduced heading spacing */
+}
+
+/* About text spacing */
+.about-text h3 {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.about-text p {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+
+
+
+
+
+
+
+/* Significantly reduced section spacing */
+.section {
+  padding: 1.5rem 0 !important; /* Dramatically reduced from original 5rem */
+}
+
+.about-section {
+  padding: 1.5rem 0 !important;
+}
+
+.services-section {
+  padding: 1.5rem 0 !important;
+}
+
+.portfolio-section {
+  padding: 1.5rem 0 !important;
+}
+
+.testimonials-section {
+  padding: 1.5rem 0 !important;
+}
+
+.contact-section {
+  padding: 1.5rem 0 !important;
+}
+
+/* Minimal header spacing */
+.section-header {
+  margin-bottom: 1rem !important; /* Significantly reduced */
+}
+
+.section-title {
+  margin-bottom: 0.5rem !important; /* Minimal spacing */
+}
+
+.section-underline {
+  margin: 0.5rem auto !important; /* Reduced from 1.5rem to 0.5rem */
+}
+
+/* Tighter grid spacing */
+.about-content {
+  gap: 1.25rem !important; /* Significantly reduced */
+}
+
+.contact-container {
+  gap: 1.25rem !important;
+}
+
+.services-grid {
+  gap: 1rem !important; /* Minimal spacing between cards */
+}
+
+.portfolio-grid {
+  gap: 1rem !important;
+}
+
+.testimonials-grid {
+  gap: 1rem !important;
+}
+
+/* Compact card and content spacing */
+.service-card {
+  padding: 1.5rem !important; /* Reduced from 2.5rem to 1.5rem */
+}
+
+.service-icon {
+  margin: 0 auto 0.75rem !important; /* Minimal spacing */
+}
+
+.service-card h3 {
+  margin-bottom: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.service-card p {
+  margin-bottom: 0.75rem !important;
+}
+
+/* Tighter feature spacing */
+.about-features {
+  margin-top: 1rem !important; /* Reduced from 2rem to 1rem */
+  gap: 0.75rem !important; /* Minimal gap */
+}
+
+.feature {
+  gap: 0.5rem !important; /* Very tight spacing */
+}
+
+.feature-text h4 {
+  margin-bottom: 0.25rem !important; /* Minimal spacing */
+}
+
+/* Compact footer */
+.main-footer {
+  padding: 2rem 0 1rem !important; /* Significantly reduced */
+}
+
+.footer-grid {
+  gap: 2rem !important; /* Reduced from 4rem to 2rem */
+  margin-bottom: 1rem !important; /* Minimal margin */
+}
+
+.footer-about p {
+  margin-bottom: 0.75rem !important; /* Reduced spacing */
+}
+
+.footer-logo {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.footer-links h3,
+.footer-contact h3 {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+  padding-bottom: 0.5rem !important; /* Reduced padding */
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem !important; /* Reduced from 0.75rem */
+}
+
+.footer-contact p {
+  margin-bottom: 0.5rem !important; /* Reduced from 0.75rem */
+}
+
+.footer-bottom {
+  padding-top: 1rem !important; /* Reduced from 2rem */
+}
+
+/* Compact tab buttons */
+.tab-buttons,
+.portfolio-filter {
+  margin: 0 auto 1.25rem !important; /* Reduced from 2.5rem */
+  gap: 1rem !important; /* Reduced from 1.5rem */
+}
+
+.tab-button,
+.filter-button {
+  padding: 0.75rem 1.5rem !important; /* Reduced padding */
+}
+
+/* Compact hero section */
+.service-options {
+  margin-top: 0.75rem !important; /* Reduced from 1.5rem */
+  gap: 0.75rem !important; /* Minimal gap */
+}
+
+.service-option {
+  padding: 1rem !important; /* Reduced from 1.5rem */
+}
+
+.service-option-title {
+  margin-bottom: 0.5rem !important; /* Reduced from 0.75rem */
+  padding-bottom: 0.5rem !important; /* Reduced padding */
+}
+
+.service-option-desc {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.25rem */
+}
+
+/* Compact testimonials */
+.testimonial-card {
+  padding: 1.5rem !important; /* Reduced from 2.5rem */
+}
+
+.testimonial-text {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.testimonial-author-image {
+  margin-bottom: 0.5rem !important; /* Reduced from 1rem */
+}
+
+/* Compact contact form */
+.form-group {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.contact-info h3 {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.contact-info p {
+  margin-bottom: 1rem !important; /* Reduced from 2rem */
+}
+
+.contact-details {
+  margin-bottom: 1rem !important; /* Reduced from 2rem */
+}
+
+.contact-item {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.contact-form-container h3 {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+/* Ensure consistent minimal vertical rhythm */
+p {
+  margin-bottom: 0.5rem !important; /* Minimal paragraph spacing */
+}
+
+h3 {
+  margin-bottom: 0.75rem !important; /* Reduced heading spacing */
+}
+
+/* About text spacing */
+.about-text h3 {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+}
+
+.about-text p {
+  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
 }
 

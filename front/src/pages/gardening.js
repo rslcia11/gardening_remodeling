@@ -40,6 +40,48 @@ export default function Gardening() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
 
+  // Eliminar el estado activeFilter y la función filteredPortfolio
+  //const [activeFilter, setActiveFilter] = useState("all")
+  // Eliminar esta línea ya que no necesitamos el estado de filtro
+
+  // Añadir este useEffect justo después de las declaraciones de estado, antes de los otros useEffect
+  useEffect(() => {
+    // Función para desplazar al inicio de la página
+    const scrollToTop = () => {
+      window.scrollTo(0, 0)
+    }
+
+    // Ejecutar inmediatamente cuando el componente se monta
+    scrollToTop()
+
+    // Manejar el evento de historial para cuando se navega con el botón atrás/adelante
+    const handlePopState = () => {
+      scrollToTop()
+    }
+
+    // Manejar el evento beforeunload para cuando se refresca la página
+    const handleBeforeUnload = () => {
+      // Guardar una marca en sessionStorage para indicar que la página debe desplazarse al inicio
+      sessionStorage.setItem("scrollToTop", "true")
+    }
+
+    // Verificar si debemos desplazarnos al inicio (después de un refresco)
+    if (sessionStorage.getItem("scrollToTop") === "true") {
+      scrollToTop()
+      sessionStorage.removeItem("scrollToTop")
+    }
+
+    // Agregar event listeners
+    window.addEventListener("popstate", handlePopState)
+    window.addEventListener("beforeunload", handleBeforeUnload)
+
+    // Limpiar event listeners cuando el componente se desmonta
+    return () => {
+      window.removeEventListener("popstate", handlePopState)
+      window.removeEventListener("beforeunload", handleBeforeUnload)
+    }
+  }, [])
+
   useEffect(() => {
     setIsVisible(true)
 
@@ -75,11 +117,121 @@ export default function Gardening() {
     }
   }, [])
 
+  // Nuevo useEffect para corregir los modales
+  useEffect(() => {
+    // Función para corregir los modales cuando se abren
+    function fixModals() {
+      // Seleccionar todos los modales
+      const modals = document.querySelectorAll(".modal, .image-modal-overlay")
+
+      modals.forEach((modal) => {
+        // Eliminar cualquier contenedor blanco
+        const containers = modal.querySelectorAll("div, section, article, main, aside, figure")
+        containers.forEach((container) => {
+          container.style.backgroundColor = "transparent"
+          container.style.background = "transparent"
+          container.style.border = "none"
+          container.style.boxShadow = "none"
+          container.style.padding = "0"
+          container.style.margin = "0"
+          container.style.maxWidth = "100%"
+          container.style.maxHeight = "100%"
+          container.style.display = "flex"
+          container.style.justifyContent = "center"
+          container.style.alignItems = "center"
+        })
+
+        // Hacer que las imágenes sean más grandes
+        const images = modal.querySelectorAll("img")
+        images.forEach((img) => {
+          img.style.maxWidth = "90vw"
+          img.style.maxHeight = "85vh"
+          img.style.width = "auto"
+          img.style.height = "auto"
+          img.style.objectFit = "contain"
+          img.style.border = "none"
+          img.style.boxShadow = "none"
+          img.style.background = "transparent"
+          img.style.margin = "0"
+          img.style.padding = "0"
+        })
+
+        // Asegurar que el botón de cierre sea visible
+        const closeButton = modal.querySelector(".modal-close-button")
+        if (closeButton) {
+          closeButton.style.position = "fixed"
+          closeButton.style.top = "20px"
+          closeButton.style.right = "20px"
+          closeButton.style.zIndex = "10000"
+        }
+      })
+    }
+
+    // Ejecutar la función cuando se abre un modal
+    document.addEventListener("click", (e) => {
+      if (e.target.closest("[data-modal-trigger]")) {
+        // Esperar a que el modal se abra
+        setTimeout(fixModals, 100)
+      }
+    })
+
+    // También ejecutar al cargar la página por si hay modales abiertos
+    fixModals()
+
+    // Y ejecutar periódicamente para asegurar que los modales se corrijan
+    const interval = setInterval(fixModals, 1000)
+
+    // Limpiar el intervalo cuando el componente se desmonte
+    return () => clearInterval(interval)
+  }, [])
+
+  // Añadir este useEffect para corregir el modal cuando está abierto
+  useEffect(() => {
+    if (isImageModalOpen) {
+      // Función para aplicar estilos al modal
+      const fixModal = () => {
+        const overlay = document.querySelector(".image-modal-overlay")
+        if (overlay) {
+          overlay.style.backgroundColor = "rgba(0, 0, 0, 0.95)"
+
+          // Eliminar cualquier fondo blanco de los contenedores
+          const containers = overlay.querySelectorAll("div")
+          containers.forEach((container) => {
+            container.style.backgroundColor = "transparent"
+            container.style.background = "transparent"
+            container.style.border = "none"
+            container.style.boxShadow = "none"
+          })
+
+          // Hacer que las imágenes sean más grandes
+          const images = overlay.querySelectorAll("img")
+          images.forEach((img) => {
+            img.style.maxWidth = "90vw"
+            img.style.maxHeight = "85vh"
+            img.style.width = "auto"
+            img.style.height = "auto"
+            img.style.objectFit = "contain"
+            img.style.border = "none"
+            img.style.boxShadow = "none"
+            img.style.background = "transparent"
+          })
+        }
+      }
+
+      // Ejecutar inmediatamente y luego cada 100ms para asegurar que se apliquen los estilos
+      fixModal()
+      const interval = setInterval(fixModal, 100)
+
+      // Limpiar el intervalo cuando el modal se cierre
+      return () => clearInterval(interval)
+    }
+  }, [isImageModalOpen])
+
   const scrollToContact = () => {
     document.getElementById("contact").scrollIntoView({ behavior: "smooth" })
   }
 
-  // Función para abrir el modal de imagen
+  // Función mejorada para abrir el modal con cualquier tipo de imagen
   const openImageModal = (image) => {
     // Si la imagen es un string (URL directa), convertirla al formato adecuado
     if (typeof image === "string") {
@@ -107,7 +259,32 @@ export default function Gardening() {
       document.body.classList.add("modal-open")
       // Seleccionar el overlay y añadir la clase open para la animación
       const overlay = document.querySelector(".image-modal-overlay")
-      if (overlay) overlay.classList.add("open")
+      if (overlay) {
+        overlay.classList.add("open")
+        overlay.style.backgroundColor = "rgba(0, 0, 0, 0.95)"
+
+        // Eliminar cualquier fondo blanco de los contenedores
+        const containers = overlay.querySelectorAll("div")
+        containers.forEach((container) => {
+          container.style.backgroundColor = "transparent"
+          container.style.background = "transparent"
+          container.style.border = "none"
+          container.style.boxShadow = "none"
+        })
+
+        // Hacer que las imágenes sean más grandes
+        const images = overlay.querySelectorAll("img")
+        images.forEach((img) => {
+          img.style.maxWidth = "90vw"
+          img.style.maxHeight = "85vh"
+          img.style.width = "auto"
+          img.style.height = "auto"
+          img.style.objectFit = "contain"
+          img.style.border = "none"
+          img.style.boxShadow = "none"
+          img.style.background = "transparent"
+        })
+      }
     }, 10)
   }
 
@@ -235,13 +412,6 @@ export default function Gardening() {
   const galleryItems = [
     {
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-SO1uzOSv574OMbCkD6aeSIWTJqec7R.jpeg",
-      title: "Instalación de Mantillo y Paisajismo",
-      description:
-        "Transformación completa con mantillo premium que mejora la retención de humedad, previene malezas y realza la estética del jardín.",
-    },
-    {
-      image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.30-sSuA8aE5YRtU40hUQT3wjnyT8obYmO.jpeg",
       title: "Diseño de Camino Lateral con Privacidad",
       description:
@@ -256,42 +426,89 @@ export default function Gardening() {
     },
     {
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20%20%281%29-bqk7asm0NPvOV85HOVI9G9YgvRAdAV.jpeg",
-      title: "Transformación Completa de Jardín",
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-31%20at%2021.37.02-KmMrxPV7c8gDfI4m5TTwnBnmbKQGFH.jpeg",
+      title: "Mantenimiento Profesional de Césped",
       description:
-        "Renovación integral con mantillo negro, bordes definidos y plantación estratégica de flores ornamentales para máximo impacto visual.",
+        "Servicio de mantenimiento con equipos profesionales que garantizan un césped saludable y bien cuidado durante todo el año.",
+    },
+    {
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-reGHppaVaFo7D6fo18RaHa6dmO06M4.jpeg",
+      title: "Instalación Profesional de Mantillo",
+      description:
+        "Aplicación experta de mantillo negro de alta calidad que mejora la estética del jardín, conserva la humedad y previene el crecimiento de malezas.",
     },
   ]
 
-  const beforeAfterItems = [
+  // Nuevo array para la sección de portafolio
+  const portfolioItems = [
     {
-      title: "Renovación de Jardín Frontal",
-      before:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20-HcZW7tGy7aYQ20LD1BdPOHEtF0GiQh.jpeg",
-      after:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20%20%281%29-bqk7asm0NPvOV85HOVI9G9YgvRAdAV.jpeg",
+      title: "Instalación de Mantillo Negro",
+      category: "mantillo",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-aXrRT1QdEN1wVMOdVpu8ihyIT5pfmr.jpeg",
       description:
-        "Esta transformación completa convirtió un jardín descuidado en un espacio elegante y de bajo mantenimiento con mantillo negro de alta calidad, bordes definidos y plantación estratégica de flores ornamentales.",
-      features: [
-        "Instalación de mantillo premium para control de malezas",
-        "Definición de bordes para un aspecto profesional",
-        "Selección de plantas adaptadas al clima local",
-        "Sistema de riego eficiente para conservación de agua",
-      ],
+        "Instalación profesional de mantillo negro para mejorar la estética del jardín y prevenir el crecimiento de malezas.",
     },
     {
-      title: "Diseño de Camino Lateral",
-      before: "https://source.unsplash.com/random/800x600/?garden,before",
-      after:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.30-sSuA8aE5YRtU40hUQT3wjnyT8obYmO.jpeg",
+      title: "Transformación Completa de Jardín",
+      category: "transformacion",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20%20%281%29-kIfWpCRNGVoMhpr07W7HlhkezKtyHP.jpeg",
+      beforeImage:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20-deqAT3ODJ4IZHK9pMdHTlcBxrNCygH.jpeg",
       description:
-        "Transformamos un espacio lateral estrecho y sin utilizar en un elegante pasaje funcional con árboles de hoja perenne para privacidad, cerca decorativa, iluminación solar y mantillo de calidad.",
-      features: [
-        "Árboles estratégicamente ubicados para privacidad",
-        "Iluminación solar para seguridad y estética nocturna",
-        "Mantillo premium para prevención de malezas",
-        "Diseño que maximiza el espacio disponible",
-      ],
+        "Renovación integral de jardín residencial que incluye instalación de mantillo negro, definición de bordes, plantación de flores ornamentales y mejora del césped.",
+    },
+    {
+      title: "Mantenimiento de Césped Residencial",
+      category: "cesped",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.26-T5QkvZIyu5OhSJjMpMY6mZCRCBemPa.jpeg",
+      description:
+        "Servicio de mantenimiento profesional de césped que incluye corte, fertilización y tratamientos para mantener un jardín impecable.",
+    },
+    {
+      title: "Instalación de Césped en Tepes",
+      category: "cesped",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/310931284_6576030909090437_4970806413429797238_n.jpg-drhL3Ph1tylgPXs6xqsOuICRzOY5Y5.jpeg",
+      description:
+        "Instalación de césped en tepes (sod) para crear rápidamente un jardín verde y uniforme, ideal para áreas nuevas o renovaciones completas.",
+    },
+    {
+      title: "Transformación de Jardín Frontal",
+      category: "transformacion",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.18%20%281%29-XJB6Ijc3J28UxFvhNk0qZwwGBbbGzq.jpeg",
+      beforeImage:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.18-JTkz62q0IMayxIJSPkejh16kWOAqTS.jpeg",
+      description:
+        "Renovación completa de jardín frontal residencial con mejora del césped, poda profesional de arbustos y aplicación de mantillo negro para definir bordes y realzar la estética del paisaje.",
+    },
+    {
+      title: "Aplicación de Mantillo en Jardín Residencial",
+      category: "mantillo",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-25%20at%2013.06.31-z5Fv8oFDhcMKu0CligdJjuItQ482V8.jpeg",
+      description:
+        "Instalación profesional de mantillo negro alrededor de árboles y arbustos para mejorar la estética, conservar la humedad del suelo y prevenir el crecimiento de malezas en este jardín residencial.",
+    },
+    {
+      title: "Mantenimiento de Césped en Patio Trasero",
+      category: "cesped",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-04-01%20at%2020.41.45-dMxOc7vS4qvMnbq9qICmQZJp6eSKsA.jpeg",
+      description:
+        "Servicio completo de mantenimiento de césped en patio trasero que incluye corte, fertilización y tratamientos para lograr un césped verde, denso y saludable, perfecto para actividades familiares al aire libre.",
+    },
+    {
+      title: "Preparación de Jardín para Halloween",
+      category: "estacional",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.16-m4mdZynXol3pGXYAfu0NcaBvBeR3be.jpeg",
+      description:
+        "Servicio de mantenimiento y preparación de jardín frontal para decoraciones estacionales, asegurando que el paisaje complemente perfectamente las decoraciones festivas mientras se mantiene la salud de plantas y arbustos.",
     },
   ]
 
@@ -337,6 +554,10 @@ export default function Gardening() {
     },
   ]
 
+  // Filtrar los elementos del portafolio según la categoría seleccionada
+  //const filteredPortfolio =
+  //  activeFilter === "all" ? portfolioItems : portfolioItems.filter((item) => item.category === activeFilter)
+
   return (
     <div className="page-container">
       {/* Navegación */}
@@ -361,17 +582,19 @@ export default function Gardening() {
 
             <ul className="nav-links">
               <li>
-                <Link to="/">INICIO</Link>
+                <Link to="/" onClick={() => window.scrollTo(0, 0)}>
+                  INICIO
+                </Link>
               </li>
               <li className="dropdown">
                 <a href="#servicios">
                   SERVICIOS <ChevronDown size={14} className="dropdown-indicator" />
                 </a>
                 <div className="dropdown-content">
-                  <Link to="/jardineria" className="active">
+                  <Link to="/jardineria" className="active" onClick={() => window.scrollTo(0, 0)}>
                     <Leaf size={16} className="dropdown-icon" /> Jardinería
                   </Link>
-                  <Link to="/interiores">
+                  <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
                     <Shovel size={16} className="dropdown-icon" /> Remodelación
                   </Link>
                 </div>
@@ -511,52 +734,34 @@ export default function Gardening() {
         </div>
       </section>
 
-      {/* Before & After Section */}
-      <section id="transformaciones" className="section before-after-section animate-on-scroll">
+      {/* Portfolio Section - Nueva sección añadida */}
+      <section id="portafolio" className="section portfolio-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Antes y Después</h2>
+            <h2 className="section-title">Nuestro Portafolio</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">TRANSFORMACIONES REALES</p>
+            <p className="section-subtitle">PROYECTOS DESTACADOS</p>
           </div>
 
-          <div className="before-after-showcase">
-            {beforeAfterItems.map((item, index) => (
-              <div className="before-after-item" key={index}>
-                <div
-                  className="before-after-images"
-                  onClick={() => openImageModal({ before: item.before, after: item.after, title: item.title })}
-                >
-                  <div className="before-image">
-                    <img src={item.before || "/placeholder.svg"} alt={`${item.title} - Antes`} />
-                    <div className="image-label">Antes</div>
+          <div className="portfolio-grid">
+            {portfolioItems.map((item, index) => (
+              <div
+                key={index}
+                className="portfolio-item"
+                onClick={() =>
+                  item.beforeImage ? openImageModal(item) : openImageModal({ single: item.image, title: item.title })
+                }
+              >
+                <div className="portfolio-image">
+                  <img src={item.image || "/placeholder.svg"} alt={item.title} className="main-portfolio-image" />
+                  <div className="portfolio-overlay">
+                    <div className="portfolio-content">
+                      <h3>{item.title}</h3>
+                    </div>
                   </div>
-                  <div className="after-image">
-                    <img src={item.after || "/placeholder.svg"} alt={`${item.title} - Después`} />
-                    <div className="image-label">Después</div>
-                  </div>
-                  <div className="click-to-expand">Ver en detalle</div>
-                </div>
-                <div className="transformation-details">
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                  <ul className="transformation-features">
-                    {item.features.map((feature, idx) => (
-                      <li key={idx}>
-                        <CheckCircle className="check-icon" /> {feature}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="before-after-cta">
-            <p>¿Listo para transformar su espacio exterior? Podemos hacer lo mismo por usted.</p>
-            <a href="#contact" className="cta-button">
-              Solicitar Su Transformación <ArrowRight className="cta-icon" />
-            </a>
           </div>
         </div>
       </section>
@@ -788,7 +993,9 @@ export default function Gardening() {
               <h3>Enlaces Rápidos</h3>
               <ul>
                 <li>
-                  <Link to="/">Inicio</Link>
+                  <Link to="/" onClick={() => window.scrollTo(0, 0)}>
+                    Inicio
+                  </Link>
                 </li>
                 <li>
                   <a href="#servicios">Servicios</a>
@@ -800,7 +1007,9 @@ export default function Gardening() {
                   <a href="#contact">Contacto</a>
                 </li>
                 <li>
-                  <Link to="/interiores">Remodelación</Link>
+                  <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
+                    Remodelación
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -824,32 +1033,63 @@ export default function Gardening() {
       </footer>
 
       {/* Botón flotante de cotización */}
-      <div className="floating-quote-button" onClick={() => scrollToContact()}>
-        <Phone className="quote-button-icon" />
+      <div className="new-floating-estimate-btn" onClick={() => scrollToContact()}>
+        <Mail className="estimate-btn-icon" />
+        <span className="estimate-btn-text">Free Estimate</span>
       </div>
 
-      {/* Modal de imagen */}
+      {/* Modal de imagen - MODIFICADO para eliminar bordes blancos y hacer imágenes más grandes */}
       {isImageModalOpen && (
-        <div className="image-modal-overlay" onClick={closeImageModal}>
-          <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close-button" onClick={closeImageModal}>
+        <div
+          className="image-modal-overlay"
+          onClick={closeImageModal}
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.95)", backdropFilter: "blur(5px)" }}
+        >
+          <div
+            className="image-modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "transparent",
+              border: "none",
+              boxShadow: "none",
+              maxWidth: "95vw",
+              maxHeight: "95vh",
+            }}
+          >
+            <button
+              className="modal-close-button"
+              onClick={closeImageModal}
+              style={{ position: "fixed", top: "20px", right: "20px", zIndex: 10000 }}
+            >
               <X size={18} />
             </button>
-            {selectedImage?.title && <h3 className="modal-title">{selectedImage.title}</h3>}
             {selectedImage?.before ? (
-              <div className="modal-before-after">
-                <div className="modal-before">
-                  <img src={selectedImage.before || "/placeholder.svg"} alt={`Antes: ${selectedImage.title}`} />
-                  <div className="modal-image-label">Antes</div>
+              <div
+                className="modal-before-after"
+                style={{ display: "flex", gap: "20px", background: "transparent", border: "none" }}
+              >
+                <div className="modal-before" style={{ flex: 1, background: "transparent", border: "none" }}>
+                  <img
+                    src={selectedImage.before || "/placeholder.svg"}
+                    alt="Imagen antes"
+                    style={{ maxWidth: "45vw", maxHeight: "85vh", objectFit: "contain", border: "none" }}
+                  />
                 </div>
-                <div className="modal-after">
-                  <img src={selectedImage.after || "/placeholder.svg"} alt={`Después: ${selectedImage.title}`} />
-                  <div className="modal-image-label">Después</div>
+                <div className="modal-after" style={{ flex: 1, background: "transparent", border: "none" }}>
+                  <img
+                    src={selectedImage.after || "/placeholder.svg"}
+                    alt="Imagen después"
+                    style={{ maxWidth: "45vw", maxHeight: "85vh", objectFit: "contain", border: "none" }}
+                  />
                 </div>
               </div>
             ) : selectedImage?.single ? (
-              <div className="modal-single-image">
-                <img src={selectedImage.single || "/placeholder.svg"} alt={selectedImage.title} />
+              <div className="modal-single-image" style={{ background: "transparent", border: "none" }}>
+                <img
+                  src={selectedImage.single || "/placeholder.svg"}
+                  alt="Imagen"
+                  style={{ maxWidth: "90vw", maxHeight: "85vh", objectFit: "contain", border: "none" }}
+                />
               </div>
             ) : null}
           </div>

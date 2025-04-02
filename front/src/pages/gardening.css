@@ -330,16 +330,22 @@ html {
   height: 2.5rem;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
 }
+section.gardening-hero .hero-title {
+  font-size: 5.5rem !important;
+}
 
 .hero-title {
   font-family: var(--font-serif);
-  font-size: 3.5rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: white;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   letter-spacing: var(--letter-spacing-tight);
   line-height: 1.2;
   margin: 0;
+}
+.hero-title-smaller {
+  font-size: 3.5rem;
 }
 
 .hero-subtitle {
@@ -1496,5 +1502,82 @@ html {
 .animate-in {
   opacity: 1;
   transform: translateY(0);
+}
+
+
+/* Importamos la fuente Cinzel de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+
+/* Modificamos la clase hero-title para usar Cinzel */
+.remodeling-hero .hero-title {
+  font-family: 'Cinzel', serif !important;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.03em; /* Aumentamos ligeramente el espaciado para Cinzel */
+  line-height: 1.2;
+  margin: 0;
+  text-transform: capitalize; /* Opcional: capitaliza cada palabra para un aspecto más monumental */
+}
+
+/* También aplicamos Cinzel a la sección de jardinería */
+section.gardening-hero .hero-title {
+  font-family: 'Cinzel', serif !important;
+  font-size: 5.5rem !important;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Reducir el espacio entre secciones */
+.section {
+  padding: 3rem 0; /* Reducido de 5rem a 3rem */
+}
+
+/* Reducir el espacio entre el encabezado de sección y el contenido */
+.section-header {
+  margin-bottom: 2rem; /* Reducido de 3rem a 2rem */
+}
+
+/* Reducir el espacio entre elementos dentro de las secciones */
+.about-content,
+.services-grid,
+.testimonials-grid,
+.contact-container {
+  gap: 2rem; /* Reducido para mantener consistencia */
+}
+
+/* Reducir el espacio entre los pasos del proceso */
+.process-steps {
+  gap: 1.5rem; /* Si existe, reducir el espacio entre los pasos */
+}
+
+/* Actualizar la imagen de fondo de la sección hero de jardinería */
+.gardening-hero {
+  background-image: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-04-01%20at%2020.41.45-kIgik1AHSsobocu7Ba0TtbGPjia2PG.jpeg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
 

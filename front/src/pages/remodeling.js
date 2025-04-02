@@ -4,15 +4,14 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import {
   CheckCircle,
-  Crown,
-  Hammer,
   Paintbrush,
-  Sofa,
+  Hammer,
+  PenToolIcon as Tool,
   Phone,
   Mail,
   MapPin,
   Award,
-  PenToolIcon as Tool,
+  Crown,
   ChevronDown,
   Menu,
   X,
@@ -22,15 +21,15 @@ import {
   Linkedin,
   Clock,
   Shield,
-  Leaf,
   Star,
   ArrowRight,
   ThumbsUp,
   Sparkles,
-  Wrench,
+  Home,
   Ruler,
   Lightbulb,
-  Droplet,
+  Leaf,
+  Shovel,
 } from "lucide-react"
 import "./remodeling.css"
 
@@ -40,6 +39,44 @@ export default function Remodeling() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
+
+  // Añadir este useEffect justo después de las declaraciones de estado, antes de los otros useEffect
+  useEffect(() => {
+    // Función para desplazar al inicio de la página
+    const scrollToTop = () => {
+      window.scrollTo(0, 0)
+    }
+
+    // Ejecutar inmediatamente cuando el componente se monta
+    scrollToTop()
+
+    // Manejar el evento de historial para cuando se navega con el botón atrás/adelante
+    const handlePopState = () => {
+      scrollToTop()
+    }
+
+    // Manejar el evento beforeunload para cuando se refresca la página
+    const handleBeforeUnload = () => {
+      // Guardar una marca en sessionStorage para indicar que la página debe desplazarse al inicio
+      sessionStorage.setItem("scrollToTop", "true")
+    }
+
+    // Verificar si debemos desplazarnos al inicio (después de un refresco)
+    if (sessionStorage.getItem("scrollToTop") === "true") {
+      scrollToTop()
+      sessionStorage.removeItem("scrollToTop")
+    }
+
+    // Agregar event listeners
+    window.addEventListener("popstate", handlePopState)
+    window.addEventListener("beforeunload", handleBeforeUnload)
+
+    // Limpiar event listeners cuando el componente se desmonta
+    return () => {
+      window.removeEventListener("popstate", handlePopState)
+      window.removeEventListener("beforeunload", handleBeforeUnload)
+    }
+  }, [])
 
   useEffect(() => {
     setIsVisible(true)
@@ -61,23 +98,136 @@ export default function Remodeling() {
     })
 
     // Gallery auto-scroll
-    const interval = setInterval(() => {
-      setActiveGalleryItem((prev) => (prev + 1) % galleryItems.length)
-    }, 5000)
+    const interval =
+      galleryItems.length > 0
+        ? setInterval(() => {
+            setActiveGalleryItem((prev) => (prev + 1) % galleryItems.length)
+          }, 5000)
+        : null
 
     return () => {
       document.querySelectorAll(".animate-on-scroll").forEach((section) => {
         observer.unobserve(section)
       })
-      clearInterval(interval)
+      if (interval) clearInterval(interval)
     }
   }, [])
+
+  // Nuevo useEffect para corregir los modales
+  useEffect(() => {
+    // Función para corregir los modales cuando se abren
+    function fixModals() {
+      // Seleccionar todos los modales
+      const modals = document.querySelectorAll(".modal, .image-modal-overlay")
+
+      modals.forEach((modal) => {
+        // Eliminar cualquier contenedor blanco
+        const containers = modal.querySelectorAll("div, section, article, main, aside, figure")
+        containers.forEach((container) => {
+          container.style.backgroundColor = "transparent"
+          container.style.background = "transparent"
+          container.style.border = "none"
+          container.style.boxShadow = "none"
+          container.style.padding = "0"
+          container.style.margin = "0"
+          container.style.maxWidth = "100%"
+          container.style.maxHeight = "100%"
+          container.style.display = "flex"
+          container.style.justifyContent = "center"
+          container.style.alignItems = "center"
+        })
+
+        // Hacer que las imágenes sean más grandes
+        const images = modal.querySelectorAll("img")
+        images.forEach((img) => {
+          img.style.maxWidth = "90vw"
+          img.style.maxHeight = "85vh"
+          img.style.width = "auto"
+          img.style.height = "auto"
+          img.style.objectFit = "contain"
+          img.style.border = "none"
+          img.style.boxShadow = "none"
+          img.style.background = "transparent"
+          img.style.margin = "0"
+          img.style.padding = "0"
+        })
+
+        // Asegurar que el botón de cierre sea visible
+        const closeButton = modal.querySelector(".modal-close-button")
+        if (closeButton) {
+          closeButton.style.position = "fixed"
+          closeButton.style.top = "20px"
+          closeButton.style.right = "20px"
+          closeButton.style.zIndex = "10000"
+        }
+      })
+    }
+
+    // Ejecutar la función cuando se abre un modal
+    document.addEventListener("click", (e) => {
+      if (e.target.closest("[data-modal-trigger]")) {
+        // Esperar a que el modal se abra
+        setTimeout(fixModals, 100)
+      }
+    })
+
+    // También ejecutar al cargar la página por si hay modales abiertos
+    fixModals()
+
+    // Y ejecutar periódicamente para asegurar que los modales se corrijan
+    const interval = setInterval(fixModals, 1000)
+
+    // Limpiar el intervalo cuando el componente se desmonte
+    return () => clearInterval(interval)
+  }, [])
+
+  // Añadir este useEffect para corregir el modal cuando está abierto
+  useEffect(() => {
+    if (isImageModalOpen) {
+      // Función para aplicar estilos al modal
+      const fixModal = () => {
+        const overlay = document.querySelector(".image-modal-overlay")
+        if (overlay) {
+          overlay.style.backgroundColor = "rgba(0, 0, 0, 0.95)"
+
+          // Eliminar cualquier fondo blanco de los contenedores
+          const containers = overlay.querySelectorAll("div")
+          containers.forEach((container) => {
+            container.style.backgroundColor = "transparent"
+            container.style.background = "transparent"
+            container.style.border = "none"
+            container.style.boxShadow = "none"
+          })
+
+          // Hacer que las imágenes sean más grandes
+          const images = overlay.querySelectorAll("img")
+          images.forEach((img) => {
+            img.style.maxWidth = "90vw"
+            img.style.maxHeight = "85vh"
+            img.style.width = "auto"
+            img.style.height = "auto"
+            img.style.objectFit = "contain"
+            img.style.border = "none"
+            img.style.boxShadow = "none"
+            img.style.background = "transparent"
+          })
+        }
+      }
+
+      // Ejecutar inmediatamente y luego cada 100ms para asegurar que se apliquen los estilos
+      fixModal()
+      const interval = setInterval(fixModal, 100)
+
+      // Limpiar el intervalo cuando el modal se cierre
+      return () => clearInterval(interval)
+    }
+  }, [isImageModalOpen])
 
   const scrollToContact = () => {
     document.getElementById("contact").scrollIntoView({ behavior: "smooth" })
   }
 
-  // Función para abrir el modal con la imagen seleccionada
+  // Función mejorada para abrir el modal con cualquier tipo de imagen
   const openImageModal = (image) => {
     // Si la imagen es un string (URL directa), convertirla al formato adecuado
     if (typeof image === "string") {
@@ -105,11 +255,36 @@ export default function Remodeling() {
       document.body.classList.add("modal-open")
       // Seleccionar el overlay y añadir la clase open para la animación
       const overlay = document.querySelector(".image-modal-overlay")
-      if (overlay) overlay.classList.add("open")
+      if (overlay) {
+        overlay.classList.add("open")
+        overlay.style.backgroundColor = "rgba(0, 0, 0, 0.95)"
+
+        // Eliminar cualquier fondo blanco de los contenedores
+        const containers = overlay.querySelectorAll("div")
+        containers.forEach((container) => {
+          container.style.backgroundColor = "transparent"
+          container.style.background = "transparent"
+          container.style.border = "none"
+          container.style.boxShadow = "none"
+        })
+
+        // Hacer que las imágenes sean más grandes
+        const images = overlay.querySelectorAll("img")
+        images.forEach((img) => {
+          img.style.maxWidth = "90vw"
+          img.style.maxHeight = "85vh"
+          img.style.width = "auto"
+          img.style.height = "auto"
+          img.style.objectFit = "contain"
+          img.style.border = "none"
+          img.style.boxShadow = "none"
+          img.style.background = "transparent"
+        })
+      }
     }, 10)
   }
 
-  // Modificar la función closeImageModal para mejorar la animación de cierre
+  // Función para cerrar el modal
   const closeImageModal = () => {
     // Seleccionar el overlay y remover la clase open para la animación
     const overlay = document.querySelector(".image-modal-overlay")
@@ -128,104 +303,104 @@ export default function Remodeling() {
       icon: <Paintbrush className="service-icon-svg" />,
       title: "Remodelación de Interiores",
       description:
-        "Transformamos completamente sus espacios interiores con diseños modernos y funcionales que reflejan su estilo personal y aumentan el valor de su propiedad, creando ambientes que impresionan y perduran.",
+        "Transformamos completamente sus espacios interiores con diseños modernos y funcionales que reflejan su estilo personal y mejoran su calidad de vida diaria.",
       features: [
-        "Renovación completa de espacios",
-        "Diseños personalizados exclusivos",
-        "Acabados de alta calidad",
-        "Optimización de espacios",
-        "Soluciones a medida",
+        "Renovación de cocinas y baños",
+        "Instalación de pisos y acabados",
+        "Diseño personalizado de espacios",
+        "Remodelación de sótanos",
+        "Actualización de iluminación",
       ],
     },
     {
       icon: <Hammer className="service-icon-svg" />,
-      title: "Cocinas y Baños",
+      title: "Construcción y Ampliaciones",
       description:
-        "Renovamos las áreas más importantes de su hogar con diseños elegantes y funcionales que combinan belleza y practicidad, utilizando materiales premium y las últimas tendencias en diseño de interiores.",
+        "Realizamos proyectos de construcción y ampliación que aumentan el valor de su propiedad, desde nuevas habitaciones hasta estructuras completas con los más altos estándares de calidad.",
       features: [
-        "Gabinetes personalizados",
-        "Encimeras de lujo",
-        "Instalaciones modernas",
-        "Iluminación estratégica",
-        "Distribución optimizada",
+        "Ampliaciones de viviendas",
+        "Construcción de estructuras",
+        "Renovación de fachadas",
+        "Adición de habitaciones",
+        "Conversión de espacios",
       ],
     },
     {
       icon: <Tool className="service-icon-svg" />,
       title: "Acabados y Detalles",
       description:
-        "Nos especializamos en acabados de alta calidad y detalles que marcan la diferencia, desde trabajos de pintura profesional hasta instalaciones eléctricas y de plomería que elevan el nivel de su hogar.",
+        "Nos especializamos en acabados de alta calidad y detalles que marcan la diferencia, desde trabajos de pintura profesional hasta instalaciones eléctricas y de plomería.",
       features: [
         "Pintura interior y exterior",
         "Instalaciones eléctricas",
-        "Carpintería personalizada",
-        "Molduras decorativas",
-        "Texturas y efectos especiales",
+        "Carpintería y detalles personalizados",
+        "Texturizado de paredes",
+        "Instalación de molduras",
       ],
     },
     {
-      icon: <Sofa className="service-icon-svg" />,
-      title: "Diseño de Interiores",
+      icon: <Shovel className="service-icon-svg" />,
+      title: "Remodelación de Exteriores",
       description:
-        "Creamos espacios armoniosos y estéticos que combinan funcionalidad y belleza para mejorar su calidad de vida y reflejar su personalidad en cada rincón de su hogar, con un estilo único y atemporal.",
+        "Transformamos sus espacios exteriores con terrazas, patios, pérgolas y otras estructuras que extienden su área habitable y crean ambientes perfectos para disfrutar al aire libre.",
       features: [
-        "Selección de materiales y colores",
-        "Distribución óptima de espacios",
-        "Iluminación estratégica",
-        "Mobiliario a medida",
-        "Accesorios decorativos",
+        "Diseño e instalación de terrazas",
+        "Construcción de patios y pérgolas",
+        "Instalación de cocinas exteriores",
+        "Creación de espacios de entretenimiento",
+        "Estructuras personalizadas",
       ],
     },
     {
-      icon: <Wrench className="service-icon-svg" />,
-      title: "Ampliaciones y Construcción",
+      icon: <Home className="service-icon-svg" />,
+      title: "Renovación Completa",
       description:
-        "Expandimos su espacio habitable con ampliaciones y construcciones que se integran perfectamente con su hogar existente, aumentando su área útil y el valor de su propiedad con diseños arquitectónicos de calidad.",
+        "Ofrecemos servicios integrales de renovación para transformar completamente su hogar, combinando diseño innovador, materiales de calidad y artesanía excepcional.",
       features: [
-        "Adición de habitaciones",
-        "Extensiones de cocina",
-        "Conversión de áticos y sótanos",
-        "Porches y terrazas",
-        "Garajes y estructuras adicionales",
+        "Renovación de viviendas completas",
+        "Actualización de sistemas",
+        "Redistribución de espacios",
+        "Mejoras de eficiencia energética",
+        "Modernización integral",
       ],
     },
     {
       icon: <Ruler className="service-icon-svg" />,
-      title: "Pisos y Revestimientos",
+      title: "Diseño Arquitectónico",
       description:
-        "Instalamos pisos y revestimientos de alta calidad que transforman completamente la apariencia de sus espacios, utilizando materiales duraderos y estéticos que resisten el paso del tiempo y el uso diario.",
+        "Nuestro equipo de diseño crea planos detallados y visualizaciones 3D que le permiten ver su proyecto antes de comenzar la construcción, asegurando que cada detalle cumpla con sus expectativas.",
       features: [
-        "Pisos de madera y laminados",
-        "Porcelanatos y cerámicas",
-        "Piedra natural y artificial",
-        "Vinílicos y materiales innovadores",
-        "Alfombras y textiles",
+        "Planos arquitectónicos",
+        "Visualizaciones 3D",
+        "Diseño de espacios funcionales",
+        "Optimización de distribución",
+        "Consultoría de diseño",
       ],
     },
     {
       icon: <Lightbulb className="service-icon-svg" />,
-      title: "Iluminación y Electricidad",
+      title: "Instalaciones Eléctricas",
       description:
-        "Diseñamos e instalamos sistemas de iluminación que realzan la belleza de sus espacios y mejoran su funcionalidad, junto con actualizaciones eléctricas que garantizan seguridad y eficiencia energética.",
+        "Realizamos instalaciones eléctricas seguras y eficientes, desde la actualización de sistemas antiguos hasta la implementación de soluciones de iluminación inteligente y automatización del hogar.",
       features: [
-        "Diseño de iluminación personalizado",
-        "Instalación de luminarias",
-        "Actualización de paneles eléctricos",
-        "Sistemas de iluminación inteligente",
+        "Actualización de sistemas eléctricos",
+        "Instalación de iluminación LED",
+        "Sistemas de automatización",
         "Soluciones de ahorro energético",
+        "Diagnóstico y reparación",
       ],
     },
     {
-      icon: <Droplet className="service-icon-svg" />,
-      title: "Plomería y Sistemas de Agua",
+      icon: <Leaf className="service-icon-svg" />,
+      title: "Remodelación Sostenible",
       description:
-        "Renovamos su sistema de plomería con instalaciones modernas y eficientes que previenen problemas futuros, mejoran el flujo de agua y contribuyen al ahorro en su consumo, con acabados estéticos y funcionales.",
+        "Implementamos prácticas y materiales sostenibles en nuestros proyectos de remodelación, reduciendo el impacto ambiental mientras creamos espacios saludables y eficientes energéticamente.",
       features: [
-        "Renovación completa de tuberías",
-        "Instalación de grifería moderna",
-        "Sistemas de filtración de agua",
-        "Calentadores eficientes",
-        "Solución de problemas complejos",
+        "Materiales ecológicos y sostenibles",
+        "Sistemas de ahorro de agua",
+        "Aislamiento térmico eficiente",
+        "Iluminación de bajo consumo",
+        "Certificaciones verdes",
       ],
     },
   ]
@@ -233,87 +408,45 @@ export default function Remodeling() {
   const galleryItems = [
     {
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27-EqiOMY03IlblCJkSzaIHSZu2GPcI9r.jpeg",
-      title: "Cocina Moderna de Dos Tonos",
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.25-CpCQmn9D9nAUd3qFaCTU2I9Iw9dKfo.jpeg",
+      title: "Transformación Completa de Baño",
       description:
-        "Renovación completa con gabinetes de dos tonos, encimeras de cuarzo y electrodomésticos de acero inoxidable.",
+        "Renovación total con diseño moderno que incluye azulejos en patrón de espiga, ducha con regadera tipo lluvia y mueble con acabado de madera.",
+    },
+    {
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.28-dQrMCrAbMJVpnsehimsIoXyo0V3kwi.jpeg",
+      title: "Renovación de Ático",
+      description:
+        "Transformación de ático sin usar a un espacio habitable con pisos de madera, iluminación empotrada y acabados de alta calidad.",
+    },
+    {
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg",
+      title: "Renovación de Cocina Moderna",
+      description:
+        "Transformación completa con encimeras de cuarzo blanco, gabinetes de dos tonos, azulejos hexagonales de mármol y electrodomésticos de acero inoxidable.",
     },
     {
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.30-reCfkY0qNcuPQoRYvWvbGyLWthgSqj.jpeg",
-      title: "Remodelación de Ático en Proceso",
+      title: "Remodelación de Sótano",
       description:
-        "Transformación de espacios no utilizados en áreas funcionales con acabados de alta calidad y atención al detalle.",
-    },
-    {
-      image: "/images/bathroom-after.jpeg",
-      title: "Transformación Total de Baño",
-      description: "Renovación completa con acabados de mármol, gabinetes modernos y ducha de vidrio templado.",
-    },
-    {
-      image: "/images/bathroom-before.jpeg",
-      title: "Antes y Después: Baño Renovado",
-      description: "Vea la dramática transformación de este baño antiguo a un espacio moderno y elegante.",
-    },
-  ]
-
-  const beforeAfterItems = [
-    {
-      title: "Renovación Completa de Baño",
-      before: "/images/bathroom-before.jpeg",
-      after: "/images/bathroom-after.jpeg",
-      description:
-        "Esta transformación total convirtió un baño anticuado en un espacio moderno y elegante con acabados de mármol, gabinetes personalizados y una ducha de vidrio templado que maximiza el espacio disponible.",
-      features: [
-        "Reemplazo completo de azulejos y accesorios",
-        "Instalación de gabinetes a medida",
-        "Ducha moderna con puertas de vidrio templado",
-        "Iluminación LED empotrada",
-      ],
-    },
-    {
-      title: "Renovación Completa de Ático",
-      before:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27%20%281%29-2cc09hsVgCuxBXpuiRoxHEiAr4GH2v.jpeg",
-      after:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.28-dQrMCrAbMJVpnsehimsIoXyo0V3kwi.jpeg",
-      description:
-        "Esta transformación convirtió un ático sin utilizar en un espacio habitable luminoso y funcional con pisos de madera de alta calidad, iluminación empotrada y acabados modernos que maximizan el espacio disponible bajo el techo inclinado.",
-      features: [
-        "Instalación de pisos de madera de alta calidad",
-        "Sistema de iluminación empotrada",
-        "Aislamiento térmico y acústico premium",
-        "Acabados de paredes y techos perfectos",
-      ],
-    },
-    {
-      title: "Renovación de Cocina Moderna",
-      before:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%281%29-3xLNhK99Bak6DL5NFisMyLQl1FUBbL.jpeg",
-      after:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg",
-      description:
-        "Esta transformación completa convirtió una cocina anticuada en un espacio elegante y funcional con encimeras de cuarzo blanco, gabinetes de dos tonos, azulejos hexagonales de mármol y electrodomésticos de acero inoxidable.",
-      features: [
-        "Instalación de encimeras de cuarzo de alta calidad",
-        "Gabinetes de dos tonos con herrajes modernos",
-        "Backsplash de azulejos hexagonales de mármol",
-        "Electrodomésticos de acero inoxidable de alta gama",
-      ],
+        "Conversión de sótano en espacio habitable con sala de entretenimiento, iluminación empotrada y acabados modernos que maximizan el espacio.",
     },
   ]
 
   const testimonials = [
     {
       name: "Carlos Méndez",
-      role: "Propietario",
-      text: "La remodelación de nuestra cocina superó todas nuestras expectativas. El equipo fue profesional, puntual y los resultados son impresionantes. Cada detalle fue cuidadosamente ejecutado y ahora tenemos el espacio de nuestros sueños.",
+      role: "Propietario en Hackensack",
+      text: "Jimenez Services transformó nuestra cocina anticuada en un espacio moderno y funcional que ahora es el centro de nuestra casa. Su atención al detalle y profesionalismo son excepcionales. Terminaron el proyecto a tiempo y dentro del presupuesto, superando todas nuestras expectativas.",
       rating: 5,
     },
     {
-      name: "Ana Gutiérrez",
-      role: "Diseñadora",
-      text: "Contratamos a Jimenez Services para remodelar nuestra oficina. La atención al detalle y la calidad del trabajo fueron excepcionales. Transformaron completamente el espacio, creando un ambiente profesional y acogedor que impresiona a todos nuestros clientes.",
+      name: "Elena Rodríguez",
+      role: "Propietaria de Negocio",
+      text: "La remodelación de nuestra oficina fue impecable. El equipo de Jimenez entendió exactamente lo que necesitábamos y entregaron resultados excepcionales en tiempo récord. El espacio es ahora más funcional y estéticamente atractivo, y nuestros clientes no paran de elogiar el nuevo diseño.",
       rating: 5,
     },
   ]
@@ -323,7 +456,7 @@ export default function Remodeling() {
       icon: <ThumbsUp />,
       title: "Aumento del Valor de su Propiedad",
       description:
-        "Una remodelación profesional puede aumentar el valor de su propiedad hasta un 70%, ofreciendo un excelente retorno de inversión.",
+        "Nuestras remodelaciones pueden aumentar significativamente el valor de su propiedad, ofreciendo un excelente retorno de inversión a largo plazo.",
     },
     {
       icon: <Sparkles />,
@@ -335,19 +468,19 @@ export default function Remodeling() {
       icon: <Shield />,
       title: "Garantía de Calidad",
       description:
-        "Todos nuestros trabajos están respaldados por garantías que aseguran la durabilidad y perfección de cada detalle.",
+        "Respaldamos nuestro trabajo con garantías sólidas y un compromiso inquebrantable con la excelencia en cada detalle del proyecto.",
     },
     {
       icon: <Award />,
       title: "Materiales Premium",
       description:
-        "Utilizamos exclusivamente materiales de primera calidad que garantizan durabilidad excepcional y belleza duradera.",
+        "Utilizamos exclusivamente materiales de primera calidad que garantizan durabilidad excepcional y belleza duradera en cada proyecto.",
     },
   ]
 
   return (
     <div className="page-container">
-      {/* Navigation */}
+      {/* Navegación */}
       <nav className="main-nav">
         <div className="nav-container">
           <div className="main-nav-content">
@@ -369,17 +502,19 @@ export default function Remodeling() {
 
             <ul className="nav-links">
               <li>
-                <Link to="/">INICIO</Link>
+                <Link to="/" onClick={() => window.scrollTo(0, 0)}>
+                  INICIO
+                </Link>
               </li>
               <li className="dropdown">
                 <a href="#servicios">
                   SERVICIOS <ChevronDown size={14} className="dropdown-indicator" />
                 </a>
                 <div className="dropdown-content">
-                  <Link to="/jardineria">
+                  <Link to="/jardineria" onClick={() => window.scrollTo(0, 0)}>
                     <Leaf size={16} className="dropdown-icon" /> Jardinería
                   </Link>
-                  <Link to="/interiores" className="active">
+                  <Link to="/interiores" className="active" onClick={() => window.scrollTo(0, 0)}>
                     <Hammer size={16} className="dropdown-icon" /> Remodelación
                   </Link>
                 </div>
@@ -409,12 +544,12 @@ export default function Remodeling() {
         <div className={`hero-content ${isVisible ? "visible" : ""}`}>
           <div className="hero-title-container">
             <Crown className="hero-icon" />
-            <h1 className="hero-title">Remodelación y Construcción</h1>
+            <h1 className="hero-title">Remodelación Profesional</h1>
             <Crown className="hero-icon" />
           </div>
           <p className="hero-subtitle">
-            Transformamos espacios con diseños modernos y funcionales que reflejan tu estilo personal, aumentan el valor
-            de tu propiedad y mejoran tu calidad de vida
+            Transformamos espacios ordinarios en extraordinarios con diseños personalizados que reflejan su estilo y
+            mejoran su calidad de vida
           </p>
           <div className="hero-buttons">
             <a href="#servicios" className="hero-button">
@@ -433,7 +568,7 @@ export default function Remodeling() {
           <div className="section-header">
             <h2 className="section-title">Remodelación de Élite</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">TRANSFORMAMOS SU ESPACIO INTERIOR</p>
+            <p className="section-subtitle">TRANSFORMAMOS SU ESPACIO</p>
           </div>
           <div className="about-content">
             <div className="about-image-grid">
@@ -453,15 +588,15 @@ export default function Remodeling() {
             <div className="about-text">
               <h3>Excelencia en Cada Detalle Constructivo</h3>
               <p>
-                En Jimenez Services, no solo remodelamos espacios –{" "}
-                <strong>creamos ambientes que transforman su experiencia diaria</strong>. Nuestro equipo de
-                profesionales combina visión creativa con precisión técnica para diseñar y construir espacios que
-                superan sus expectativas.
+                En Jimenez Services, no solo remodelamos espacios – <strong>creamos ambientes excepcionales</strong> que
+                transforman su propiedad y mejoran su calidad de vida. Nuestro equipo de profesionales combina
+                conocimiento técnico con visión artística para diseñar, construir y renovar espacios que superan sus
+                expectativas.
               </p>
               <p>
-                Desde renovaciones de cocinas y baños hasta proyectos completos de construcción, nos comprometemos a
-                entregar resultados excepcionales con materiales de primera calidad y acabados impecables que{" "}
-                <strong>aumentan el valor de su propiedad</strong> y crean espacios que disfrutará por años.
+                Desde pequeñas renovaciones hasta proyectos completos de remodelación, nos comprometemos a ofrecer un
+                servicio personalizado y resultados impecables que <strong>aumentan el valor de su propiedad</strong> y
+                crean espacios que disfrutará por años.
               </p>
               <div className="about-features">
                 {benefits.map((benefit, index) => (
@@ -511,59 +646,9 @@ export default function Remodeling() {
           </div>
 
           <div className="services-cta">
-            <p>Descubra cómo podemos transformar su espacio interior en un ambiente elegante y funcional</p>
+            <p>Descubra cómo podemos transformar su espacio en un ambiente funcional, moderno y personalizado</p>
             <a href="#contact" className="cta-button">
               Solicitar Consulta Gratuita <ArrowRight className="cta-icon" />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Before & After Section */}
-      <section id="transformaciones" className="section before-after-section animate-on-scroll">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Antes y Después</h2>
-            <div className="section-underline"></div>
-            <p className="section-subtitle">TRANSFORMACIONES REALES</p>
-          </div>
-
-          <div className="before-after-showcase">
-            {beforeAfterItems.map((item, index) => (
-              <div className="before-after-item" key={index}>
-                <div
-                  className="before-after-images"
-                  onClick={() => openImageModal({ before: item.before, after: item.after, title: item.title })}
-                >
-                  <div className="before-image">
-                    <img src={item.before || "/placeholder.svg"} alt={`${item.title} - Antes`} />
-                    <div className="image-label">Antes</div>
-                  </div>
-                  <div className="after-image">
-                    <img src={item.after || "/placeholder.svg"} alt={`${item.title} - Después`} />
-                    <div className="image-label">Después</div>
-                  </div>
-                  <div className="click-to-expand">Ver en detalle</div>
-                </div>
-                <div className="transformation-details">
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                  <ul className="transformation-features">
-                    {item.features.map((feature, idx) => (
-                      <li key={idx}>
-                        <CheckCircle className="check-icon" /> {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="before-after-cta">
-            <p>¿Listo para transformar su espacio interior? Podemos hacer lo mismo por usted.</p>
-            <a href="#contact" className="cta-button">
-              Solicitar Su Transformación <ArrowRight className="cta-icon" />
             </a>
           </div>
         </div>
@@ -583,31 +668,35 @@ export default function Remodeling() {
               <div className="step-number">1</div>
               <h3>Consulta Inicial</h3>
               <p>
-                Nos reunimos en su propiedad para entender sus necesidades, evaluar el espacio y discutir ideas y
-                presupuesto.
+                Nos reunimos para entender sus necesidades, evaluar el espacio, discutir ideas y establecer un
+                presupuesto preliminar.
               </p>
             </div>
 
             <div className="process-step">
               <div className="step-number">2</div>
-              <h3>Diseño Personalizado</h3>
-              <p>Creamos planos detallados con selección de materiales, colores y elementos que reflejan su visión.</p>
+              <h3>Diseño y Planificación</h3>
+              <p>
+                Creamos planos detallados, seleccionamos materiales y finalizamos presupuestos para su aprobación antes
+                de comenzar.
+              </p>
             </div>
 
             <div className="process-step">
               <div className="step-number">3</div>
               <h3>Ejecución Experta</h3>
               <p>
-                Nuestro equipo de profesionales realiza la remodelación con precisión, eficiencia y materiales premium.
+                Nuestro equipo de profesionales realiza la transformación con precisión, eficiencia y materiales
+                premium.
               </p>
             </div>
 
             <div className="process-step">
               <div className="step-number">4</div>
-              <h3>Entrega Final</h3>
+              <h3>Entrega y Garantía</h3>
               <p>
-                Realizamos una revisión completa para asegurar que cada detalle cumple con nuestros estándares de
-                calidad.
+                Realizamos una inspección final juntos para asegurar su satisfacción total y respaldamos nuestro trabajo
+                con garantías sólidas.
               </p>
             </div>
           </div>
@@ -650,7 +739,7 @@ export default function Remodeling() {
           </div>
 
           <div className="testimonials-cta">
-            <p>Únase a nuestros clientes satisfechos y transforme su espacio interior</p>
+            <p>Únase a nuestros clientes satisfechos y transforme su espacio</p>
             <a href="#contact" className="cta-button">
               Solicitar Presupuesto <ArrowRight className="cta-icon" />
             </a>
@@ -734,9 +823,9 @@ export default function Remodeling() {
                   <select id="service">
                     <option value="">Seleccione un servicio</option>
                     <option value="interior-remodeling">Remodelación de Interiores</option>
-                    <option value="kitchen-bath">Cocinas y Baños</option>
-                    <option value="finishing">Acabados y Detalles</option>
-                    <option value="interior-design">Diseño de Interiores</option>
+                    <option value="construction">Construcción y Ampliaciones</option>
+                    <option value="exterior-remodeling">Remodelación de Exteriores</option>
+                    <option value="complete-renovation">Renovación Completa</option>
                     <option value="other">Otro Servicio</option>
                   </select>
                 </div>
@@ -773,8 +862,8 @@ export default function Remodeling() {
                 <span>Jimenez Services LLC</span>
               </div>
               <p>
-                Transformando espacios interiores en obras maestras de diseño desde 2018. Nuestro compromiso:
-                excelencia, innovación y satisfacción garantizada en cada proyecto.
+                Transformando espacios ordinarios en extraordinarios desde 2018. Nuestro compromiso: excelencia,
+                innovación y satisfacción garantizada en cada proyecto.
               </p>
               <div className="footer-social">
                 <a href="#" className="footer-social-icon">
@@ -795,13 +884,12 @@ export default function Remodeling() {
               <h3>Enlaces Rápidos</h3>
               <ul>
                 <li>
-                  <Link to="/">Inicio</Link>
+                  <Link to="/" onClick={() => window.scrollTo(0, 0)}>
+                    Inicio
+                  </Link>
                 </li>
                 <li>
                   <a href="#servicios">Servicios</a>
-                </li>
-                <li>
-                  <a href="#transformaciones">Antes/Después</a>
                 </li>
                 <li>
                   <a href="#testimonios">Testimonios</a>
@@ -810,7 +898,9 @@ export default function Remodeling() {
                   <a href="#contact">Contacto</a>
                 </li>
                 <li>
-                  <Link to="/jardineria">Jardinería</Link>
+                  <Link to="/jardineria" onClick={() => window.scrollTo(0, 0)}>
+                    Jardinería
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -833,33 +923,64 @@ export default function Remodeling() {
         </div>
       </footer>
 
-      {/* Botón flotante de cotización */}
-      <div className="floating-quote-button" onClick={() => scrollToContact()}>
-        <Phone className="quote-button-icon" />
+      {/* Buscar el botón flotante de cotización y reemplazarlo con este nuevo código */}
+      <div className="new-floating-estimate-btn" onClick={() => scrollToContact()}>
+        <Mail className="estimate-btn-icon" />
+        <span className="estimate-btn-text">Free Estimate</span>
       </div>
 
-      {/* Modal de imagen */}
+      {/* Modal de imagen - MODIFICADO para eliminar bordes blancos y hacer imágenes más grandes */}
       {isImageModalOpen && (
-        <div className="image-modal-overlay" onClick={closeImageModal}>
-          <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close-button" onClick={closeImageModal}>
+        <div
+          className="image-modal-overlay"
+          onClick={closeImageModal}
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.95)", backdropFilter: "blur(5px)" }}
+        >
+          <div
+            className="image-modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "transparent",
+              border: "none",
+              boxShadow: "none",
+              maxWidth: "95vw",
+              maxHeight: "95vh",
+            }}
+          >
+            <button
+              className="modal-close-button"
+              onClick={closeImageModal}
+              style={{ position: "fixed", top: "20px", right: "20px", zIndex: 10000 }}
+            >
               <X size={18} />
             </button>
-            {selectedImage?.title && <h3 className="modal-title">{selectedImage.title}</h3>}
             {selectedImage?.before ? (
-              <div className="modal-before-after">
-                <div className="modal-before">
-                  <img src={selectedImage.before || "/placeholder.svg"} alt={`Antes: ${selectedImage.title}`} />
-                  <div className="modal-image-label">Antes</div>
+              <div
+                className="modal-before-after"
+                style={{ display: "flex", gap: "20px", background: "transparent", border: "none" }}
+              >
+                <div className="modal-before" style={{ flex: 1, background: "transparent", border: "none" }}>
+                  <img
+                    src={selectedImage.before || "/placeholder.svg"}
+                    alt="Imagen antes"
+                    style={{ maxWidth: "45vw", maxHeight: "85vh", objectFit: "contain", border: "none" }}
+                  />
                 </div>
-                <div className="modal-after">
-                  <img src={selectedImage.after || "/placeholder.svg"} alt={`Después: ${selectedImage.title}`} />
-                  <div className="modal-image-label">Después</div>
+                <div className="modal-after" style={{ flex: 1, background: "transparent", border: "none" }}>
+                  <img
+                    src={selectedImage.after || "/placeholder.svg"}
+                    alt="Imagen después"
+                    style={{ maxWidth: "45vw", maxHeight: "85vh", objectFit: "contain", border: "none" }}
+                  />
                 </div>
               </div>
             ) : selectedImage?.single ? (
-              <div className="modal-single-image">
-                <img src={selectedImage.single || "/placeholder.svg"} alt={selectedImage.title} />
+              <div className="modal-single-image" style={{ background: "transparent", border: "none" }}>
+                <img
+                  src={selectedImage.single || "/placeholder.svg"}
+                  alt="Imagen"
+                  style={{ maxWidth: "90vw", maxHeight: "85vh", objectFit: "contain", border: "none" }}
+                />
               </div>
             ) : null}
           </div>

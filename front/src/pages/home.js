@@ -49,6 +49,46 @@ export default function Home() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
 
+  // Reemplazar el useEffect existente que agregué anteriormente con esta implementación más completa
+  // Añadir este useEffect justo después de las declaraciones de estado, antes de los otros useEffect
+
+  useEffect(() => {
+    // Función para desplazar al inicio de la página
+    const scrollToTop = () => {
+      window.scrollTo(0, 0)
+    }
+
+    // Ejecutar inmediatamente cuando el componente se monta
+    scrollToTop()
+
+    // Manejar el evento de historial para cuando se navega con el botón atrás/adelante
+    const handlePopState = () => {
+      scrollToTop()
+    }
+
+    // Manejar el evento beforeunload para cuando se refresca la página
+    const handleBeforeUnload = () => {
+      // Guardar una marca en sessionStorage para indicar que la página debe desplazarse al inicio
+      sessionStorage.setItem("scrollToTop", "true")
+    }
+
+    // Verificar si debemos desplazarnos al inicio (después de un refresco)
+    if (sessionStorage.getItem("scrollToTop") === "true") {
+      scrollToTop()
+      sessionStorage.removeItem("scrollToTop")
+    }
+
+    // Agregar event listeners
+    window.addEventListener("popstate", handlePopState)
+    window.addEventListener("beforeunload", handleBeforeUnload)
+
+    // Limpiar event listeners cuando el componente se desmonta
+    return () => {
+      window.removeEventListener("popstate", handlePopState)
+      window.removeEventListener("beforeunload", handleBeforeUnload)
+    }
+  }, [])
+
   // Efecto parallax para la sección hero
   useEffect(() => {
     const handleScroll = () => {
@@ -89,6 +129,74 @@ export default function Home() {
     }
   }, [])
 
+  // Nuevo useEffect para corregir los modales
+  useEffect(() => {
+    // Función para corregir los modales cuando se abren
+    function fixModals() {
+      // Seleccionar todos los modales
+      const modals = document.querySelectorAll(".modal, .image-modal-overlay")
+
+      modals.forEach((modal) => {
+        // Eliminar cualquier contenedor blanco
+        const containers = modal.querySelectorAll("div, section, article, main, aside, figure")
+        containers.forEach((container) => {
+          container.style.backgroundColor = "transparent"
+          container.style.background = "transparent"
+          container.style.border = "none"
+          container.style.boxShadow = "none"
+          container.style.padding = "0"
+          container.style.margin = "0"
+          container.style.maxWidth = "100%"
+          container.style.maxHeight = "100%"
+          container.style.display = "flex"
+          container.style.justifyContent = "center"
+          container.style.alignItems = "center"
+        })
+
+        // Hacer que las imágenes sean más grandes
+        const images = modal.querySelectorAll("img")
+        images.forEach((img) => {
+          img.style.maxWidth = "90vw"
+          img.style.maxHeight = "85vh"
+          img.style.width = "auto"
+          img.style.height = "auto"
+          img.style.objectFit = "contain"
+          img.style.border = "none"
+          img.style.boxShadow = "none"
+          img.style.background = "transparent"
+          img.style.margin = "0"
+          img.style.padding = "0"
+        })
+
+        // Asegurar que el botón de cierre sea visible
+        const closeButton = modal.querySelector(".modal-close-button")
+        if (closeButton) {
+          closeButton.style.position = "fixed"
+          closeButton.style.top = "20px"
+          closeButton.style.right = "20px"
+          closeButton.style.zIndex = "10000"
+        }
+      })
+    }
+
+    // Ejecutar la función cuando se abre un modal
+    document.addEventListener("click", (e) => {
+      if (e.target.closest("[data-modal-trigger]")) {
+        // Esperar a que el modal se abra
+        setTimeout(fixModals, 100)
+      }
+    })
+
+    // También ejecutar al cargar la página por si hay modales abiertos
+    fixModals()
+
+    // Y ejecutar periódicamente para asegurar que los modales se corrijan
+    const interval = setInterval(fixModals, 1000)
+
+    // Limpiar el intervalo cuando el componente se desmonte
+    return () => clearInterval(interval)
+  }, [])
+
   const scrollToSection = (ref) => {
     if (ref && ref.current) {
       ref.current.scrollIntoView({ behavior: "smooth", block: "start" })
@@ -100,22 +208,25 @@ export default function Home() {
   const testimonials = [
     {
       name: "Maria Rodriguez",
-      role: "Propietaria en Little Ferry",
-      image:  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010019-z39kWRQp0E8pqugGzNzkgsWztQSFKe.png",
+      role: "Cliente de Little Ferry",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010019-z39kWRQp0E8pqugGzNzkgsWztQSFKe.png",
       text: "¡Increíble transformación! Jimenez Services convirtió mi jardín en un oasis de ensueño. Su atención al detalle y profesionalismo superaron todas mis expectativas. Ahora disfruto cada minuto en mi nuevo espacio exterior.",
       rating: 5,
     },
     {
       name: "John Davis",
       role: "Dueño de Negocio",
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010101-3DJmFwAevTyPlHr3vsIrA7weXnQmqw.png",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010101-3DJmFwAevTyPlHr3vsIrA7weXnQmqw.png",
       text: "La remodelación de nuestra oficina fue impecable. El equipo de Jimenez entendió exactamente lo que necesitábamos y entregaron resultados excepcionales en tiempo récord. Nuestros clientes no paran de elogiar el nuevo diseño.",
       rating: 5,
     },
     {
       name: "Sarah Thompson",
       role: "Administradora de Propiedades",
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010143-g5zhIrqdafbDUWXWkoL9Ibua5dguNG.png",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010143-g5zhIrqdafbDUWXWkoL9Ibua5dguNG.png",
       text: "Como administradora de múltiples propiedades, valoro la consistencia y confiabilidad. Jimenez Services siempre cumple con excelencia, transformando cada espacio con un toque único y manteniendo la más alta calidad en cada proyecto.",
       rating: 5,
     },
@@ -131,9 +242,7 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.25-CpCQmn9D9nAUd3qFaCTU2I9Iw9dKfo.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26-xCpRvT859Z09XQxaNHHY5tb13vMa6K.jpeg",
-      description:
-        "Renovación total de baño con diseño moderno que incluye azulejos en patrón de espiga, ducha con regadera tipo lluvia, mueble con acabado de madera y encimera de mármol blanco.",
-    },
+        },
     {
       title: "Renovación de Ático",
       category: "remodeling",
@@ -141,9 +250,7 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.28-dQrMCrAbMJVpnsehimsIoXyo0V3kwi.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27%20%281%29-2cc09hsVgCuxBXpuiRoxHEiAr4GH2v.jpeg",
-      description:
-        "Transformación completa de ático sin usar a un espacio habitable con pisos de madera, iluminación empotrada y acabados de alta calidad que maximizan el espacio disponible.",
-    },
+         },
     {
       title: "Renovación de Cocina Moderna",
       category: "remodeling",
@@ -151,8 +258,12 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%281%29-3xLNhK99Bak6DL5NFisMyLQl1FUBbL.jpeg",
-      description:
-        "Transformación completa de cocina con encimeras de cuarzo blanco, gabinetes de dos tonos, azulejos hexagonales de mármol y electrodomésticos de acero inoxidable.",
+     },
+    {
+      title: "Remodelacion y acabado de un cuarto",
+      category: "remodeling",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-28%20at%2017.12.50-M1R7RXgPPB4pwHkApQfiDlJVCZSNe9.jpeg",
     },
 
     // Proyectos de jardinería con imágenes reales
@@ -163,33 +274,32 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20%20%281%29-bqk7asm0NPvOV85HOVI9G9YgvRAdAV.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20-HcZW7tGy7aYQ20LD1BdPOHEtF0GiQh.jpeg",
-      description:
-        "Renovación integral de jardín residencial que incluye instalación de mantillo negro, definición de bordes, plantación de flores ornamentales y mejora del césped, creando un espacio exterior atractivo y de bajo mantenimiento.",
-    },
+},
     {
       title: "Diseño de Camino Lateral con Privacidad",
       category: "gardening",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.30-OsEJe2YeWg3P6g3iXIq3wVL7xTih3B.jpeg",
-      description:
-        "Transformación de un espacio lateral estrecho con árboles de hoja perenne para privacidad, cerca decorativa, iluminación solar y mantillo de calidad que crea un pasaje funcional y estéticamente agradable.",
     },
     {
-      title: "Mantenimiento de Jardín Residencial",
+      title: "Mantenimiento de Jardín",
       category: "gardening",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.26-78p413j3LMqwgT63kJy72TCkUe4WGZ.jpeg",
-      description:
-        "Servicio profesional de mantenimiento de jardín que incluye corte de césped, poda de arbustos y cuidado de plantas ornamentales, mejorando significativamente la apariencia y valor de la propiedad residencial.",
     },
     {
       title: "Instalación de Mantillo Profesional",
       category: "gardening",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-SO1uzOSv574OMbCkD6aeSIWTJqec7R.jpeg",
-      description:
-        "Instalación profesional de mantillo y paisajismo que transforma completamente el aspecto exterior de la propiedad, mejorando su valor estético y funcional.",
     },
+    {
+      title: "Mantenimiento y decoración de un jardin en la temporada de Hallowen",
+      category: "gardening",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.16-CcEtkb5DKce0jIl6eigpcUT5MkrOM6.jpeg",
+    },
+    
   ]
 
   // Reemplazar el objeto services con los nuevos servicios en español
@@ -305,9 +415,76 @@ export default function Home() {
       document.body.classList.add("modal-open")
       // Seleccionar el overlay y añadir la clase open para la animación
       const overlay = document.querySelector(".image-modal-overlay")
-      if (overlay) overlay.classList.add("open")
+      if (overlay) {
+        overlay.classList.add("open")
+        overlay.style.backgroundColor = "rgba(0, 0, 0, 0.95)"
+
+        // Eliminar cualquier fondo blanco de los contenedores
+        const containers = overlay.querySelectorAll("div")
+        containers.forEach((container) => {
+          container.style.backgroundColor = "transparent"
+          container.style.background = "transparent"
+          container.style.border = "none"
+          container.style.boxShadow = "none"
+        })
+
+        // Hacer que las imágenes sean más grandes
+        const images = overlay.querySelectorAll("img")
+        images.forEach((img) => {
+          img.style.maxWidth = "90vw"
+          img.style.maxHeight = "85vh"
+          img.style.width = "auto"
+          img.style.height = "auto"
+          img.style.objectFit = "contain"
+          img.style.border = "none"
+          img.style.boxShadow = "none"
+          img.style.background = "transparent"
+        })
+      }
     }, 10)
   }
+
+  // Añadir este useEffect para corregir el modal cuando está abierto
+  useEffect(() => {
+    if (isImageModalOpen) {
+      // Función para aplicar estilos al modal
+      const fixModal = () => {
+        const overlay = document.querySelector(".image-modal-overlay")
+        if (overlay) {
+          overlay.style.backgroundColor = "rgba(0, 0, 0, 0.95)"
+
+          // Eliminar cualquier fondo blanco de los contenedores
+          const containers = overlay.querySelectorAll("div")
+          containers.forEach((container) => {
+            container.style.backgroundColor = "transparent"
+            container.style.background = "transparent"
+            container.style.border = "none"
+            container.style.boxShadow = "none"
+          })
+
+          // Hacer que las imágenes sean más grandes
+          const images = overlay.querySelectorAll("img")
+          images.forEach((img) => {
+            img.style.maxWidth = "90vw"
+            img.style.maxHeight = "85vh"
+            img.style.width = "auto"
+            img.style.height = "auto"
+            img.style.objectFit = "contain"
+            img.style.border = "none"
+            img.style.boxShadow = "none"
+            img.style.background = "transparent"
+          })
+        }
+      }
+
+      // Ejecutar inmediatamente y luego cada 100ms para asegurar que se apliquen los estilos
+      fixModal()
+      const interval = setInterval(fixModal, 100)
+
+      // Limpiar el intervalo cuando el modal se cierre
+      return () => clearInterval(interval)
+    }
+  }, [isImageModalOpen])
 
   // Añadir esta función para cerrar el modal
   const closeImageModal = () => {
@@ -383,11 +560,11 @@ export default function Home() {
                   SERVICIOS <ChevronDown size={14} className="dropdown-indicator" />
                 </a>
                 <div className="dropdown-content">
-                  <Link to="/jardineria">
+                  <Link to="/jardineria" onClick={() => window.scrollTo(0, 0)}>
                     <TreePine size={16} className="dropdown-icon" /> Jardinería
                   </Link>
-                  <Link to="/interiores">
-                    <Hammer size={16} className="dropdown-icon" /> Remodelación
+                  <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
+                    <Hammer size={16} className="dropdown-icon" /> Remodelación y Construcción
                   </Link>
                 </div>
               </li>
@@ -442,16 +619,16 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
         <div className="hero-content z-10" onClick={(e) => e.stopPropagation()}>
-          <h1 className="mb-16 text-4xl font-light tracking-wide text-white md:text-5xl">¿Qué servicio buscas?</h1>
+          <h1 className="mb-16 text-4xl font-light tracking-wide text-white md:text-5xl">¿Qué servicio deseas?</h1>
 
           <div className="service-options">
-            <Link to="/jardineria" className="service-option">
+            <Link to="/jardineria" className="service-option" onClick={() => window.scrollTo(0, 0)}>
               <div className="service-option-icon-container">
                 <Leaf className="service-option-icon" />
               </div>
               <h3 className="service-option-title">Jardinería</h3>
               <p className="service-option-desc">
-                Creamos y mantenemos espacios verdes hermosos que armonizan con la naturaleza
+                
               </p>
               <div className="service-option-button">
                 Explorar Servicios
@@ -459,13 +636,13 @@ export default function Home() {
               </div>
             </Link>
 
-            <Link to="/interiores" className="service-option">
+            <Link to="/interiores" className="service-option" onClick={() => window.scrollTo(0, 0)}>
               <div className="service-option-icon-container">
                 <Hammer className="service-option-icon" />
               </div>
-              <h3 className="service-option-title">Remodelación</h3>
+              <h3 className="service-option-title">Remodelación y Construcción</h3>
               <p className="service-option-desc">
-                Transformamos espacios con diseños modernos y funcionales que reflejan tu estilo
+                
               </p>
               <div className="service-option-button">
                 Explorar Servicios
@@ -530,7 +707,7 @@ export default function Home() {
               <p>
                 En Jimenez Services LLC, no solo transformamos espacios – creamos experiencias que perduran. Nuestro
                 equipo de profesionales altamente capacitados combina visión artística con precisión técnica para
-                convertir sus sueños en realidades tangibles.
+                realizar sus trabajos.
               </p>
               <p>
                 Desde nuestra sede en Little Ferry, New Jersey, hemos llevado nuestra excelencia a toda el área
@@ -559,7 +736,7 @@ export default function Home() {
           <div className="section-header">
             <h2 className="section-title">Nuestros Servicios</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">SOLUCIONES PROFESIONALES A MEDIDA</p>
+            <p className="section-subtitle">SOLUCIONES PROFESIONALES</p>
           </div>
           <div className="tab-buttons">
             <button
@@ -692,7 +869,7 @@ export default function Home() {
             <div className="contact-info">
               <h3>Información de Contacto</h3>
               <p>
-                Estamos a solo un mensaje de distancia para convertir sus ideas en realidad. Contáctenos hoy mismo para
+                Estas a un mensaje de convertir tus ideas en realidad. Contáctanos hoy mismo para
                 una consulta personalizada sin compromiso.
               </p>
               <div className="contact-details">
@@ -729,8 +906,8 @@ export default function Home() {
                   </div>
                   <div className="contact-text">
                     <h4>Horario</h4>
-                    <p>Lunes - Viernes: 8am - 6pm</p>
-                    <p>Sábado: 9am - 2pm</p>
+                    <p>24 horas al dia, los 365 dias del año</p>
+                    <p>Free Stimate</p>
                   </div>
                 </div>
               </div>
@@ -754,10 +931,9 @@ export default function Home() {
                   <label htmlFor="service">Servicio de Interés</label>
                   <select id="service">
                     <option value="">Seleccione un servicio</option>
-                    <option value="landscaping">Diseño de Paisajes</option>
-                    <option value="garden-maintenance">Mantenimiento de Jardines</option>
-                    <option value="interior-remodeling">Remodelación de Interiores</option>
-                    <option value="kitchen-bath">Cocinas y Baños</option>
+                    <option value="landscaping">Jardinería</option>
+                    <option value="garden-maintenance">Construcción</option>
+                    <option value="interior-remodeling">Remodelación</option>
                     <option value="other">Otro Servicio</option>
                   </select>
                 </div>
@@ -765,7 +941,7 @@ export default function Home() {
                   <label htmlFor="message">Mensaje</label>
                   <textarea id="message" rows="5" placeholder="Cuéntenos sobre su proyecto" required></textarea>
                 </div>
-                <button type="submit">ENVIAR MENSAJE</button>
+                <button type="submit">COTIZAR DE MANERA GRATUTIA</button>
               </form>
             </div>
           </div>
@@ -835,10 +1011,14 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <Link to="/jardineria">Jardinería</Link>
+                  <Link to="/jardineria" onClick={() => window.scrollTo(0, 0)}>
+                    Jardinería
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/interiores">Remodelación</Link>
+                  <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
+                    Remodelación
+                  </Link>
                 </li>
                 <li>
                   <a
@@ -884,8 +1064,7 @@ export default function Home() {
               <p>
                 Email: <a href="mailto:mjimenezlandscaping80@gmail.com">mjimenezlandscaping80@gmail.com</a>
               </p>
-              <p>Lunes - Viernes: 8am - 6pm</p>
-              <p>Sábado: 9am - 2pm</p>
+              <p>24 horas del dia, 365 dias del año</p>
             </div>
           </div>
           <div className="footer-bottom">
@@ -895,29 +1074,63 @@ export default function Home() {
       </footer>
 
       {/* Botón flotante de cotización */}
-      <div className="floating-quote-button" onClick={() => scrollToSection(contactRef)}>
-        <Phone className="quote-button-icon" />
+      <div className="new-floating-estimate-btn" onClick={() => scrollToSection(contactRef)}>
+        <Mail className="estimate-btn-icon" />
+        <span className="estimate-btn-text">Free Estimate</span>
       </div>
 
-      {/* Modal de imagen */}
+      {/* Modal de imagen - MODIFICADO para eliminar bordes blancos y hacer imágenes más grandes */}
       {isImageModalOpen && (
-        <div className="image-modal-overlay" onClick={closeImageModal}>
-          <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close-button" onClick={closeImageModal}>
+        <div
+          className="image-modal-overlay"
+          onClick={closeImageModal}
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.95)", backdropFilter: "blur(5px)" }}
+        >
+          <div
+            className="image-modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "transparent",
+              border: "none",
+              boxShadow: "none",
+              maxWidth: "95vw",
+              maxHeight: "95vh",
+            }}
+          >
+            <button
+              className="modal-close-button"
+              onClick={closeImageModal}
+              style={{ position: "fixed", top: "20px", right: "20px", zIndex: 10000 }}
+            >
               <X size={20} />
             </button>
             {selectedImage?.before ? (
-              <div className="modal-before-after">
-                <div className="modal-before">
-                  <img src={selectedImage.before || "/placeholder.svg"} alt={`Antes: ${selectedImage.title}`} />
+              <div
+                className="modal-before-after"
+                style={{ display: "flex", gap: "20px", background: "transparent", border: "none" }}
+              >
+                <div className="modal-before" style={{ flex: 1, background: "transparent", border: "none" }}>
+                  <img
+                    src={selectedImage.before || "/placeholder.svg"}
+                    alt={`Antes: ${selectedImage.title}`}
+                    style={{ maxWidth: "45vw", maxHeight: "85vh", objectFit: "contain", border: "none" }}
+                  />
                 </div>
-                <div className="modal-after">
-                  <img src={selectedImage.after || "/placeholder.svg"} alt={`Después: ${selectedImage.title}`} />
+                <div className="modal-after" style={{ flex: 1, background: "transparent", border: "none" }}>
+                  <img
+                    src={selectedImage.after || "/placeholder.svg"}
+                    alt={`Después: ${selectedImage.title}`}
+                    style={{ maxWidth: "45vw", maxHeight: "85vh", objectFit: "contain", border: "none" }}
+                  />
                 </div>
               </div>
             ) : selectedImage?.single ? (
-              <div className="modal-single-image">
-                <img src={selectedImage.single || "/placeholder.svg"} alt={selectedImage.title} />
+              <div className="modal-single-image" style={{ background: "transparent", border: "none" }}>
+                <img
+                  src={selectedImage.single || "/placeholder.svg"}
+                  alt={selectedImage.title}
+                  style={{ maxWidth: "90vw", maxHeight: "85vh", objectFit: "contain", border: "none" }}
+                />
               </div>
             ) : null}
           </div>
