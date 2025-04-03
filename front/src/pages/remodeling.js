@@ -436,6 +436,72 @@ export default function Remodeling() {
     },
   ]
 
+  // Nuevo array para la sección de portafolio
+  const portfolioItems = [
+    {
+      title: "Cocina Moderna con Gabinetes de Dos Tonos",
+      category: "cocina",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27-u5yimx9QxZlCr8kcR53othrfFvn6qu.jpeg",
+      description:
+        "Renovación completa de cocina con gabinetes de dos tonos (blanco y azul marino), encimeras de cuarzo blanco, salpicadero de mármol y electrodomésticos de acero inoxidable. Incluye pisos de madera clara y ventilador de techo moderno.",
+    },
+    {
+      title: "Transformación de Ático en Espacio Habitable",
+      category: "atico",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27%20%281%29-j3q6JKzWEbaI48eIob0otnML7WRDLQ.jpeg",
+      description:
+        "Conversión de un ático sin utilizar en un espacio funcional y luminoso con paredes blancas, pisos de madera y techos inclinados. El proyecto incluyó aislamiento, instalación eléctrica, acabados de paredes y pisos de alta calidad.",
+    },
+    {
+      title: "Renovación de Habitación con Pisos de Madera",
+      category: "habitacion",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-28%20at%2017.12.50%20%281%29-06LAwWxKzWV2s6vGtP50F9qqBg7njq.jpeg",
+      description:
+        "Renovación completa de habitación con paredes en tono neutro, molduras blancas y restauración de pisos de madera originales. Incluye ventanas con marcos blancos y radiadores actualizados para mayor eficiencia.",
+    },
+    {
+      title: "Baño Moderno con Azulejos Hexagonales",
+      category: "bano",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-28%20at%2017.12.50-8tCZ0peN8UvAsNONLR57dTOFfrtt3A.jpeg",
+      description:
+        "Renovación de baño con azulejos hexagonales blancos, bañera moderna, vanidad gris con lavabo blanco, espejo negro enmarcado y apliques de pared contemporáneos. Incluye wainscoting blanco y paredes en tono neutro.",
+    },
+    {
+      title: "Transformación Completa de Baño",
+      category: "bano",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.25-CpCQmn9D9nAUd3qFaCTU2I9Iw9dKfo.jpeg",
+      beforeImage:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26-xCpRvT859Z09XQxaNHHY5tb13vMa6K.jpeg",
+      description:
+        "Renovación total de baño con diseño moderno que incluye azulejos en patrón de espiga, ducha con regadera tipo lluvia, mueble con acabado de madera y encimera de mármol blanco.",
+    },
+    {
+      title: "Renovación de Ático",
+      category: "atico",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.28-dQrMCrAbMJVpnsehimsIoXyo0V3kwi.jpeg",
+      beforeImage:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27%20%281%29-2cc09hsVgCuxBXpuiRoxHEiAr4GH2v.jpeg",
+      description:
+        "Transformación completa de ático sin usar a un espacio habitable con pisos de madera, iluminación empotrada y acabados de alta calidad que maximizan el espacio disponible.",
+    },
+    {
+      title: "Renovación de Cocina Moderna",
+      category: "cocina",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg",
+      beforeImage:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%281%29-3xLNhK99Bak6DL5NFisMyLQl1FUBbL.jpeg",
+      description:
+        "Transformación completa de cocina con encimeras de cuarzo blanco, gabinetes de dos tonos, azulejos hexagonales de mármol y electrodomésticos de acero inoxidable.",
+    },
+  ]
+
   const testimonials = [
     {
       name: "Carlos Méndez",
@@ -650,6 +716,38 @@ export default function Remodeling() {
             <a href="#contact" className="cta-button">
               Solicitar Consulta Gratuita <ArrowRight className="cta-icon" />
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio Section - Nueva sección añadida */}
+      <section id="portafolio" className="section portfolio-section animate-on-scroll">
+        <div className="container">
+          <div className="section-header">
+            <h2 className="section-title">Nuestro Portafolio</h2>
+            <div className="section-underline"></div>
+            <p className="section-subtitle">PROYECTOS DESTACADOS</p>
+          </div>
+
+          <div className="portfolio-grid">
+            {portfolioItems.map((item, index) => (
+              <div
+                key={index}
+                className="portfolio-item"
+                onClick={() =>
+                  item.beforeImage ? openImageModal(item) : openImageModal({ single: item.image, title: item.title })
+                }
+              >
+                <div className="portfolio-image">
+                  <img src={item.image || "/placeholder.svg"} alt={item.title} className="main-portfolio-image" />
+                  <div className="portfolio-overlay">
+                    <div className="portfolio-content">
+                      <h3>{item.title}</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

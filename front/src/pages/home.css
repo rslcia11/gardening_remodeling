@@ -2476,23 +2476,12 @@ a {
   display: none !important;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 /* Importamos la fuente Cinzel de Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap");
 
 /* Modificamos la clase hero-title para usar Cinzel */
 .hero-section {
-  font-family: 'Cinzel', serif !important;
+  font-family: "Cinzel", serif !important;
   font-size: 3.0rem !important;
   font-weight: 700;
   color: white;
@@ -2503,28 +2492,16 @@ a {
   text-transform: capitalize;
 }
 
-
-
-
-
-
-
-
-.hero-section, 
-.hero-section h1, 
-.hero-section h2, 
-.hero-section h3, 
-.hero-section h4, 
-.hero-section p, 
+.hero-section,
+.hero-section h1,
+.hero-section h2,
+.hero-section h3,
+.hero-section h4,
+.hero-section p,
 .hero-section span {
   color: white !important;
 }
 
-
-
-
-
-
 /* Significantly reduced section spacing */
 .section {
   padding: 1.5rem 0 !important; /* Dramatically reduced from original 5rem */
@@ -2739,224 +2716,241 @@ h3 {
   margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
 }
 
+/* Mejoras adicionales de responsividad */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 7rem !important;
+  }
 
+  .container {
+    padding: 0 1.5rem;
+  }
 
+  .portfolio-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
 
-
-
-
-
-/* Significantly reduced section spacing */
-.section {
-  padding: 1.5rem 0 !important; /* Dramatically reduced from original 5rem */
+  .testimonials-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
 }
 
-.about-section {
-  padding: 1.5rem 0 !important;
+@media (max-width: 992px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .about-text h3 {
+    font-size: 1.8rem;
+  }
+
+  .contact-info h3,
+  .contact-form-container h3 {
+    font-size: 1.8rem;
+  }
+
+  .tab-button,
+  .filter-button {
+    min-width: 140px;
+    padding: 0.8rem 1.5rem !important;
+  }
 }
 
-.services-section {
-  padding: 1.5rem 0 !important;
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .about-content {
+    grid-template-columns: 1fr;
+  }
+
+  .about-features {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-buttons,
+  .portfolio-filter {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tab-button,
+  .filter-button {
+    min-width: 120px;
+    padding: 0.75rem 1rem !important;
+    margin-bottom: 0.5rem;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-item {
+    height: 300px;
+  }
+
+  /* Mejorar la experiencia táctil en móviles */
+  .nav-links .dropdown-content a,
+  .footer-links a,
+  .service-option-button,
+  .tab-button,
+  .filter-button {
+    padding: 0.8rem 1rem;
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    padding: 0.8rem;
+    font-size: 16px; /* Prevenir zoom en iOS */
+  }
+
+  .contact-form button {
+    padding: 1rem;
+    font-size: 16px;
+  }
+
+  /* Mejorar el botón de cierre del modal para dispositivos táctiles */
+  .modal-close {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 35px !important;
+  }
 }
 
-.portfolio-section {
-  padding: 1.5rem 0 !important;
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 2.5rem !important;
+    padding: 0.5rem 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hero-button {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .service-card {
+    padding: 1.25rem !important;
+  }
+
+  .service-features {
+    padding-left: 0.5rem;
+  }
+
+  .service-features li {
+    align-items: flex-start;
+  }
+
+  .check-icon {
+    margin-top: 0.2rem;
+  }
+
+  .testimonial-card {
+    padding: 1.25rem !important;
+  }
+
+  .contact-info {
+    padding: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  /* Ajustar navegación para pantallas muy pequeñas */
+  .logo-text {
+    font-size: 1rem;
+  }
+
+  .phone-button {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .phone-number {
+    font-size: 0.75rem;
+  }
 }
 
-.testimonials-section {
-  padding: 1.5rem 0 !important;
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 375px) {
+  .hero-title {
+    font-size: 2rem !important;
+  }
+
+  .service-option {
+    padding: 0.75rem !important;
+  }
+
+  .service-option-title {
+    font-size: 1.2rem;
+  }
+
+  .service-option-desc {
+    font-size: 0.85rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .footer-logo span {
+    font-size: 1.2rem;
+  }
+
+  /* Ajustar el botón flotante para pantallas muy pequeñas */
+  .new-floating-estimate-btn {
+    min-width: 140px !important;
+    height: 44px !important;
+    padding: 0 12px !important;
+    bottom: 15px !important;
+    right: 15px !important;
+  }
+
+  .estimate-btn-text {
+    font-size: 12px !important;
+  }
+
+  .estimate-btn-icon {
+    font-size: 16px !important;
+    margin-right: 6px !important;
+  }
 }
 
-.contact-section {
-  padding: 1.5rem 0 !important;
+/* Arreglar el problema de background-attachment: fixed en iOS */
+@supports (-webkit-overflow-scrolling: touch) {
+  .hero-section {
+    background-attachment: scroll;
+  }
 }
 
-/* Minimal header spacing */
-.section-header {
-  margin-bottom: 1rem !important; /* Significantly reduced */
-}
+/* Optimizar imágenes para dispositivos móviles */
+@media (max-width: 768px) {
+  .modal-before-after {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-.section-title {
-  margin-bottom: 0.5rem !important; /* Minimal spacing */
-}
+  .modal-before-after img {
+    max-width: 90vw !important;
+  }
 
-.section-underline {
-  margin: 0.5rem auto !important; /* Reduced from 1.5rem to 0.5rem */
-}
-
-/* Tighter grid spacing */
-.about-content {
-  gap: 1.25rem !important; /* Significantly reduced */
-}
-
-.contact-container {
-  gap: 1.25rem !important;
-}
-
-.services-grid {
-  gap: 1rem !important; /* Minimal spacing between cards */
-}
-
-.portfolio-grid {
-  gap: 1rem !important;
-}
-
-.testimonials-grid {
-  gap: 1rem !important;
-}
-
-/* Compact card and content spacing */
-.service-card {
-  padding: 1.5rem !important; /* Reduced from 2.5rem to 1.5rem */
-}
-
-.service-icon {
-  margin: 0 auto 0.75rem !important; /* Minimal spacing */
-}
-
-.service-card h3 {
-  margin-bottom: 0.5rem !important;
-  padding-bottom: 0.5rem !important;
-}
-
-.service-card p {
-  margin-bottom: 0.75rem !important;
-}
-
-/* Tighter feature spacing */
-.about-features {
-  margin-top: 1rem !important; /* Reduced from 2rem to 1rem */
-  gap: 0.75rem !important; /* Minimal gap */
-}
-
-.feature {
-  gap: 0.5rem !important; /* Very tight spacing */
-}
-
-.feature-text h4 {
-  margin-bottom: 0.25rem !important; /* Minimal spacing */
-}
-
-/* Compact footer */
-.main-footer {
-  padding: 2rem 0 1rem !important; /* Significantly reduced */
-}
-
-.footer-grid {
-  gap: 2rem !important; /* Reduced from 4rem to 2rem */
-  margin-bottom: 1rem !important; /* Minimal margin */
-}
-
-.footer-about p {
-  margin-bottom: 0.75rem !important; /* Reduced spacing */
-}
-
-.footer-logo {
-  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
-}
-
-.footer-links h3,
-.footer-contact h3 {
-  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
-  padding-bottom: 0.5rem !important; /* Reduced padding */
-}
-
-.footer-links li {
-  margin-bottom: 0.5rem !important; /* Reduced from 0.75rem */
-}
-
-.footer-contact p {
-  margin-bottom: 0.5rem !important; /* Reduced from 0.75rem */
-}
-
-.footer-bottom {
-  padding-top: 1rem !important; /* Reduced from 2rem */
-}
-
-/* Compact tab buttons */
-.tab-buttons,
-.portfolio-filter {
-  margin: 0 auto 1.25rem !important; /* Reduced from 2.5rem */
-  gap: 1rem !important; /* Reduced from 1.5rem */
-}
-
-.tab-button,
-.filter-button {
-  padding: 0.75rem 1.5rem !important; /* Reduced padding */
-}
-
-/* Compact hero section */
-.service-options {
-  margin-top: 0.75rem !important; /* Reduced from 1.5rem */
-  gap: 0.75rem !important; /* Minimal gap */
-}
-
-.service-option {
-  padding: 1rem !important; /* Reduced from 1.5rem */
-}
-
-.service-option-title {
-  margin-bottom: 0.5rem !important; /* Reduced from 0.75rem */
-  padding-bottom: 0.5rem !important; /* Reduced padding */
-}
-
-.service-option-desc {
-  margin-bottom: 0.75rem !important; /* Reduced from 1.25rem */
-}
-
-/* Compact testimonials */
-.testimonial-card {
-  padding: 1.5rem !important; /* Reduced from 2.5rem */
-}
-
-.testimonial-text {
-  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
-}
-
-.testimonial-author-image {
-  margin-bottom: 0.5rem !important; /* Reduced from 1rem */
-}
-
-/* Compact contact form */
-.form-group {
-  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
-}
-
-.contact-info h3 {
-  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
-}
-
-.contact-info p {
-  margin-bottom: 1rem !important; /* Reduced from 2rem */
-}
-
-.contact-details {
-  margin-bottom: 1rem !important; /* Reduced from 2rem */
-}
-
-.contact-item {
-  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
-}
-
-.contact-form-container h3 {
-  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
-}
-
-/* Ensure consistent minimal vertical rhythm */
-p {
-  margin-bottom: 0.5rem !important; /* Minimal paragraph spacing */
-}
-
-h3 {
-  margin-bottom: 0.75rem !important; /* Reduced heading spacing */
-}
-
-/* About text spacing */
-.about-text h3 {
-  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
-}
-
-.about-text p {
-  margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+  /* Ajustar galería modal para móviles */
+  .modal-gallery {
+    grid-template-columns: 1fr !important;
+  }
 }
 

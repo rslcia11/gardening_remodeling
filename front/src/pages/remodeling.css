@@ -1164,6 +1164,18 @@
   }
 }
 
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+  }
+}
+
 /* Responsive Styles */
 @media (max-width: 1200px) {
   .process-steps {
@@ -1172,6 +1184,18 @@
 
   .step-number::after {
     display: none;
+  }
+
+  .transformation-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .container {
+    padding: 0 2rem;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
   }
 }
 
@@ -1195,6 +1219,62 @@
   .remodeling-contact .contact-info {
     padding-right: 0;
   }
+
+  .before-after-item {
+    grid-template-columns: 1fr;
+  }
+
+  .before-after-images {
+    height: 400px;
+    flex-direction: column;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .before-after-images::after {
+    left: 0;
+    right: 0;
+    top: 50%;
+    bottom: auto;
+    width: 100%;
+    height: 4px;
+    transform: translateY(-50%);
+  }
+
+  .before-after-images:hover .before-image {
+    flex: 1;
+  }
+
+  .before-after-images:hover .after-image {
+    flex: 1;
+  }
+
+  .modal-before-after.horizontal {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .modal-before-after.horizontal .modal-before,
+  .modal-before-after.horizontal .modal-after {
+    max-width: 100%;
+  }
+
+  .transformation-details::before {
+    width: 60px;
+    height: 60px;
+    background-size: 30px;
+  }
+
+  .service-card {
+    padding: 2.5rem;
+  }
+
+  .nav-container {
+    padding: 0 1.5rem;
+  }
+
+  .footer-grid {
+    gap: 2rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1211,7 +1291,7 @@
   }
 
   .service-card {
-    padding: 2.5rem;
+    padding: 2rem;
   }
 
   .remodeling-hero .hero-title {
@@ -1231,6 +1311,19 @@
     height: 400px;
   }
 
+  .gallery-info {
+    padding: 2rem;
+  }
+
+  .remodeling-gallery .gallery-info h3 {
+    font-size: 1.8rem;
+  }
+
+  .remodeling-gallery .gallery-info p {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+
   .remodeling-process .process-steps {
     grid-template-columns: 1fr;
   }
@@ -1238,9 +1331,67 @@
   .section-title {
     font-size: 2.25rem;
   }
+
+  .testimonial-card {
+    padding: 2.5rem;
+  }
+
+  .remodeling-testimonials .testimonial-text {
+    font-size: 1rem;
+  }
+
+  .remodeling-testimonials .testimonial-author h4 {
+    font-size: 1.2rem;
+  }
+
+  .before-after-images {
+    height: 350px;
+  }
+
+  .transformation-features {
+    grid-template-columns: 1fr;
+  }
+
+  .transformation-details h3 {
+    font-size: 1.8rem;
+  }
+
+  .transformation-details p {
+    font-size: 1rem;
+  }
+
+  .image-label {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .remodeling-contact .contact-form-container {
+    padding: 2rem;
+  }
+
+  .remodeling-contact .contact-methods {
+    grid-template-columns: 1fr;
+  }
+
+  .main-footer {
+    padding: 4rem 0 2rem;
+  }
+
+  .footer-grid {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .footer-links {
+    flex: 1 1 100%;
+  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   .remodeling-hero .hero-title {
     font-size: 2rem;
   }
@@ -1258,7 +1409,7 @@
   }
 
   .remodeling-contact .contact-form-container {
-    padding: 2rem;
+    padding: 1.5rem;
   }
 
   .floating-quote-button {
@@ -1279,6 +1430,122 @@
 
   .quote-text {
     font-size: 0.9rem;
+  }
+
+  .before-after-images {
+    height: 300px;
+  }
+
+  .transformation-details {
+    padding: 2rem 1.5rem;
+  }
+
+  .transformation-features li {
+    padding: 1rem;
+  }
+
+  .check-icon {
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+  }
+
+  .service-card {
+    padding: 1.5rem;
+  }
+
+  .service-icon {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .process-step {
+    padding: 2rem 1.5rem;
+  }
+
+  .step-number {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-item {
+    padding: 0.75rem;
+  }
+
+  .contact-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .remodeling-hero .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .remodeling-hero .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .remodeling-hero .primary-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .service-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .gallery-main {
+    height: 300px;
+  }
+
+  .testimonial-card {
+    padding: 2rem;
+  }
+
+  .before-after-item {
+    padding: 1.5rem;
+  }
+
+  .before-image,
+  .after-image {
+    height: 250px;
+  }
+
+  .transformation-details h3 {
+    font-size: 1.5rem;
+  }
+
+  .contact-info h3,
+  .contact-form h3 {
+    font-size: 1.5rem;
+  }
+
+  .footer-logo span {
+    font-size: 1.3rem;
+  }
+
+  .footer-links h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Arreglo para background-attachment: fixed en iOS */
+@supports (-webkit-overflow-scrolling: touch) {
+  .remodeling-hero {
+    background-attachment: scroll;
   }
 }
 
@@ -1537,14 +1804,141 @@
   border-color: var(--primary-color);
 }
 
-.check-icon {
-  color: var(--primary-color);
-  flex-shrink: 0;
-  background: rgba(255, 215, 0, 0.1);
-  padding: 8px;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
+/* Filtro oscuro para la imagen de fondo */
+.hero-section::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.4) !important; /* Overlay oscuro semi-transparente */
+  z-index: 1 !important;
+}
+
+/* Selectores ultra específicos para los botones */
+.hero-section .hero-content .hero-buttons .hero-button,
+.hero-button,
+a.hero-button,
+.gardening-hero .hero-button,
+section.hero-section a.hero-button,
+.hero-buttons > a.hero-button {
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #ffffff !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 2px solid #ffffff !important;
+  border-color: #ffffff !important;
+  padding: 0.9rem 1.8rem !important;
+  border-radius: 0 !important;
+  transition: all 0.3s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 200px !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  /* Asegurarse de que no haya gradientes */
+  background-image: none !important;
+  background: none !important;
+}
+
+/* Efecto hover con fondo negro */
+.hero-section .hero-content .hero-buttons .hero-button:hover,
+.hero-button:hover,
+a.hero-button:hover,
+.gardening-hero .hero-button:hover,
+section.hero-section a.hero-button:hover,
+.hero-buttons > a.hero-button:hover {
+  background-color: #000000 !important; /* Fondo negro al pasar el cursor */
+  background: #000000 !important;
+  color: #ffffff !important; /* Texto blanco */
+  transform: translateY(-3px) !important;
+  border-color: #000000 !important; /* Borde negro para que coincida con el fondo */
+}
+
+/* Iconos de los botones */
+.hero-button .hero-button-icon,
+.hero-section .hero-button .hero-button-icon {
+  margin-right: 0.5rem !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Eliminar cualquier pseudo-elemento que pueda estar añadiendo color */
+.hero-button::before,
+.hero-section .hero-button::before {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  background-color: transparent !important;
+}
+
+/* Ajustes específicos para tamaños de hero title */
+section.gardening-hero .hero-title {
+  font-size: 3.0rem !important;
+}
+
+section.remodeling-hero .hero-title {
+  font-size: 5.5rem !important;
+}
+
+@media (max-width: 992px) {
+  section.remodeling-hero .hero-title {
+    font-size: 4rem !important;
+  }
+
+  section.gardening-hero .hero-title {
+    font-size: 2.5rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  section.remodeling-hero .hero-title {
+    font-size: 3rem !important;
+  }
+
+  section.gardening-hero .hero-title {
+    font-size: 2rem !important;
+  }
+
+  .hero-section .hero-content .hero-buttons .hero-button,
+  .hero-button,
+  a.hero-button {
+    min-width: 160px !important;
+    padding: 0.8rem 1.5rem !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  section.remodeling-hero .hero-title {
+    font-size: 2.5rem !important;
+  }
+
+  section.gardening-hero .hero-title {
+    font-size: 1.8rem !important;
+  }
+
+  .hero-section .hero-content .hero-buttons .hero-button,
+  .hero-button,
+  a.hero-button {
+    min-width: 140px !important;
+    padding: 0.7rem 1.2rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
 
 /* Modal mejorado */
@@ -1562,15 +1956,6 @@
   padding: 20px;
   backdrop-filter: blur(5px);
   animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 .image-modal-content {
@@ -1687,430 +2072,40 @@
   color: white;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-  .transformation-features {
-    grid-template-columns: repeat(2, 1fr);
+/* Mejoras adicionales de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-@media (max-width: 992px) {
-  .before-after-item {
-    grid-template-columns: 1fr;
+/* Mejoras para dispositivos táctiles */
+@media (hover: none) {
+  .service-card:hover,
+  .process-step:hover,
+  .testimonial-card:hover,
+  .before-after-item:hover,
+  .gallery-thumbnail:hover {
+    transform: none;
   }
 
-  .before-after-images {
-    height: 400px;
-    flex-direction: column;
-    border-radius: 20px 20px 0 0;
+  .click-to-expand {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
 
-  .before-after-images::after {
-    left: 0;
-    right: 0;
-    top: 50%;
-    bottom: auto;
-    width: 100%;
-    height: 4px;
-    transform: translateY(-50%);
-  }
-
-  .before-after-images:hover .before-image {
-    flex: 1;
-  }
-
-  .before-after-images:hover .after-image {
-    flex: 1;
-  }
-
-  .modal-before-after.horizontal {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .modal-before-after.horizontal .modal-before,
-  .modal-before-after.horizontal .modal-after {
-    max-width: 100%;
-  }
-
-  .transformation-details::before {
-    width: 60px;
-    height: 60px;
-    background-size: 30px;
+  .contact-item:hover {
+    transform: none;
   }
 }
 
-@media (max-width: 768px) {
-  .before-after-images {
-    height: 350px;
-  }
-
-  .transformation-features {
-    grid-template-columns: 1fr;
-  }
-
-  .transformation-details h3 {
-    font-size: 1.8rem;
-  }
-
-  .transformation-details p {
-    font-size: 1rem;
-  }
-
-  .image-label {
-    padding: 8px 16px;
-    font-size: 0.8rem;
+/* Mejoras para pantallas de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .remodeling-hero {
+    background-size: cover;
   }
 }
 
-@media (max-width: 576px) {
-  .before-after-images {
-    height: 300px;
-  }
-
-  .transformation-details {
-    padding: 2rem 1.5rem;
-  }
-
-  .transformation-features li {
-    padding: 1rem;
-  }
-
-  .check-icon {
-    width: 30px;
-    height: 30px;
-    padding: 6px;
-  }
-}
-
-/* Reducir el espacio del encabezado de sección */
-.section-header {
-  margin-bottom: 2rem; /* Ajustado para todas las secciones */
-}
-
-/* Reducir el espacio entre proyectos en la sección de antes y después */
-.before-after-showcase {
-  gap: 2rem; /* Reducido de 4rem */
-}
-
-/* Before & After Section */
-.remodeling-before-after {
-  padding: 4rem 0; /* Reducido de 8rem */
-  background-color: #fafafa;
-}
-
-.before-after-showcase {
-  margin-top: 2rem; /* Reducido de 4rem */
-  display: flex;
-  flex-direction: column;
-  gap: 2rem; /* Aumentar el espacio entre proyectos */
-}
-
-.before-after-item {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 0; /* Eliminar el margen inferior ya que usamos gap */
-  background: white;
-  border-radius: 30px;
-  overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
-  padding: 3rem;
-}
-
-/* Asegurar que las imágenes de antes y después tengan el mismo tamaño */
-.before-image,
-.after-image {
-  position: relative;
-  height: 400px;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.4s ease;
-}
-
-.before-image img,
-.after-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.image-label {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  color: var(--secondary-color);
-  font-weight: 700;
-  padding: 8px 20px;
-  border-radius: 50px;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 2;
-}
-
-.transformation-details {
-  grid-column: span 2;
-  padding-top: 2rem;
-}
-
-.transformation-details h3 {
-  font-size: 2rem;
-  font-weight: 800;
-  margin-bottom: 1.25rem;
-  color: var(--text-color);
-}
-
-.transformation-details p {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  margin-bottom: 2rem;
-  color: var(--text-light);
-}
-
-.transformation-features {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  list-style: none;
-  padding: 0;
-}
-
-.transformation-features li {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 1rem;
-  color: var(--text-light);
-}
-
-.check-icon {
-  color: var(--primary-color);
-  flex-shrink: 0;
-}
-
-/* Responsive adjustments */
-@media (max-width: 992px) {
-  .before-after-item {
-    grid-template-columns: 1fr;
-  }
-
-  .transformation-details {
-    grid-column: span 1;
-  }
-
-  .transformation-features {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .before-image,
-  .after-image {
-    height: 300px;
-  }
-}
-
-@media (max-width: 576px) {
-  .before-after-item {
-    padding: 1.5rem;
-  }
-
-  .before-image,
-  .after-image {
-    height: 250px;
-  }
-}
-
-/* Estilos para la visualización de antes y después en el mismo cuadro */
-.before-after-images {
-  display: flex;
-  gap: 2rem;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.before-after-images:hover {
-  transform: translateY(-5px);
-}
-
-.before-image,
-.after-image {
-  position: relative;
-  flex: 1;
-  height: 400px;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.4s ease;
-}
-
-.before-image img,
-.after-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.before-after-images:hover .before-image img,
-.before-after-images:hover .after-image img {
-  transform: scale(1.05);
-}
-
-.click-to-expand {
-  position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  padding: 8px 20px;
-  border-radius: 30px;
-  font-size: 0.9rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 5;
-}
-
-/* Mejorar la visibilidad de la información de contacto */
-.contact-item {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-  background: rgba(0, 0, 0, 0.05);
-  padding: 1rem;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-}
-
-.contact-item:hover {
-  background: rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
-}
-
-.contact-icon {
-  background: rgba(0, 0, 0, 0.1);
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 1rem;
-  flex-shrink: 0;
-}
-
-.contact-text h4 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 0.3rem;
-}
-
-.contact-text p {
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-section.gardening-hero .hero-title {
-  font-size: 5.5rem !important;
-}
-
-
-
-
-
-
-
-/* Filtro oscuro para la imagen de fondo */
-.hero-section::before {
-  content: "" !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  background: rgba(0, 0, 0, 0.4) !important; /* Overlay oscuro semi-transparente */
-  z-index: 1 !important;
-}
-
-/* Selectores ultra específicos para los botones */
-.hero-section .hero-content .hero-buttons .hero-button,
-.hero-button,
-a.hero-button,
-.gardening-hero .hero-button,
-section.hero-section a.hero-button,
-.hero-buttons > a.hero-button {
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: 1rem !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
-  color: #ffffff !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  background-image: none !important;
-  border: 2px solid #ffffff !important;
-  border-color: #ffffff !important;
-  padding: 0.9rem 1.8rem !important;
-  border-radius: 0 !important;
-  transition: all 0.3s ease !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  min-width: 200px !important;
-  text-decoration: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-  /* Asegurarse de que no haya gradientes */
-  background-image: none !important;
-  background: none !important;
-}
-
-/* Efecto hover con fondo negro */
-.hero-section .hero-content .hero-buttons .hero-button:hover,
-.hero-button:hover,
-a.hero-button:hover,
-.gardening-hero .hero-button:hover,
-section.hero-section a.hero-button:hover,
-.hero-buttons > a.hero-button:hover {
-  background-color: #000000 !important; /* Fondo negro al pasar el cursor */
-  background: #000000 !important;
-  color: #ffffff !important; /* Texto blanco */
-  transform: translateY(-3px) !important;
-  border-color: #000000 !important; /* Borde negro para que coincida con el fondo */
-}
-
-/* Iconos de los botones */
-.hero-button .hero-button-icon,
-.hero-section .hero-button .hero-button-icon {
-  margin-right: 0.5rem !important;
-  color: #ffffff !important;
-  fill: #ffffff !important;
-  stroke: #ffffff !important;
-}
-
-/* Eliminar cualquier pseudo-elemento que pueda estar añadiendo color */
-.hero-button::before,
-.hero-section .hero-button::before {
-  display: none !important;
-  content: none !important;
-  background: none !important;
-  background-color: transparent !important;
-}
