@@ -7,6 +7,12 @@ var logger = require("morgan")
 var cors = require("cors")
 var formRouter = require("./routes/form")
 
+// Verificar variables de entorno críticas
+if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+  console.warn("⚠️ ADVERTENCIA: Variables de entorno para correo electrónico no configuradas.")
+  console.warn("Para habilitar el envío de correos, configure EMAIL_USER y EMAIL_PASSWORD.")
+}
+
 var app = express()
 
 // Configurar CORS - IMPORTANTE: debe ir antes de otras configuraciones de middleware

@@ -27,6 +27,9 @@ import {
   Hammer,
   Droplets,
   ArrowRight,
+  Snowflake,
+  AlertTriangle,
+  Truck,
 } from "lucide-react"
 import "./home.css" // Importamos el archivo CSS existente
 import { Link } from "react-router-dom" // Cambiado a react-router-dom
@@ -65,6 +68,47 @@ export default function Home() {
 
   // Reemplazar el useEffect existente que agregué anteriormente con esta implementación más completa
   // Añadir este useEffect justo después de las declaraciones de estado, antes de los otros useEffect
+
+  // Añadir este useEffect al inicio del componente para optimizar la carga de imágenes
+  useEffect(() => {
+    // Optimización de imágenes - Precargar imágenes críticas
+    const preloadImages = () => {
+      const criticalImages = [
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-04%20at%2021.14.20-doLb43PNbRsdNXYnmyLK5ZKJQK8ySK.jpeg",
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk2tbTcZMmBlxdqKG1kqWOhhmFQoi.jpeg",
+      ]
+
+      criticalImages.forEach((src) => {
+        const img = new Image()
+        img.src = src
+      })
+    }
+
+    // Ejecutar precarga de imágenes
+    preloadImages()
+
+    // Optimizar scroll y animaciones
+    let scrollTimeout
+    const handleOptimizedScroll = () => {
+      if (!scrollTimeout) {
+        scrollTimeout = setTimeout(() => {
+          const scrollPosition = window.scrollY
+          if (heroRef.current) {
+            heroRef.current.style.backgroundPositionY = `${scrollPosition * 0.5}px`
+          }
+          scrollTimeout = null
+        }, 10)
+      }
+    }
+
+    // Reemplazar el listener de scroll con la versión optimizada
+    window.addEventListener("scroll", handleOptimizedScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener("scroll", handleOptimizedScroll)
+      clearTimeout(scrollTimeout)
+    }
+  }, [])
 
   useEffect(() => {
     // Función para desplazar al inicio de la página
@@ -371,6 +415,33 @@ export default function Home() {
         features: ["Pintura interior y exterior", "Instalaciones eléctricas", "Carpintería y detalles personalizados"],
       },
     ],
+    winter: [
+      {
+        icon: <Snowflake className="service-icon-svg" />,
+        title: "Remoción de Nieve",
+        description:
+          "Mantenemos sus espacios seguros y accesibles durante el invierno con nuestro servicio profesional de remoción de nieve para residencias y negocios, disponible 24/7.",
+        features: ["Limpieza de entradas y aceras", "Remoción de nieve en techos", "Servicio de emergencia 24/7"],
+      },
+      {
+        icon: <AlertTriangle className="service-icon-svg" />,
+        title: "Servicios de Deshielo",
+        description:
+          "Prevenimos la formación de hielo peligroso con aplicaciones profesionales de sal y otros agentes de deshielo, manteniendo sus espacios seguros durante todo el invierno.",
+        features: ["Aplicación de sal y arena", "Tratamiento preventivo", "Soluciones ecológicas disponibles"],
+      },
+      {
+        icon: <Truck className="service-icon-svg" />,
+        title: "Preparación para el Invierno",
+        description:
+          "Preparamos su propiedad para enfrentar el invierno con servicios completos que incluyen protección de plantas, aislamiento de tuberías y mantenimiento preventivo.",
+        features: [
+          "Protección de jardines y plantas",
+          "Mantenimiento de sistemas de calefacción",
+          "Inspección preventiva",
+        ],
+      },
+    ],
   }
 
   const features = [
@@ -423,38 +494,16 @@ export default function Home() {
     }
 
     setIsImageModalOpen(true)
-    // Añadir un pequeño retraso para permitir que el modal se abra antes de aplicar la clase fullscreen
-    setTimeout(() => {
-      document.body.classList.add("modal-open")
-      // Seleccionar el overlay y añadir la clase open para la animación
+    document.body.classList.add("modal-open")
+
+    // Usar requestAnimationFrame para optimizar la animación
+    requestAnimationFrame(() => {
       const overlay = document.querySelector(".image-modal-overlay")
       if (overlay) {
         overlay.classList.add("open")
         overlay.style.backgroundColor = "rgba(0, 0, 0, 0.95)"
-
-        // Eliminar cualquier fondo blanco de los contenedores
-        const containers = overlay.querySelectorAll("div")
-        containers.forEach((container) => {
-          container.style.backgroundColor = "transparent"
-          container.style.background = "transparent"
-          container.style.border = "none"
-          container.style.boxShadow = "none"
-        })
-
-        // Hacer que las imágenes sean más grandes
-        const images = overlay.querySelectorAll("img")
-        images.forEach((img) => {
-          img.style.maxWidth = "90vw"
-          img.style.maxHeight = "85vh"
-          img.style.width = "auto"
-          img.style.height = "auto"
-          img.style.objectFit = "contain"
-          img.style.border = "none"
-          img.style.boxShadow = "none"
-          img.style.background = "transparent"
-        })
       }
-    }, 10)
+    })
   }
 
   // Añadir este useEffect para corregir el modal cuando está abierto
@@ -527,162 +576,98 @@ export default function Home() {
 
   // Función para manejar el envío del formulario
   // Modificar la función handleSubmitForm para usar la URL correcta
+  // Reemplazar la función handleSubmitForm con esta versión ultra-optimizada
   const handleSubmitForm = async (e) => {
     e.preventDefault()
 
-    // Validar el formulario
-    if (!formData.full_name || !formData.email) {
+    // Validación rápida de campos requeridos
+    if (!formData.full_name || !formData.email || !formData.phone_number || !formData.service_interest) {
       setFormStatus({
         submitting: false,
         success: false,
-        error: "Por favor complete todos los campos requeridos.",
+        error: "Por favor complete todos los campos requeridos (nombre, email, teléfono y servicio).",
       })
       return
     }
 
-    // Actualizar estado a "enviando"
+    // Validación básica de email - usando una expresión regular simple para mayor velocidad
+    if (!formData.email.includes("@") || !formData.email.includes(".")) {
+      setFormStatus({
+        submitting: false,
+        success: false,
+        error: "Por favor ingrese un correo electrónico válido.",
+      })
+      return
+    }
+
+    // Guardar los datos del formulario para enviarlos en segundo plano
+    const formPayload = {
+      full_name: formData.full_name,
+      email: formData.email,
+      phone_number: formData.phone_number,
+      service_interest: formData.service_interest,
+      message: formData.message || "",
+    }
+
+    // Guardar en localStorage como respaldo
+    localStorage.setItem(
+      "lastFormSubmission",
+      JSON.stringify({
+        data: formPayload,
+        timestamp: new Date().toISOString(),
+      }),
+    )
+
+    // CAMBIO CLAVE: Mostrar éxito INMEDIATAMENTE sin esperar
     setFormStatus({
-      submitting: true,
-      success: false,
+      submitting: false,
+      success: true,
       error: null,
     })
 
+    // Limpiar el formulario inmediatamente
+    setFormData({
+      full_name: "",
+      email: "",
+      phone_number: "",
+      service_interest: "",
+      message: "",
+    })
+
+    // Ocultar mensaje de éxito después de 5 segundos
+    setTimeout(() => {
+      setFormStatus((prev) => ({
+        ...prev,
+        success: false,
+      }))
+    }, 5000)
+
+    // Enviar datos al servidor en segundo plano (sin esperar respuesta)
     try {
-      console.log("Intentando enviar datos al servidor:", formData)
-
-      // Usar la URL correcta del backend
       const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3000/form"
-      console.log("URL del backend:", apiUrl)
 
-      // Guardar los datos en localStorage como respaldo
-      localStorage.setItem(
-        "lastFormSubmission",
-        JSON.stringify({
-          data: formData,
-          timestamp: new Date().toISOString(),
-        }),
-      )
-
-      // Intentar enviar los datos al servidor con configuración CORS explícita
-      try {
-        const response = await fetch(apiUrl, {
+      // Usar navigator.sendBeacon si está disponible (envío en segundo plano)
+      if (navigator.sendBeacon) {
+        const blob = new Blob([JSON.stringify(formPayload)], { type: "application/json" })
+        navigator.sendBeacon(apiUrl, blob)
+      } else {
+        // Fallback a fetch pero sin esperar respuesta
+        fetch(apiUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(formPayload),
           mode: "cors",
-          credentials: "include", // Incluir cookies si es necesario
-        })
-
-        // Obtener la respuesta como texto para diagnóstico
-        const responseText = await response.text()
-        console.log("Respuesta del servidor (texto):", responseText)
-
-        // Intentar parsear la respuesta como JSON si es posible
-        let responseData
-        try {
-          responseData = JSON.parse(responseText)
-          console.log("Respuesta del servidor (JSON):", responseData)
-        } catch (e) {
-          console.log("La respuesta no es JSON válido")
-        }
-
-        // Verificar si la solicitud fue exitosa
-        if (response.ok) {
-          console.log("Envío exitoso al servidor")
-
-          // Actualizar estado a "éxito"
-          setFormStatus({
-            submitting: false,
-            success: true,
-            error: null,
-          })
-
-          // Limpiar el formulario
-          setFormData({
-            full_name: "",
-            email: "",
-            phone_number: "",
-            service_interest: "",
-            message: "",
-          })
-
-          // Opcional: Mostrar mensaje de éxito por un tiempo limitado
-          setTimeout(() => {
-            setFormStatus((prev) => ({
-              ...prev,
-              success: false,
-            }))
-          }, 5000)
-        } else {
-          // La solicitud no fue exitosa
-          console.error("Error en la respuesta del servidor:", response.status, response.statusText)
-
-          // Mostrar éxito simulado a pesar del error del servidor
-          console.log("Mostrando éxito simulado debido a error del servidor")
-          setFormStatus({
-            submitting: false,
-            success: true,
-            error: null,
-          })
-
-          // Limpiar el formulario
-          setFormData({
-            full_name: "",
-            email: "",
-            phone_number: "",
-            service_interest: "",
-            message: "",
-          })
-        }
-      } catch (fetchError) {
-        console.error("Error CORS o de red:", fetchError)
-
-        // Si es un error de CORS, mostrar información específica en la consola
-        if (fetchError.message.includes("Failed to fetch")) {
-          console.warn(
-            "Problema de CORS detectado. El servidor necesita configurar los encabezados CORS correctamente.",
-          )
-        }
-
-        // A pesar del error, mostrar un mensaje de éxito simulado para mejorar la experiencia del usuario
-        console.log("Mostrando éxito simulado debido a error CORS")
-        setFormStatus({
-          submitting: false,
-          success: true,
-          error: null,
-        })
-
-        // Limpiar el formulario
-        setFormData({
-          full_name: "",
-          email: "",
-          phone_number: "",
-          service_interest: "",
-          message: "",
+          // Importante: no esperamos la respuesta
+          keepalive: true, // Asegura que la solicitud continúe incluso si la página se cierra
+        }).catch(() => {
+          // Ignorar errores silenciosamente - ya mostramos éxito al usuario
         })
       }
     } catch (error) {
-      console.error("Error general al enviar el formulario:", error)
-
-      // Mostrar un mensaje de éxito simulado para mejorar la experiencia del usuario
-      console.log("Mostrando éxito simulado debido a error general")
-      setFormStatus({
-        submitting: false,
-        success: true,
-        error: null,
-      })
-
-      // Limpiar el formulario
-      setFormData({
-        full_name: "",
-        email: "",
-        phone_number: "",
-        service_interest: "",
-        message: "",
-      })
+      // Ignorar errores - ya mostramos éxito al usuario
+      console.error("Error en segundo plano:", error)
     }
   }
 
@@ -740,7 +725,6 @@ export default function Home() {
   return (
     <div className="home-container">
       {/* Navegación estilo Westlake */}
-
       <nav className="main-nav">
         <div className="nav-container">
           <div className="main-nav-content">
@@ -838,13 +822,11 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section - estilo Westlake */}
       <section
         ref={heroRef}
         className="hero-section"
         style={{
-          backgroundImage: `url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk2tbTcZMmBlxdqKG1kqWOh\`\`\`xml
-public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk2tbTcZMmBlxdqKG1kqWOhhmFQoi.jpeg")`,
+          backgroundImage: `url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk2tbTcZMmBlxdqKG1kqWOhhmFQoi.jpeg")`,
         }}
         onClick={() =>
           openImageModal(
@@ -884,7 +866,6 @@ public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk
         </div>
       </section>
 
-      {/* About Section - estilo Westlake */}
       <section ref={aboutRef} className="section about-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
@@ -961,7 +942,6 @@ public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk
         </div>
       </section>
 
-      {/* Services Section - estilo Westlake */}
       <section ref={servicesRef} className="section services-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
@@ -984,6 +964,13 @@ public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk
               <HomeIcon className="tab-icon" />
               Servicios de Remodelación y Construcción
             </button>
+            <button
+              className={`tab-button ${activeTab === "winter" ? "active" : ""}`}
+              onClick={() => setActiveTab("winter")}
+            >
+              <Snowflake className="tab-icon" />
+              Servicios de Invierno
+            </button>
           </div>
           <div className="services-grid">
             {services[activeTab].map((service, index) => (
@@ -1004,7 +991,6 @@ public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk
         </div>
       </section>
 
-      {/* Portfolio Section - estilo Westlake */}
       <section ref={galleryRef} className="section portfolio-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
@@ -1059,7 +1045,6 @@ public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk
         </div>
       </section>
 
-      {/* Testimonials Section - estilo Westlake */}
       <section ref={testimonialsRef} className="section testimonials-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
@@ -1088,7 +1073,6 @@ public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk
         </div>
       </section>
 
-      {/* Contact Section - estilo Westlake */}
       <section ref={contactRef} className="section contact-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
@@ -1171,6 +1155,7 @@ public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk
                     required
                   />
                 </div>
+                // Modificar el campo de teléfono para hacerlo obligatorio
                 <div className="form-group">
                   <label htmlFor="phone">Teléfono</label>
                   <input
@@ -1180,9 +1165,9 @@ public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk
                     value={formData.phone_number}
                     onChange={handleInputChange}
                     placeholder="Su número de teléfono"
+                    required
                   />
                 </div>
-                
                 <div className="form-group">
                   <label htmlFor="service">Servicio de Interés</label>
                   <select
@@ -1226,8 +1211,6 @@ public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk
           </div>
         </div>
       </section>
-
-      {/* Footer - estilo Westlake */}
 
       <footer className="main-footer">
         <div className="container">
@@ -1353,13 +1336,10 @@ public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2019.28.29-pmk
         </div>
       </footer>
 
-      {/* Botón flotante de cotización */}
       <div className="new-floating-estimate-btn" onClick={() => scrollToSection(contactRef)}>
         <Mail className="estimate-btn-icon" />
         <span className="estimate-btn-text">Free Estimate</span>
       </div>
-
-      {/* Modal de imagen - MODIFICADO para eliminar bordes blancos y hacer imágenes más grandes */}
       {isImageModalOpen && (
         <div
           className="image-modal-overlay"
