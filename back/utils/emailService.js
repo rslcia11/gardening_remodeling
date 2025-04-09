@@ -29,6 +29,9 @@ const sendFormEmail = async (formData) => {
     case "Remodeling":
       serviceFormatted = "Remodelación"
       break
+      case "Snow Removal":
+        serviceFormatted = "Remoción de Nieve"
+        break
     case "Other Service":
       serviceFormatted = "Otro Servicio"
       break

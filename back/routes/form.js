@@ -30,6 +30,11 @@ router.post("/", async (req, res) => {
         case "remodelación":
           mappedServiceInterest = "Remodeling"
           break
+          case "snow removal":
+            case "remoción de nieve":
+            case "snow-removal":
+              mappedServiceInterest = "Snow Removal"
+              break
         default:
           mappedServiceInterest = "Other Service"
       }

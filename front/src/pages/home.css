@@ -108,7 +108,7 @@ a {
 }
 
 .services-text {
-  color: #d4af37;
+  color: #070707;
 }
 
 .nav-links {
@@ -2954,3 +2954,23 @@ h3 {
   }
 }
 
+
+
+
+
+.main-nav .logo-text,
+.main-nav .logo-text *,
+.logo-text,
+.logo-text *,
+.services-text,
+span.logo-text,
+span.services-text,
+.footer-logo span,
+.logo .logo-text,
+.logo .services-text {
+  color: #d4af37 !important;
+  text-shadow: none !important;
+  -webkit-text-fill-color: #d4af37   !important;
+}
+
+/*#d4af37*/

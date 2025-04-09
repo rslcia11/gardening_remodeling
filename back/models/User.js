@@ -9,7 +9,7 @@ const User = sequelize.define('User', {
     email: { type: DataTypes.STRING(100), allowNull: false},
     phone_number: { type: DataTypes.STRING(20), allowNull: false },
     service_interest: { 
-        type: DataTypes.ENUM('Gardening', 'Construction', 'Remodeling', 'Other Service'),
+        type: DataTypes.ENUM('Gardening', 'Construction', 'Remodeling','Snow Removal', 'Other Service'),
         allowNull: false
     },
     message: { type: DataTypes.TEXT, allowNull: true }

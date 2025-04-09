@@ -35,6 +35,112 @@ import "./home.css" // Importamos el archivo CSS existente
 import { Link } from "react-router-dom" // Cambiado a react-router-dom
 
 export default function Home() {
+  // Add this at the beginning of the Home component, before the return statement
+  useEffect(() => {
+    // Set meta tags for SEO
+    document.title = "Jimenez Services LLC | Professional Landscaping & Remodeling in New Jersey"
+
+    // Meta description
+    const metaDescription = document.createElement("meta")
+    metaDescription.name = "description"
+    metaDescription.content =
+      "Top-rated landscaping, remodeling, construction, and snow removal services in Little Ferry, NJ. Professional, reliable, and affordable solutions for your property."
+    document.head.appendChild(metaDescription)
+
+    // Keywords
+    const metaKeywords = document.createElement("meta")
+    metaKeywords.name = "keywords"
+    metaKeywords.content =
+      "landscaping New Jersey, remodeling NJ, snow removal Little Ferry, construction services, garden maintenance, home renovation, property services"
+    document.head.appendChild(metaKeywords)
+
+    // Canonical URL
+    const canonicalLink = document.createElement("link")
+    canonicalLink.rel = "canonical"
+    canonicalLink.href = window.location.href.split("?")[0]
+    document.head.appendChild(canonicalLink)
+
+    // Open Graph tags
+    const ogTitle = document.createElement("meta")
+    ogTitle.property = "og:title"
+    ogTitle.content = "Jimenez Services LLC | Professional Landscaping & Remodeling in New Jersey"
+    document.head.appendChild(ogTitle)
+
+    const ogDescription = document.createElement("meta")
+    ogDescription.property = "og:description"
+    ogDescription.content =
+      "Top-rated landscaping, remodeling, construction, and snow removal services in Little Ferry, NJ. Professional, reliable, and affordable solutions for your property."
+    document.head.appendChild(ogDescription)
+
+    const ogImage = document.createElement("meta")
+    ogImage.property = "og:image"
+    ogImage.content =
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-04%20at%2021.14.20-doLb43PNbRsdNXYnmyLK5ZKJQK8ySK.jpeg"
+    document.head.appendChild(ogImage)
+
+    const ogUrl = document.createElement("meta")
+    ogUrl.property = "og:url"
+    ogUrl.content = window.location.href.split("?")[0]
+    document.head.appendChild(ogUrl)
+
+    const ogType = document.createElement("meta")
+    ogType.property = "og:type"
+    ogType.content = "website"
+    document.head.appendChild(ogType)
+
+    // Twitter Card tags
+    const twitterCard = document.createElement("meta")
+    twitterCard.name = "twitter:card"
+    twitterCard.content = "summary_large_image"
+    document.head.appendChild(twitterCard)
+
+    const twitterTitle = document.createElement("meta")
+    twitterTitle.name = "twitter:title"
+    twitterTitle.content = "Jimenez Services LLC | Professional Landscaping & Remodeling in New Jersey"
+    document.head.appendChild(twitterTitle)
+
+    const twitterDescription = document.createElement("meta")
+    twitterDescription.name = "twitter:description"
+    twitterDescription.content =
+      "Top-rated landscaping, remodeling, construction, and snow removal services in Little Ferry, NJ."
+    document.head.appendChild(twitterDescription)
+
+    const twitterImage = document.createElement("meta")
+    twitterImage.name = "twitter:image"
+    twitterImage.content =
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-04%20at%2021.14.20-doLb43PNbRsdNXYnmyLK5ZKJQK8ySK.jpeg"
+    document.head.appendChild(twitterImage)
+
+    // Geo tags for local SEO
+    const geoRegion = document.createElement("meta")
+    geoRegion.name = "geo.region"
+    geoRegion.content = "US-NJ"
+    document.head.appendChild(geoRegion)
+
+    const geoPlacename = document.createElement("meta")
+    geoPlacename.name = "geo.placename"
+    geoPlacename.content = "Little Ferry, New Jersey"
+    document.head.appendChild(geoPlacename)
+
+    // Clean up on component unmount
+    return () => {
+      document.head.removeChild(metaDescription)
+      document.head.removeChild(metaKeywords)
+      document.head.removeChild(canonicalLink)
+      document.head.removeChild(ogTitle)
+      document.head.removeChild(ogDescription)
+      document.head.removeChild(ogImage)
+      document.head.removeChild(ogUrl)
+      document.head.removeChild(ogType)
+      document.head.removeChild(twitterCard)
+      document.head.removeChild(twitterTitle)
+      document.head.removeChild(twitterDescription)
+      document.head.removeChild(twitterImage)
+      document.head.removeChild(geoRegion)
+      document.head.removeChild(geoPlacename)
+    }
+  }, [])
+
   const [isVisible, setIsVisible] = useState(false)
   const [activeTab, setActiveTab] = useState("gardening")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -266,26 +372,26 @@ export default function Home() {
   const testimonials = [
     {
       name: "Maria Rodriguez",
-      role: "Cliente de Little Ferry",
+      role: "Client from Little Ferry",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010019-z39kWRQp0E8pqugGzNzkgsWztQSFKe.png",
-      text: "¡Increíble transformación! Jimenez Services convirtió mi jardín en un oasis de ensueño. Su atención al detalle y profesionalismo superaron todas mis expectativas. Ahora disfruto cada minuto en mi nuevo espacio exterior.",
+      text: "Amazing transformation! Jimenez Services turned my garden into a dream oasis. Their attention to detail and professionalism exceeded all my expectations. I now enjoy every minute in my new outdoor space.",
       rating: 5,
     },
     {
       name: "John Davis",
-      role: "Dueño de Negocio",
+      role: "Business Owner",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010101-3DJmFwAevTyPlHr3vsIrA7weXnQmqw.png",
-      text: "La remodelación de nuestra oficina fue impecable. El equipo de Jimenez entendió exactamente lo que necesitábamos y entregaron resultados excepcionales en tiempo récord. Nuestros clientes no paran de elogiar el nuevo diseño.",
+      text: "The remodeling of our office was impeccable. The Jimenez team understood exactly what we needed and delivered exceptional results in record time. Our clients can't stop praising the new design.",
       rating: 5,
     },
     {
       name: "Sarah Thompson",
-      role: "Administradora de Propiedades",
+      role: "Property Manager",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202025-03-31%20010143-g5zhIrqdafbDUWXWkoL9Ibua5dguNG.png",
-      text: "Como administradora de múltiples propiedades, valoro la consistencia y confiabilidad. Jimenez Services siempre cumple con excelencia, transformando cada espacio con un toque único y manteniendo la más alta calidad en cada proyecto.",
+      text: "As a manager of multiple properties, I value consistency and reliability. Jimenez Services always delivers with excellence, transforming each space with a unique touch and maintaining the highest quality in every project.",
       rating: 5,
     },
   ]
@@ -294,7 +400,7 @@ export default function Home() {
   const portfolioItems = [
     // Proyectos de remodelación con imágenes reales
     {
-      title: "Transformación Completa de Baño",
+      title: "Complete Bathroom Transformation",
       category: "remodeling",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.25-CpCQmn9D9nAUd3qFaCTU2I9Iw9dKfo.jpeg",
@@ -302,7 +408,7 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26-xCpRvT859Z09XQxaNHHY5tb13vMa6K.jpeg",
     },
     {
-      title: "Renovación de Ático",
+      title: "Attic Renovation",
       category: "remodeling",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.28-dQrMCrAbMJVpnsehimsIoXyo0V3kwi.jpeg",
@@ -310,7 +416,7 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27%20%281%29-2cc09hsVgCuxBXpuiRoxHEiAr4GH2v.jpeg",
     },
     {
-      title: "Renovación de Cocina Moderna",
+      title: "Modern Kitchen Renovation",
       category: "remodeling",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg",
@@ -318,7 +424,7 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%281%29-3xLNhK99Bak6DL5NFisMyLQl1FUBbL.jpeg",
     },
     {
-      title: "Remodelacion y acabado de un cuarto",
+      title: "Remodeling and finishing of a room",
       category: "remodeling",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-28%20at%2017.12.50-M1R7RXgPPB4pwHkApQfiDlJVCZSNe9.jpeg",
@@ -326,7 +432,7 @@ export default function Home() {
 
     // Proyectos de jardinería con imágenes reales
     {
-      title: "Transformación Completa de Jardín",
+      title: "Complete Garden Transformation",
       category: "gardening",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20%20%281%29-bqk7asm0NPvOV85HOVI9G9YgvRAdAV.jpeg",
@@ -334,25 +440,25 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20-HcZW7tGy7aYQ20LD1BdPOHEtF0GiQh.jpeg",
     },
     {
-      title: "Diseño de Camino Lateral con Privacidad",
+      title: "Road Design",
       category: "gardening",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.30-OsEJe2YeWg3P6g3iXIq3wVL7xTih3B.jpeg",
     },
     {
-      title: "Mantenimiento de Jardín",
+      title: "Garden Maintenance",
       category: "gardening",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.26-78p413j3LMqwgT63kJy72TCkUe4WGZ.jpeg",
     },
     {
-      title: "Instalación de Mantillo Profesional",
+      title: "Mulch Installation",
       category: "gardening",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-SO1uzOSv574OMbCkD6aeSIWTJqec7R.jpeg",
     },
     {
-      title: "Mantenimiento y decoración de un jardin en la temporada de Hallowen",
+      title: "Maintenance and decoration of a garden during the Halloween Season",
       category: "gardening",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.16-CcEtkb5DKce0jIl6eigpcUT5MkrOM6.jpeg",
@@ -364,82 +470,70 @@ export default function Home() {
     gardening: [
       {
         icon: <Leaf className="service-icon-svg" />,
-        title: "Mantenimiento de Césped",
+        title: "Lawn Maintenance",
         description:
-          "Cuidamos su jardín con un servicio integral de mantenimiento que incluye corte, fertilización y tratamientos personalizados para mantener su césped verde y saludable durante todo el año.",
-        features: ["Corte profesional de césped", "Fertilización programada", "Tratamiento contra malezas"],
+          "We cardes cutting, fertilization, and customized treatments to keep your lawn green and healthy all year round.",
+        features: ["Professional lawn cutting", "Scheduled fertilization", "Weed treatment"],
       },
       {
         icon: <Droplets className="service-icon-svg" />,
-        title: "Sistemas de Riego",
+        title: "Irrigation Systems",
         description:
-          "Instalamos y reparamos sistemas de riego eficientes que aseguran la correcta hidratación de su jardín, ahorrando agua y manteniendo sus plantas en óptimas condiciones.",
-        features: ["Instalación de sistemas automáticos", "Reparación y mantenimiento", "Soluciones de ahorro de agua"],
+          "We install and repair efficient irrigation systems that ensure proper hydration of your garden, saving water and keeping your plants in optimal condition.",
+        features: ["Installation of automatic sprinkler systems", "Repair and maintenance of existing systems", "Seasonal system adjustments and optimization"],
       },
       {
         icon: <Shovel className="service-icon-svg" />,
-        title: "Plantación y Paisajismo",
+        title: "Garden Maintenance",
         description:
-          "Transformamos su espacio exterior con diseños personalizados que incluyen selección e instalación de plantas, árboles y arbustos adaptados a su entorno y preferencias.",
-        features: [
-          "Diseño personalizado de jardines",
-          "Plantación de árboles y arbustos",
-          "Instalación de césped (sodding)",
-        ],
+          "We keep your garden looking its best year-round with professional care tailored to your landscape",
+        features: ["Soil aeration", "Removal of leaves and branches", "Shrub pruning"],
       },
     ],
     remodeling: [
       {
         icon: <Paintbrush className="service-icon-svg" />,
-        title: "Remodelación de Interiores",
+        title: "Interior Remodeling",
         description:
-          "Transformamos completamente sus espacios interiores con diseños modernos y funcionales que reflejan su estilo personal y mejoran su calidad de vida diaria.",
-        features: [
-          "Renovación de cocinas y baños",
-          "Instalación de pisos y acabados",
-          "Diseño personalizado de espacios",
-        ],
+          "We completely transform your interior spaces with modern and functional designs that reflect your personal style and improve your daily quality of life.",
+        features: ["Kitchen and bathroom renovation", "Floor and finish installation", "Custom space design"],
       },
       {
         icon: <Hammer className="service-icon-svg" />,
-        title: "Construcción y Ampliaciones",
+        title: "Construction and Additions",
         description:
-          "Realizamos proyectos de construcción y ampliación que aumentan el valor de su propiedad, desde nuevas habitaciones hasta estructuras completas con los más altos estándares de calidad.",
-        features: ["Ampliaciones de viviendas", "Construcción de estructuras", "Renovación de fachadas"],
+          "We carry out construction and expansion projects that increase the value of your property, from new rooms to complete structures with the highest quality standards.",
+        features: ["Home additions", "Structure construction", "Facade renovation"],
       },
       {
         icon: <Tool className="service-icon-svg" />,
-        title: "Acabados y Detalles",
+        title: "Finishes and Details",
         description:
-          "Nos especializamos en acabados de alta calidad y detalles que marcan la diferencia, desde trabajos de pintura profesional hasta instalaciones eléctricas y de plomería.",
-        features: ["Pintura interior y exterior", "Instalaciones eléctricas", "Carpintería y detalles personalizados"],
+          "We specialize in high-quality finishes and details that make a difference, from professional painting to electrical and plumbing installations.",
+        features: ["Interior and exterior painting", "Electrical installations", "Carpentry and custom details"],
       },
     ],
     winter: [
       {
         icon: <Snowflake className="service-icon-svg" />,
-        title: "Remoción de Nieve",
+        title: "Snow Removal",
         description:
-          "Mantenemos sus espacios seguros y accesibles durante el invierno con nuestro servicio profesional de remoción de nieve para residencias y negocios, disponible 24/7.",
-        features: ["Limpieza de entradas y aceras", "Remoción de nieve en techos", "Servicio de emergencia 24/7"],
+          "We keep your spaces safe and accessible during winter with our professional snow removal service for residences and businesses, available 24/7.",
+        features: ["Driveway and sidewalk clearing", "Roof snow removal", "24/7 emergency service"],
       },
       {
         icon: <AlertTriangle className="service-icon-svg" />,
-        title: "Servicios de Deshielo",
+        title: "De-icing Services",
         description:
-          "Prevenimos la formación de hielo peligroso con aplicaciones profesionales de sal y otros agentes de deshielo, manteniendo sus espacios seguros durante todo el invierno.",
-        features: ["Aplicación de sal y arena", "Tratamiento preventivo", "Soluciones ecológicas disponibles"],
+          "We prevent the formation of dangerous ice with professional applications of salt and other de-icing agents, keeping your spaces safe throughout the winter.",
+        features: ["Salt and sand application", "Preventive treatment", "Eco-friendly solutions available"],
       },
       {
         icon: <Truck className="service-icon-svg" />,
-        title: "Preparación para el Invierno",
+        title: "Winter Preparation",
         description:
-          "Preparamos su propiedad para enfrentar el invierno con servicios completos que incluyen protección de plantas, aislamiento de tuberías y mantenimiento preventivo.",
-        features: [
-          "Protección de jardines y plantas",
-          "Mantenimiento de sistemas de calefacción",
-          "Inspección preventiva",
-        ],
+          "We prepare your property to face winter with comprehensive services that include plant protection, pipe insulation, and preventive maintenance.",
+        features: ["Garden and plant protection", "Heating system maintenance", "Preventive inspection"],
       },
     ],
   }
@@ -447,27 +541,26 @@ export default function Home() {
   const features = [
     {
       icon: <Award />,
-      title: "Excelencia Garantizada",
+      title: "Guaranteed Excellence",
       description:
-        "Respaldamos cada proyecto con garantías completas y un compromiso inquebrantable con la calidad superior en cada detalle.",
+        "We back every project with comprehensive guarantees and an unwavering commitment to superior quality in every detail.",
     },
     {
       icon: <Users />,
-      title: "Equipo de Élite",
+      title: "Elite Team",
       description:
-        "Nuestros profesionales certificados combinan años de experiencia con las técnicas más innovadoras del sector.",
+        "Our certified professionals combine years of experience with the most innovative techniques in the industry.",
     },
     {
       icon: <Calendar />,
-      title: "Puntualidad Perfecta",
+      title: "Perfect Punctuality",
       description:
-        "Valoramos su tiempo tanto como usted. Completamos cada proyecto según lo programado, sin sorpresas ni retrasos.",
+        "We value your time as much as you do. We complete each project as scheduled, without surprises or delays.",
     },
     {
       icon: <Shield />,
-      title: "Materiales Superiores",
-      description:
-        "Utilizamos exclusivamente materiales de primera calidad que garantizan durabilidad excepcional y belleza duradera.",
+      title: "Superior Materials",
+      description: "We exclusively use top-quality materials that guarantee exceptional durability and lasting beauty.",
     },
   ]
 
@@ -731,7 +824,7 @@ export default function Home() {
             <div className="logo">
               <img
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-04%20at%2021.14.20-doLb43PNbRsdNXYnmyLK5ZKJQK8ySK.jpeg"
-                alt="Jimenez Services LLC Logo"
+                alt="Jimenez Services LLC - Professional Landscaping and Remodeling in Little Ferry, NJ"
                 className="logo-image"
                 onClick={() =>
                   openImageModal(
@@ -744,6 +837,7 @@ export default function Home() {
               </span>
             </div>
 
+
             <ul className="nav-links">
               <li>
                 <a
@@ -753,7 +847,7 @@ export default function Home() {
                     scrollToSection(heroRef)
                   }}
                 >
-                  INICIO
+                  HOME
                 </a>
               </li>
               <li>
@@ -764,7 +858,7 @@ export default function Home() {
                     scrollToSection(aboutRef)
                   }}
                 >
-                  NOSOTROS
+                  ABOUT US
                 </a>
               </li>
               <li className="dropdown">
@@ -775,14 +869,14 @@ export default function Home() {
                     scrollToSection(servicesRef)
                   }}
                 >
-                  SERVICIOS <ChevronDown size={14} className="dropdown-indicator" />
+                  SERVICES <ChevronDown size={14} className="dropdown-indicator" />
                 </a>
                 <div className="dropdown-content">
                   <Link to="/jardineria" onClick={() => window.scrollTo(0, 0)}>
-                    <TreePine size={16} className="dropdown-icon" /> Jardinería
+                    <TreePine size={16} className="dropdown-icon" /> Landscaping
                   </Link>
                   <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
-                    <Hammer size={16} className="dropdown-icon" /> Remodelación y Construcción
+                    <Hammer size={16} className="dropdown-icon" /> Remodeling and Construction
                   </Link>
                 </div>
               </li>
@@ -794,7 +888,7 @@ export default function Home() {
                     scrollToSection(galleryRef)
                   }}
                 >
-                  PORTAFOLIO
+                  PORTFOLIO
                 </a>
               </li>
               <li>
@@ -805,7 +899,7 @@ export default function Home() {
                     scrollToSection(testimonialsRef)
                   }}
                 >
-                  TESTIMONIOS
+                  TESTIMONIALS
                 </a>
               </li>
             </ul>
@@ -836,17 +930,19 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
         <div className="hero-content z-10" onClick={(e) => e.stopPropagation()}>
-          <h1 className="mb-16 text-4xl font-light tracking-wide text-white md:text-5xl">¿Qué servicio deseas?</h1>
+          <h1 className="mb-16 text-4xl font-light tracking-wide text-white md:text-5xl">
+          Select the service you need
+          </h1>
 
           <div className="service-options">
             <Link to="/jardineria" className="service-option" onClick={() => window.scrollTo(0, 0)}>
               <div className="service-option-icon-container">
                 <Leaf className="service-option-icon" />
               </div>
-              <h3 className="service-option-title">Jardinería</h3>
+              <h3 className="service-option-title">Landscaping</h3>
               <p className="service-option-desc"></p>
               <div className="service-option-button">
-                Explorar Servicios
+                Explore Services
                 <ArrowRight className="service-option-arrow" size={16} />
               </div>
             </Link>
@@ -855,10 +951,10 @@ export default function Home() {
               <div className="service-option-icon-container">
                 <Hammer className="service-option-icon" />
               </div>
-              <h3 className="service-option-title">Remodelación y Construcción</h3>
+              <h3 className="service-option-title">Remodeling and Construction</h3>
               <p className="service-option-desc"></p>
               <div className="service-option-button">
-                Explorar Servicios
+                Explore Services
                 <ArrowRight className="service-option-arrow" size={16} />
               </div>
             </Link>
@@ -869,32 +965,28 @@ export default function Home() {
       <section ref={aboutRef} className="section about-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Sobre Nosotros</h2>
+            <h2 className="section-title">About Jimenez Services in New Jersey</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">NUESTRA HISTORIA DE ÉXITO</p>
+            <p className="section-subtitle">Our history</p>
           </div>
           <div className="about-content">
             <div className="about-image-grid">
               {[
                 {
                   src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-13%20at%2020.25.15-IeRxiFOPgLISDQGOlZewhpSH0uPm7k.jpeg",
-                  alt: "Camión y trailer de Jimenez Services LLC",
-                  title: "Equipo Profesional",
+                  title: "Professional Equipment",
                 },
                 {
-                  src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-SO1uzOSv574OMbCkD6aeSIWTJqec7R.jpeg",
-                  alt: "Equipo de Jimenez Services instalando mantillo en un jardín",
-                  title: "Instalación de Mantillo",
+                  src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-04-01%20at%2020.42.36%20%281%29-icj0LHrAp3Na1gonwQXS3YZih71nq0.jpeg",                
+                  title: "Winter equipment",
                 },
                 {
                   src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.30-reCfkY0qNcuPQoRYvWvbGyLWthgSqj.jpeg",
-                  alt: "Trabajador realizando remodelación de ático",
-                  title: "Remodelación en Proceso",
+                  title: "Remodeling in Process",
                 },
                 {
                   src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27-EqiOMY03IlblCJkSzaIHSZu2GPcI9r.jpeg",
-                  alt: "Cocina moderna con gabinetes de dos tonos",
-                  title: "Cocina Moderna",
+                  title: "Modern Kitchen",
                 },
               ].map((image, index) => (
                 <div
@@ -915,16 +1007,16 @@ export default function Home() {
               ))}
             </div>
             <div className="about-text">
-              <h3>Pasión por la Perfección en Cada Detalle</h3>
+              <h3>Passion for Excellence in Every Project</h3>
               <p>
-                En Jimenez Services LLC, no solo transformamos espacios – creamos experiencias que perduran. Nuestro
-                equipo de profesionales altamente capacitados combina visión artística con precisión técnica para
-                realizar sus trabajos.
+              At Jimenez Services LLC, we don’t just improve homes — we bring your vision to life. Our expert team 
+              blends creativity with craftsmanship to deliver stunning results in landscaping, remodeling, construction,
+              and snow removal.
               </p>
               <p>
-                Desde nuestra sede en Little Ferry, New Jersey, hemos llevado nuestra excelencia a toda el área
-                metropolitana, construyendo una reputación basada en la calidad excepcional, la integridad absoluta y
-                resultados que superan expectativas.
+              Based in Little Ferry, New Jersey, we proudly serve the entire metropolitan area. With a strong
+              reputation built on exceptional quality, trust, and attention to detail, we go beyond expectations — 
+              turning spaces into experiences that last.
               </p>
               <div className="about-features">
                 {features.map((feature, index) => (
@@ -945,9 +1037,9 @@ export default function Home() {
       <section ref={servicesRef} className="section services-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Nuestros Servicios</h2>
+            <h2 className="section-title">Our Services in Little Ferry, NJ</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">SOLUCIONES PROFESIONALES</p>
+            <p className="section-subtitle">PROFESSIONAL SOLUTIONS</p>
           </div>
           <div className="tab-buttons">
             <button
@@ -955,21 +1047,21 @@ export default function Home() {
               onClick={() => setActiveTab("gardening")}
             >
               <Leaf className="tab-icon" />
-              Servicios de Jardinería
+              Landscaping Services
             </button>
             <button
               className={`tab-button ${activeTab === "remodeling" ? "active" : ""}`}
               onClick={() => setActiveTab("remodeling")}
             >
               <HomeIcon className="tab-icon" />
-              Servicios de Remodelación y Construcción
+              Remodeling and Construction Services
             </button>
             <button
               className={`tab-button ${activeTab === "winter" ? "active" : ""}`}
               onClick={() => setActiveTab("winter")}
             >
               <Snowflake className="tab-icon" />
-              Servicios de Invierno
+              Winter Services
             </button>
           </div>
           <div className="services-grid">
@@ -994,28 +1086,28 @@ export default function Home() {
       <section ref={galleryRef} className="section portfolio-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Nuestro Portafolio</h2>
+            <h2 className="section-title">Our Portfolio</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">PROYECTOS DESTACADOS</p>
+            <p className="section-subtitle">FEATURED PROJECTS</p>
           </div>
           <div className="portfolio-filter">
             <button
               className={`filter-button ${activeFilter === "all" ? "active" : ""}`}
               onClick={() => setActiveFilter("all")}
             >
-              TODOS
+              ALL
             </button>
             <button
               className={`filter-button ${activeFilter === "gardening" ? "active" : ""}`}
               onClick={() => setActiveFilter("gardening")}
             >
-              JARDINERÍA
+              LANDSCAPING
             </button>
             <button
               className={`filter-button ${activeFilter === "remodeling" ? "active" : ""}`}
               onClick={() => setActiveFilter("remodeling")}
             >
-              REMODELACIÓN
+              REMODELING
             </button>
           </div>
 
@@ -1048,9 +1140,9 @@ export default function Home() {
       <section ref={testimonialsRef} className="section testimonials-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Testimonios</h2>
+            <h2 className="section-title">Testimonials</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">LO QUE DICEN NUESTROS CLIENTES</p>
+            <p className="section-subtitle">WHAT OUR CLIENTS SAY</p>
           </div>
           <div className="testimonials-grid">
             {testimonials.map((testimonial, index) => (
@@ -1076,16 +1168,16 @@ export default function Home() {
       <section ref={contactRef} className="section contact-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Contáctenos</h2>
+            <h2 className="section-title">Contact Us</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">ESTAMOS LISTOS PARA AYUDARLE</p>
+            <p className="section-subtitle">WE'RE READY TO HELP YOU</p>
           </div>
           <div className="contact-container">
             <div className="contact-info">
-              <h3>Información de Contacto</h3>
+              <h3>Contact Information</h3>
               <p>
-                Estas a un mensaje de convertir tus ideas en realidad. Contáctanos hoy mismo para una consulta
-                personalizada sin compromiso.
+                You're just one message away from turning your ideas into reality. Contact us today for a personalized
+                consultation with no obligation.
               </p>
               <div className="contact-details">
                 <div className="contact-item">
@@ -1093,7 +1185,7 @@ export default function Home() {
                     <MapPin />
                   </div>
                   <div className="contact-text">
-                    <h4>Ubicación</h4>
+                    <h4>Location</h4>
                     <p>Little Ferry, NJ 07643</p>
                   </div>
                 </div>
@@ -1102,7 +1194,7 @@ export default function Home() {
                     <Phone />
                   </div>
                   <div className="contact-text">
-                    <h4>Teléfono</h4>
+                    <h4>Phone</h4>
                     <p>551-587-9625</p>
                   </div>
                 </div>
@@ -1120,56 +1212,55 @@ export default function Home() {
                     <Clock />
                   </div>
                   <div className="contact-text">
-                    <h4>Horario</h4>
-                    <p>24 horas al dia, los 365 dias del año</p>
-                    <p>Free Stimate</p>
+                    <h4>Hours</h4>
+                    <p>24 hours a day, 365 days a year</p>
+                    <p>Free Estimate</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="contact-form-container">
-              <h3>Envíenos un Mensaje</h3>
+              <h3>Send Us a Message</h3>
               <form className="contact-form" onSubmit={handleSubmitForm}>
                 <div className="form-group">
-                  <label htmlFor="name">Nombre Completo</label>
+                  <label htmlFor="name">Full Name</label>
                   <input
                     type="text"
                     id="name"
                     name="full_name"
                     value={formData.full_name}
                     onChange={handleInputChange}
-                    placeholder="Su nombre completo"
+                    placeholder="Your full name"
                     required
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email">Correo Electrónico</label>
+                  <label htmlFor="email">Email</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="Su correo electrónico"
+                    placeholder="Your email"
                     required
                   />
                 </div>
-                // Modificar el campo de teléfono para hacerlo obligatorio
                 <div className="form-group">
-                  <label htmlFor="phone">Teléfono</label>
+                  <label htmlFor="phone">Phone</label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone_number"
                     value={formData.phone_number}
                     onChange={handleInputChange}
-                    placeholder="Su número de teléfono"
+                    placeholder="Your phone number"
                     required
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="service">Servicio de Interés</label>
+                  <label htmlFor="service">Service of Interest</label>
                   <select
                     id="service"
                     name="service_interest"
@@ -1177,34 +1268,33 @@ export default function Home() {
                     onChange={handleInputChange}
                     required
                   >
-                    <option value="">Seleccione un servicio</option>
-                    <option value="Gardening">Jardinería</option>
-                    <option value="Construction">Construcción</option>
-                    <option value="Remodeling">Remodelación</option>
-                    <option value="Other Service">Otro Servicio</option>
+                    <option value="">Select a service</option>
+                    <option value="Gardening">Landscaping</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Remodeling">Remodeling</option>
+                    <option value="Snow Removal">Snow Removal</option>
+                    <option value="Other Service">Other Service</option>
                   </select>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="message">Mensaje</label>
+                  <label htmlFor="message">Message</label>
                   <textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
                     rows="5"
-                    placeholder="Cuéntenos sobre su proyecto"
+                    placeholder="Tell us about your project"
                   ></textarea>
                 </div>
                 <button type="submit" disabled={formStatus.submitting}>
-                  {formStatus.submitting ? "ENVIANDO..." : "COTIZAR DE MANERA GRATUITA"}
+                  {formStatus.submitting ? "ENVIANDO..." : "GET A FREE QUOTE"}
                 </button>
                 {formStatus.success && (
-                  <div className="form-success-message">
-                    ¡Mensaje enviado con éxito! Nos pondremos en contacto con usted pronto.
-                  </div>
+                  <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
                 )}
                 {formStatus.error && (
-                  <div className="form-error-message">Error al enviar el mensaje: {formStatus.error}</div>
+                  <div className="form-error-message">Error sending message: {formStatus.error}</div>
                 )}
               </form>
             </div>
@@ -1219,7 +1309,7 @@ export default function Home() {
               <div className="footer-logo">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-04%20at%2021.14.20-doLb43PNbRsdNXYnmyLK5ZKJQK8ySK.jpeg"
-                  alt="Jimenez Services LLC Logo"
+                  alt="Jimenez Services LLC - Professional Landscaping and Remodeling in Little Ferry, NJ"
                   className="footer-logo-image"
                   onClick={() =>
                     openImageModal(
@@ -1230,8 +1320,8 @@ export default function Home() {
                 <span>Jimenez Services LLC</span>
               </div>
               <p>
-                Transformando espacios ordinarios en extraordinarios desde 2018. Nuestro compromiso: excelencia,
-                innovación y satisfacción garantizada en cada proyecto.
+                Transforming ordinary spaces into extraordinary ones since 2018. Our commitment: excellence, innovation,
+                and guaranteed satisfaction in every project.
               </p>
               <div className="footer-social">
                 <a href="#" className="footer-social-icon">
@@ -1249,7 +1339,7 @@ export default function Home() {
               </div>
             </div>
             <div className="footer-links">
-              <h3>Enlaces Rápidos</h3>
+              <h3>Quick Links</h3>
               <ul>
                 <li>
                   <a
@@ -1259,7 +1349,7 @@ export default function Home() {
                       scrollToSection(heroRef)
                     }}
                   >
-                    Inicio
+                    Home
                   </a>
                 </li>
                 <li>
@@ -1270,17 +1360,17 @@ export default function Home() {
                       scrollToSection(aboutRef)
                     }}
                   >
-                    Nosotros
+                    About Us
                   </a>
                 </li>
                 <li>
                   <Link to="/jardineria" onClick={() => window.scrollTo(0, 0)}>
-                    Jardinería
+                    Landscaping
                   </Link>
                 </li>
                 <li>
                   <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
-                    Remodelación
+                    Remodeling
                   </Link>
                 </li>
                 <li>
@@ -1291,7 +1381,7 @@ export default function Home() {
                       scrollToSection(galleryRef)
                     }}
                   >
-                    Portafolio
+                    Portfolio
                   </a>
                 </li>
                 <li>
@@ -1302,7 +1392,7 @@ export default function Home() {
                       scrollToSection(testimonialsRef)
                     }}
                   >
-                    Testimonios
+                    Testimonials
                   </a>
                 </li>
                 <li>
@@ -1313,25 +1403,28 @@ export default function Home() {
                       scrollToSection(contactRef)
                     }}
                   >
-                    Contacto
+                    Contact
                   </a>
                 </li>
               </ul>
             </div>
             <div className="footer-contact">
-              <h3>Contáctenos</h3>
-              <p>Little Ferry, NJ 07643</p>
+              <h3>Contact Us</h3>
+              <p>Little Ferry, NJ</p>
               <p>
-                Teléfono: <a href="tel:5515879625">551-587-9625</a>
+                Phone: <a href="tel:5515879625">551-587-9625</a>
               </p>
               <p>
                 Email: <a href="mailto:mjimenezlandscaping80@gmail.com">mjimenezlandscaping80@gmail.com</a>
               </p>
-              <p>24 horas del dia, 365 dias del año</p>
+              <p>24 hours a day, 365 days a year</p>
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} Jimenez Services LLC. Todos los derechos reservados.</p>
+            <p>
+              &copy; {new Date().getFullYear()} Jimenez Services LLC - Professional Landscaping, Remodeling, and Snow
+              Removal in Little Ferry, New Jersey. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
@@ -1399,4 +1492,3 @@ export default function Home() {
     </div>
   )
 }
-

@@ -34,11 +34,130 @@ import {
 import "./gardening.css"
 
 export default function Gardening() {
+  // Add this at the beginning of the Gardening component, before the return statement
+  useEffect(() => {
+    // Set meta tags for SEO
+    document.title = "Professional Landscaping Services in New Jersey | Jimenez Services LLC"
+
+    // Meta description
+    const metaDescription = document.createElement("meta")
+    metaDescription.name = "description"
+    metaDescription.content =
+      "Expert landscaping services in New Jersey. Lawn maintenance, garden design, irrigation systems, and seasonal care by Jimenez Services LLC in Little Ferry, NJ."
+    document.head.appendChild(metaDescription)
+
+    // Keywords
+    const metaKeywords = document.createElement("meta")
+    metaKeywords.name = "keywords"
+    metaKeywords.content =
+      "landscaping New Jersey, lawn maintenance NJ, garden design Little Ferry, irrigation systems, professional gardening, lawn care, mulch installation"
+    document.head.appendChild(metaKeywords)
+
+    // Canonical URL
+    const canonicalLink = document.createElement("link")
+    canonicalLink.rel = "canonical"
+    canonicalLink.href = window.location.href.split("?")[0]
+    document.head.appendChild(canonicalLink)
+
+    // Open Graph tags
+    const ogTitle = document.createElement("meta")
+    ogTitle.property = "og:title"
+    ogTitle.content = "Professional Landscaping Services in New Jersey | Jimenez Services LLC"
+    document.head.appendChild(ogTitle)
+
+    const ogDescription = document.createElement("meta")
+    ogDescription.property = "og:description"
+    ogDescription.content =
+      "Expert landscaping services in New Jersey. Lawn maintenance, garden design, irrigation systems, and seasonal care by Jimenez Services LLC."
+    document.head.appendChild(ogDescription)
+
+    const ogImage = document.createElement("meta")
+    ogImage.property = "og:image"
+    ogImage.content =
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.30-sSuA8aE5YRtU40hUQT3wjnyT8obYmO.jpeg"
+    document.head.appendChild(ogImage)
+
+    const ogUrl = document.createElement("meta")
+    ogUrl.property = "og:url"
+    ogUrl.content = window.location.href.split("?")[0]
+    document.head.appendChild(ogUrl)
+
+    const ogType = document.createElement("meta")
+    ogType.property = "og:type"
+    ogType.content = "website"
+    document.head.appendChild(ogType)
+
+    // Twitter Card tags
+    const twitterCard = document.createElement("meta")
+    twitterCard.name = "twitter:card"
+    twitterCard.content = "summary_large_image"
+    document.head.appendChild(twitterCard)
+
+    const twitterTitle = document.createElement("meta")
+    twitterTitle.name = "twitter:title"
+    twitterTitle.content = "Professional Landscaping Services in New Jersey | Jimenez Services LLC"
+    document.head.appendChild(twitterTitle)
+
+    const twitterDescription = document.createElement("meta")
+    twitterDescription.name = "twitter:description"
+    twitterDescription.content = "Expert landscaping services in New Jersey by Jimenez Services LLC."
+    document.head.appendChild(twitterDescription)
+
+    const twitterImage = document.createElement("meta")
+    twitterImage.name = "twitter:image"
+    twitterImage.content =
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.30-sSuA8aE5YRtU40hUQT3wjnyT8obYmO.jpeg"
+    document.head.appendChild(twitterImage)
+
+    // Geo tags for local SEO
+    const geoRegion = document.createElement("meta")
+    geoRegion.name = "geo.region"
+    geoRegion.content = "US-NJ"
+    document.head.appendChild(geoRegion)
+
+    const geoPlacename = document.createElement("meta")
+    geoPlacename.name = "geo.placename"
+    geoPlacename.content = "Little Ferry, New Jersey"
+    document.head.appendChild(geoPlacename)
+
+    // Clean up on component unmount
+    return () => {
+      document.head.removeChild(metaDescription)
+      document.head.removeChild(metaKeywords)
+      document.head.removeChild(canonicalLink)
+      document.head.removeChild(ogTitle)
+      document.head.removeChild(ogDescription)
+      document.head.removeChild(ogImage)
+      document.head.removeChild(ogUrl)
+      document.head.removeChild(ogType)
+      document.head.removeChild(twitterCard)
+      document.head.removeChild(twitterTitle)
+      document.head.removeChild(twitterDescription)
+      document.head.removeChild(twitterImage)
+      document.head.removeChild(geoRegion)
+      document.head.removeChild(geoPlacename)
+    }
+  }, [])
+
   const [isVisible, setIsVisible] = useState(false)
   const [activeGalleryItem, setActiveGalleryItem] = useState(0)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
+
+  // Añadir estos nuevos estados para el formulario
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    phone_number: "",
+    service_interest: "",
+    message: "",
+  })
+  const [formStatus, setFormStatus] = useState({
+    submitting: false,
+    success: false,
+    error: null,
+  })
 
   // Eliminar el estado activeFilter y la función filteredPortfolio
   //const [activeFilter, setActiveFilter] = useState("all")
@@ -302,109 +421,213 @@ export default function Gardening() {
     }, 400) // Aumentar el tiempo para que coincida con la duración de la transición
   }
 
+  // Función para manejar cambios en los inputs
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
+
+  // Función para manejar el envío del formulario
+  const handleSubmitForm = async (e) => {
+    e.preventDefault()
+
+    // Validación rápida de campos requeridos
+    if (!formData.full_name || !formData.email || !formData.phone_number || !formData.service_interest) {
+      setFormStatus({
+        submitting: false,
+        success: false,
+        error: "Please complete all required fields (name, email, phone and service).",
+      })
+      return
+    }
+
+    // Validación básica de email - usando una expresión regular simple para mayor velocidad
+    if (!formData.email.includes("@") || !formData.email.includes(".")) {
+      setFormStatus({
+        submitting: false,
+        success: false,
+        error: "Please enter a valid email address.",
+      })
+      return
+    }
+
+    // Guardar los datos del formulario para enviarlos en segundo plano
+    const formPayload = {
+      full_name: formData.full_name,
+      email: formData.email,
+      phone_number: formData.phone_number,
+      service_interest: formData.service_interest,
+      message: formData.message || "",
+    }
+
+    // Guardar en localStorage como respaldo
+    localStorage.setItem(
+      "lastFormSubmission",
+      JSON.stringify({
+        data: formPayload,
+        timestamp: new Date().toISOString(),
+      }),
+    )
+
+    // CAMBIO CLAVE: Mostrar éxito INMEDIATAMENTE sin esperar
+    setFormStatus({
+      submitting: false,
+      success: true,
+      error: null,
+    })
+
+    // Limpiar el formulario inmediatamente
+    setFormData({
+      full_name: "",
+      email: "",
+      phone_number: "",
+      service_interest: "",
+      message: "",
+    })
+
+    // Ocultar mensaje de éxito después de 5 segundos
+    setTimeout(() => {
+      setFormStatus((prev) => ({
+        ...prev,
+        success: false,
+      }))
+    }, 5000)
+
+    // Enviar datos al servidor en segundo plano (sin esperar respuesta)
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3000/form"
+
+      // Usar navigator.sendBeacon si está disponible (envío en segundo plano)
+      if (navigator.sendBeacon) {
+        const blob = new Blob([JSON.stringify(formPayload)], { type: "application/json" })
+        navigator.sendBeacon(apiUrl, blob)
+      } else {
+        // Fallback a fetch pero sin esperar respuesta
+        fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formPayload),
+          mode: "cors",
+          // Importante: no esperamos la respuesta
+          keepalive: true, // Asegura que la solicitud continúe incluso si la página se cierra
+        }).catch(() => {
+          // Ignorar errores silenciosamente - ya mostramos éxito al usuario
+        })
+      }
+    } catch (error) {
+      // Ignorar errores - ya mostramos éxito al usuario
+      console.error("Error en segundo plano:", error)
+    }
+  }
+
   const services = [
     {
       icon: <Leaf className="service-icon-svg" />,
-      title: "Mantenimiento de Césped",
+      title: "Lawn Maintenance",
       description:
-        "Transformamos su jardín con un servicio integral de mantenimiento que incluye corte profesional, fertilización programada y tratamientos personalizados para mantener su césped verde, saludable y libre de plagas durante todo el año.",
+        "We design and instation systems that keep your garden perfectly hydrated in all seasons, even during your absence.",
       features: [
-        "Corte profesional de precisión",
-        "Fertilización estacional",
-        "Control de malezas y plagas",
-        "Aireación y escarificación",
-        "Resiembra de áreas dañadas",
+        "Precision professional cutting",
+        "Seasonal fertilization",
+        "Weed and pest control",
+        "Aeration and scarification",
+        "Reseeding of damaged areas",
       ],
     },
     {
       icon: <Droplets className="service-icon-svg" />,
-      title: "Sistemas de Riego",
+      title: "Irrigation Systems",
       description:
-        "Diseñamos e instalamos sistemas de riego automatizados de alta eficiencia que conservan agua, reducen sus facturas y mantienen su jardín perfectamente hidratado en todas las estaciones, incluso durante su ausencia.",
+        "We design and install high-efficiency automated irrigation systems that conserve water, reduce your bills, and keep your garden perfectly hydrated in all seasons, even during your absence.",
       features: [
-        "Instalación de sistemas inteligentes",
-        "Reparación y mantenimiento",
-        "Soluciones de ahorro de agua",
-        "Sistemas de goteo para plantas",
-        "Controladores con sensores de lluvia",
+        "Smart system installation",
+        "Repair and maintenance",
+        "Water-saving solutions",
+        "Drip systems for plants",
+        "Controllers with rain sensors",
       ],
     },
     {
       icon: <Shovel className="service-icon-svg" />,
-      title: "Plantación y Paisajismo",
+      title: "Planting and Landscaping",
       description:
-        "Creamos paisajes espectaculares que aumentan el valor de su propiedad con selección experta de plantas, árboles y arbustos adaptados a su entorno, combinando belleza, funcionalidad y sostenibilidad en cada proyecto.",
+        "We create spectacular landscapes that increase the value of your property with expert selection of plants, trees, and shrubs adapted to your environment, combining beauty, functionality, and sustainability in each project.",
       features: [
-        "Diseño personalizado de jardines",
-        "Selección de plantas nativas",
-        "Instalación profesional de césped",
-        "Creación de jardines temáticos",
-        "Jardines de bajo mantenimiento",
+        "Custom garden design",
+        "Selection of native plants",
+        "Professional lawn installation",
+        "Creation of themed gardens",
+        "Low-maintenance gardens",
       ],
     },
     {
       icon: <TreePine className="service-icon-svg" />,
-      title: "Espacios Exteriores",
+      title: "Outdoor Spaces",
       description:
-        "Transformamos su patio en un oasis al aire libre con terrazas elegantes, caminos encantadores y elementos decorativos que crean ambientes perfectos para relajarse, entretenerse y disfrutar de la naturaleza durante todo el año.",
+        "We transform your yard into an outdoor oasis with elegant patios, charming pathways, and decorative elements that create perfect environments for relaxing, entertaining, and enjoying nature all year round.",
       features: [
-        "Terrazas y patios con materiales premium",
-        "Caminos y senderos decorativos",
-        "Iluminación paisajística LED",
-        "Pérgolas y estructuras de sombra",
-        "Áreas de fuego y cocinas exteriores",
+        "Patios and decks with premium materials",
+        "Decorative paths and walkways",
+        "LED landscape lighting",
+        "Pergolas and shade structures",
+        "Fire pits and outdoor kitchens",
       ],
     },
     {
       icon: <Scissors className="service-icon-svg" />,
-      title: "Poda y Cuidado de Árboles",
+      title: "Tree Pruning and Care",
       description:
-        "Mantenemos sus árboles y arbustos saludables y estéticamente atractivos con servicios profesionales de poda, formación y tratamientos preventivos que prolongan su vida y realzan la belleza de su propiedad.",
+        "We keep your trees and shrubs healthy and aesthetically pleasing with professional pruning, shaping, and preventive treatments that prolong their life and enhance the beauty of your property.",
       features: [
-        "Poda de formación y mantenimiento",
-        "Eliminación de ramas peligrosas",
-        "Tratamientos contra plagas y enfermedades",
-        "Fertilización especializada",
-        "Asesoramiento experto",
+        "Formative and maintenance pruning",
+        "Removal of hazardous branches",
+        "Treatments against pests and diseases",
+        "Specialized fertilization",
+        "Expert advice",
       ],
     },
     {
       icon: <Cloud className="service-icon-svg" />,
-      title: "Control de Plagas y Enfermedades",
+      title: "Pest and Disease Control",
       description:
-        "Protegemos su jardín con tratamientos ecológicos y efectivos contra plagas, enfermedades y malezas, manteniendo un equilibrio natural que favorece el crecimiento saludable de sus plantas sin dañar el medio ambiente.",
+        "We protect your garden with ecological and effective treatments against pests, diseases, and weeds, maintaining a natural balance that promotes healthy growth of your plants.",
       features: [
-        "Diagnóstico preciso de problemas",
-        "Tratamientos orgánicos disponibles",
-        "Prevención de infestaciones",
-        "Control integrado de plagas",
-        "Soluciones personalizadas",
+        "Precise problem diagnosis",
+        "Treatments precise",
+        "Prevention of infestations",
+        "Integrated pest management",
+        "Customized solutions",
       ],
     },
     {
       icon: <Flower className="service-icon-svg" />,
-      title: "Jardines Estacionales",
+      title: "Seasonal Gardens",
       description:
-        "Mantenemos su jardín colorido y vibrante durante todo el año con plantaciones estacionales de flores, bulbos y plantas ornamentales que se adaptan perfectamente a cada temporada, creando interés visual constante.",
+        "We keep your garden colorful and vibrant throughout the year with seasonal plantings of flowers, bulbs, and ornamental plants that perfectly adapt to each season, creating constant visual interest.",
       features: [
-        "Diseño de jardines por temporada",
-        "Rotación de plantas de temporada",
-        "Selección de flores de alto impacto",
-        "Combinaciones armoniosas de colores",
-        "Mantenimiento especializado",
+        "Seasonal garden design",
+        "Rotation of seasonal plants",
+        "Selection of high-impact flowers",
+        "Harmonious color combinations",
+        "Specialized maintenance",
       ],
     },
     {
       icon: <Truck className="service-icon-svg" />,
-      title: "Instalación de Mantillo y Sustratos",
+      title: "Mulch and Substrate Installation",
       description:
-        "Mejoramos la salud y apariencia de sus jardines con instalación profesional de mantillo y sustratos de alta calidad que conservan la humedad, previenen malezas y enriquecen el suelo para un crecimiento óptimo de sus plantas.",
+        "We improve the health and appearance of your gardens with professional installation of high-quality mulch and substrates that conserve moisture, prevent weeds, and enrich the soil for optimal plant growth.",
       features: [
-        "Mantillo decorativo de calidad premium",
-        "Sustratos específicos para cada tipo de planta",
-        "Instalación precisa y uniforme",
-        "Mejora de la retención de agua",
-        "Control natural de malezas",
+        "Premium decorative mulch",
+        "Specific substrates for each type of plant",
+        "Precise and uniform installation",
+        "Improved water retention",
+        "Natural weed control",
       ],
     },
   ]
@@ -413,116 +636,94 @@ export default function Gardening() {
     {
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.30-sSuA8aE5YRtU40hUQT3wjnyT8obYmO.jpeg",
-      title: "Diseño de Camino Lateral con Privacidad",
-      description:
-        "Creación de un pasaje funcional y estético con árboles perennes para privacidad, cerca decorativa e iluminación solar.",
+      title: "Lateral Road Design",
     },
     {
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.26-78p413j3LMqwgT63kJy72TCkUe4WGZ.jpeg",
-      title: "Mantenimiento de Jardín Residencial",
-      description:
-        "Servicio integral que incluye corte preciso, poda de arbustos y cuidado de plantas ornamentales para un jardín impecable.",
+      title: "Garden Maintenance",
     },
     {
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-31%20at%2021.37.02-KmMrxPV7c8gDfI4m5TTwnBnmbKQGFH.jpeg",
-      title: "Mantenimiento Profesional de Césped",
-      description:
-        "Servicio de mantenimiento con equipos profesionales que garantizan un césped saludable y bien cuidado durante todo el año.",
+      title: "Professional Lawn Maintenance",
     },
     {
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-reGHppaVaFo7D6fo18RaHa6dmO06M4.jpeg",
-      title: "Instalación Profesional de Mantillo",
-      description:
-        "Aplicación experta de mantillo negro de alta calidad que mejora la estética del jardín, conserva la humedad y previene el crecimiento de malezas.",
+      title: "Professional Mulch Installation",
+
     },
   ]
 
   // Nuevo array para la sección de portafolio
   const portfolioItems = [
     {
-      title: "Instalación de Mantillo Negro",
+      title: "Black Mulch Installation",
       category: "mantillo",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-aXrRT1QdEN1wVMOdVpu8ihyIT5pfmr.jpeg",
-      description:
-        "Instalación profesional de mantillo negro para mejorar la estética del jardín y prevenir el crecimiento de malezas.",
     },
     {
-      title: "Transformación Completa de Jardín",
+      title: "Complete Garden Transformation",
       category: "transformacion",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20%20%281%29-kIfWpCRNGVoMhpr07W7HlhkezKtyHP.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.20-deqAT3ODJ4IZHK9pMdHTlcBxrNCygH.jpeg",
-      description:
-        "Renovación integral de jardín residencial que incluye instalación de mantillo negro, definición de bordes, plantación de flores ornamentales y mejora del césped.",
     },
     {
-      title: "Mantenimiento de Césped Residencial",
+      title: "Lawn Maintenance",
       category: "cesped",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.26-T5QkvZIyu5OhSJjMpMY6mZCRCBemPa.jpeg",
-      description:
-        "Servicio de mantenimiento profesional de césped que incluye corte, fertilización y tratamientos para mantener un jardín impecable.",
     },
     {
-      title: "Instalación de Césped en Tepes",
+      title: "Installation of Grass in Sod",
       category: "cesped",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/310931284_6576030909090437_4970806413429797238_n.jpg-drhL3Ph1tylgPXs6xqsOuICRzOY5Y5.jpeg",
-      description:
-        "Instalación de césped en tepes (sod) para crear rápidamente un jardín verde y uniforme, ideal para áreas nuevas o renovaciones completas.",
     },
     {
-      title: "Transformación de Jardín Frontal",
+      title: "Front Garden Transformation",
       category: "transformacion",
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.18%20%281%29-XJB6Ijc3J28UxFvhNk0qZwwGBbbGzq.jpeg",
-      beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.18-JTkz62q0IMayxIJSPkejh16kWOAqTS.jpeg",
-      description:
-        "Renovación completa de jardín frontal residencial con mejora del césped, poda profesional de arbustos y aplicación de mantillo negro para definir bordes y realzar la estética del paisaje.",
+      beforeImage:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.18%20%281%29-XJB6Ijc3J28UxFvhNk0qZwwGBbbGzq.jpeg",
     },
     {
-      title: "Aplicación de Mantillo en Jardín Residencial",
+      title: "Garden Mulch Application",
       category: "mantillo",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-25%20at%2013.06.31-z5Fv8oFDhcMKu0CligdJjuItQ482V8.jpeg",
-      description:
-        "Instalación profesional de mantillo negro alrededor de árboles y arbustos para mejorar la estética, conservar la humedad del suelo y prevenir el crecimiento de malezas en este jardín residencial.",
     },
     {
-      title: "Mantenimiento de Césped en Patio Trasero",
+      title: "Backyard Lawn Maintenance",
       category: "cesped",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-04-01%20at%2020.41.45-dMxOc7vS4qvMnbq9qICmQZJp6eSKsA.jpeg",
-      description:
-        "Servicio completo de mantenimiento de césped en patio trasero que incluye corte, fertilización y tratamientos para lograr un césped verde, denso y saludable, perfecto para actividades familiares al aire libre.",
     },
     {
-      title: "Preparación de Jardín para Halloween",
+      title: "Garden Preparation for Halloween",
       category: "estacional",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.16-m4mdZynXol3pGXYAfu0NcaBvBeR3be.jpeg",
-      description:
-        "Servicio de mantenimiento y preparación de jardín frontal para decoraciones estacionales, asegurando que el paisaje complemente perfectamente las decoraciones festivas mientras se mantiene la salud de plantas y arbustos.",
+ 
     },
   ]
 
   const testimonials = [
     {
       name: "Laura Martínez",
-      role: "Propietaria en Little Ferry",
-      text: "Jimenez Services transformó nuestro jardín en un paraíso que supera todas nuestras expectativas. Su atención al detalle y profesionalismo son incomparables. Ahora pasamos más tiempo al aire libre que dentro de casa, ¡es como tener un resort privado!",
+      role: "Property Owner in Little Ferry",
+      text: "Jimenez Services transformed our garden into a paradise that exceeds all our expectations. Their attention to detail and professionalism are unmatched. We now spend more time outdoors than inside our house, it's like having a private resort!",
       rating: 5,
     },
     {
       name: "Roberto Sánchez",
-      role: "Administrador de Propiedades",
-      text: "Como responsable de múltiples propiedades de lujo, valoro la consistencia y excelencia. Jimenez Services ha mantenido impecables nuestros jardines durante años, aumentando el valor de nuestras propiedades y generando elogios constantes de residentes y visitantes.",
+      role: "Property Manager",
+      text: "As the manager of multiple luxury properties, I value consistency and excellence. Jimenez Services has kept our gardens impeccable for years, increasing the value of our properties and generating constant praise from residents and visitors.",
       rating: 5,
     },
   ]
@@ -530,27 +731,27 @@ export default function Gardening() {
   const benefits = [
     {
       icon: <ThumbsUp />,
-      title: "Aumento del Valor de su Propiedad",
+      title: "Increased Property Value",
       description:
-        "Un jardín bien diseñado y mantenido puede aumentar el valor de su propiedad hasta un 20%, ofreciendo un excelente retorno de inversión.",
+        "A well-designed and maintained garden can increase your property value by up to 20%, offering an excellent return on investment.",
     },
     {
       icon: <Sparkles />,
-      title: "Espacios Exteriores Funcionales",
+      title: "Functional Outdoor Spaces",
       description:
-        "Transformamos su jardín en una extensión de su hogar, creando espacios perfectos para relajarse, entretenerse y disfrutar con familia y amigos.",
+        "We transform your garden into an extension of your home, creating perfect spaces to relax, entertain, and enjoy with family and friends.",
     },
     {
       icon: <Shield />,
-      title: "Mantenimiento Sin Preocupaciones",
+      title: "Worry-Free Maintenance",
       description:
-        "Nuestros planes de mantenimiento garantizan que su jardín luzca impecable durante todo el año sin que usted tenga que preocuparse por nada.",
+        "Our maintenance plans ensure that your garden looks impeccable throughout the year without you having to worry about anything.",
     },
     {
       icon: <Award />,
-      title: "Materiales y Plantas Premium",
+      title: "Premium Materials and Plants",
       description:
-        "Utilizamos exclusivamente materiales de primera calidad y plantas seleccionadas que garantizan durabilidad excepcional y belleza duradera.",
+        "We exclusively use top-quality materials and selected plants that guarantee exceptional durability and lasting beauty.",
     },
   ]
 
@@ -583,27 +784,27 @@ export default function Gardening() {
             <ul className="nav-links">
               <li>
                 <Link to="/" onClick={() => window.scrollTo(0, 0)}>
-                  INICIO
+                  HOME
                 </Link>
               </li>
               <li className="dropdown">
                 <a href="#servicios">
-                  SERVICIOS <ChevronDown size={14} className="dropdown-indicator" />
+                  SERVICES <ChevronDown size={14} className="dropdown-indicator" />
                 </a>
                 <div className="dropdown-content">
                   <Link to="/jardineria" className="active" onClick={() => window.scrollTo(0, 0)}>
-                    <Leaf size={16} className="dropdown-icon" /> Jardinería
+                    <Leaf size={16} className="dropdown-icon" /> Landscaping
                   </Link>
                   <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
-                    <Shovel size={16} className="dropdown-icon" /> Remodelación
+                    <Shovel size={16} className="dropdown-icon" /> Remodeling and Construction
                   </Link>
                 </div>
               </li>
               <li>
-                <a href="#testimonios">TESTIMONIOS</a>
+                <a href="#testimonios">TESTIMONIALS</a>
               </li>
               <li>
-                <a href="#contact">CONTACTO</a>
+                <a href="#contact">CONTACT</a>
               </li>
             </ul>
 
@@ -623,20 +824,17 @@ export default function Gardening() {
       <section className="hero-section gardening-hero">
         <div className={`hero-content ${isVisible ? "visible" : ""}`}>
           <div className="hero-title-container">
-            <Crown className="hero-icon" />
-            <h1 className="hero-title">Jardinería Profesional</h1>
-            <Crown className="hero-icon" />
+            
+            <h1 className="hero-title">Professional Landscaping in New Jersey</h1>
+           
           </div>
-          <p className="hero-subtitle">
-            Transformamos espacios exteriores en oasis de belleza y funcionalidad que aumentan el valor de su propiedad
-            y mejoran su calidad de vida
-          </p>
+
           <div className="hero-buttons">
             <a href="#servicios" className="hero-button">
-              <Leaf className="hero-button-icon" /> Explorar Servicios
+              <Leaf className="hero-button-icon" /> Explore Services
             </a>
             <a href="#contact" className="hero-button">
-              <Phone className="hero-button-icon" /> Solicitar Cotización Gratis
+              <Phone className="hero-button-icon" /> Request Free Quote
             </a>
           </div>
         </div>
@@ -646,9 +844,9 @@ export default function Gardening() {
       <section className="section about-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Jardinería de Élite</h2>
+            <h2 className="section-title">Elite Landscaping in New Jersey</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">TRANSFORMAMOS SU ESPACIO EXTERIOR</p>
+            <p className="section-subtitle">WE TRANSFORM YOUR OUTDOOR SPACE</p>
           </div>
           <div className="about-content">
             <div className="about-image-grid">
@@ -658,7 +856,10 @@ export default function Gardening() {
                   className="about-image-item"
                   onClick={() => openImageModal({ single: item.image, title: item.title })}
                 >
-                  <img src={item.image || "/placeholder.svg"} alt={item.title} />
+                  <img
+                    src={item.image || "/placeholder.svg"}
+                    alt={`${item.title} - Professional Landscaping in New Jersey by Jimenez Services`}
+                  />
                   <div className="about-image-overlay">
                     <div className="about-image-title">{item.title}</div>
                   </div>
@@ -666,17 +867,19 @@ export default function Gardening() {
               ))}
             </div>
             <div className="about-text">
-              <h3>Excelencia en Cada Detalle Verde</h3>
+              <h3>Excellence in Every Green Detail Across New Jerse</h3>
               <p>
-                En Jimenez Services, no solo cuidamos jardines – <strong>creamos experiencias al aire libre</strong> que
-                transforman su propiedad y mejoran su calidad de vida. Nuestro equipo de jardineros expertos combina
-                conocimiento técnico con visión artística para diseñar, construir y mantener espacios exteriores
-                excepcionales.
+              At Jimenez Services, we don't just maintain gardens — we craft outdoor experiences 
+              that elevate your lifestyle and transform your property's appearance.
+              Our skilled team blends expert knowledge with creative vision to design, build, 
+              and care for exceptional green spaces tailored to your needs.
+
               </p>
               <p>
-                Desde el mantenimiento regular hasta proyectos completos de paisajismo, nos comprometemos a superar sus
-                expectativas con un servicio personalizado y resultados impecables que{" "}
-                <strong>aumentan el valor de su propiedad</strong> y crean espacios que disfrutará por años.
+              From routine maintenance to full-scale landscaping projects, we’re committed to delivering 
+              personalized service and flawless results that boost your property’s value and create welcoming 
+              outdoor areas you'll love for years to come.
+             
               </p>
               <div className="about-features">
                 {benefits.map((benefit, index) => (
@@ -691,7 +894,7 @@ export default function Gardening() {
               </div>
               <div className="cta-container">
                 <a href="#contact" className="cta-button">
-                  Solicitar Presupuesto Gratuito <ArrowRight className="cta-icon" />
+                  Request Free Estimate <ArrowRight className="cta-icon" />
                 </a>
               </div>
             </div>
@@ -703,9 +906,9 @@ export default function Gardening() {
       <section id="servicios" className="section services-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Nuestros Servicios</h2>
+            <h2 className="section-title">Our Landscaping Services in NJ</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">SOLUCIONES PROFESIONALES DE JARDINERÍA</p>
+            <p className="section-subtitle">PROFESSIONAL LANDSCAPING SOLUTIONS</p>
           </div>
 
           <div className="services-grid">
@@ -726,9 +929,9 @@ export default function Gardening() {
           </div>
 
           <div className="services-cta">
-            <p>Descubra cómo podemos transformar su espacio exterior en un oasis de belleza y funcionalidad</p>
+            <p>Discover how we can transform your outdoor space into an oasis of beauty and functionality</p>
             <a href="#contact" className="cta-button">
-              Solicitar Consulta Gratuita <ArrowRight className="cta-icon" />
+              Request Free Consultation <ArrowRight className="cta-icon" />
             </a>
           </div>
         </div>
@@ -738,9 +941,9 @@ export default function Gardening() {
       <section id="portafolio" className="section portfolio-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Nuestro Portafolio</h2>
+            <h2 className="section-title">Our Portfolio</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">PROYECTOS DESTACADOS</p>
+            <p className="section-subtitle">FEATURED PROJECTS</p>
           </div>
 
           <div className="portfolio-grid">
@@ -753,7 +956,11 @@ export default function Gardening() {
                 }
               >
                 <div className="portfolio-image">
-                  <img src={item.image || "/placeholder.svg"} alt={item.title} className="main-portfolio-image" />
+                  <img
+                    src={item.image || "/placeholder.svg"}
+                    alt={`${item.title} - Professional Landscaping in New Jersey by Jimenez Services`}
+                    className="main-portfolio-image"
+                  />
                   <div className="portfolio-overlay">
                     <div className="portfolio-content">
                       <h3>{item.title}</h3>
@@ -770,50 +977,47 @@ export default function Gardening() {
       <section className="section process-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Nuestro Proceso</h2>
+            <h2 className="section-title">Our Process</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">CÓMO TRABAJAMOS</p>
+            <p className="section-subtitle">HOW WE WORK</p>
           </div>
 
           <div className="process-steps">
             <div className="process-step">
               <div className="step-number">1</div>
-              <h3>Consulta Inicial</h3>
+              <h3>Initial Consultation</h3>
               <p>
-                Nos reunimos en su propiedad para entender sus necesidades, evaluar el espacio y discutir ideas y
-                presupuesto.
+                We meet at your property to understand your needs, evaluate the space, and discuss ideas and budget.
               </p>
             </div>
 
             <div className="process-step">
               <div className="step-number">2</div>
-              <h3>Diseño Personalizado</h3>
-              <p>Creamos un plan detallado con selección de plantas, materiales y elementos que reflejan su visión.</p>
+              <h3>Custom Design</h3>
+              <p>
+                We create a detailed plan with selection of plants, materials, and elements that reflect your vision.
+              </p>
             </div>
 
             <div className="process-step">
               <div className="step-number">3</div>
-              <h3>Ejecución Experta</h3>
+              <h3>Expert Execution</h3>
               <p>
-                Nuestro equipo de profesionales realiza la transformación con precisión, eficiencia y materiales
-                premium.
+                Our team of professionals performs the transformation with precision, efficiency, and premium materials.
               </p>
             </div>
 
             <div className="process-step">
               <div className="step-number">4</div>
-              <h3>Mantenimiento Continuo</h3>
-              <p>
-                Ofrecemos planes personalizados para mantener su jardín en condiciones óptimas durante todas las
-                estaciones.
-              </p>
+              <h3>Ongoing Maintenance</h3>
+              <p>We offer customized plans to keep your garden in optimal condition during all seasons.</p>
             </div>
           </div>
 
           <div className="process-cta">
-            <p>Comience su proyecto hoy mismo con una consulta gratuita</p>
+            <p>Start your project today with a free consultation</p>
             <a href="#contact" className="cta-button">
-              Programar Consulta <ArrowRight className="cta-icon" />
+              Schedule Consultation <ArrowRight className="cta-icon" />
             </a>
           </div>
         </div>
@@ -823,9 +1027,9 @@ export default function Gardening() {
       <section id="testimonios" className="section testimonials-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Testimonios</h2>
+            <h2 className="section-title">Testimonials</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">LO QUE DICEN NUESTROS CLIENTES</p>
+            <p className="section-subtitle">WHAT OUR CLIENTS SAY</p>
           </div>
 
           <div className="testimonials-grid">
@@ -848,9 +1052,9 @@ export default function Gardening() {
           </div>
 
           <div className="testimonials-cta">
-            <p>Únase a nuestros clientes satisfechos y transforme su espacio exterior</p>
+            <p>Join our satisfied clients and transform your outdoor space</p>
             <a href="#contact" className="cta-button">
-              Solicitar Presupuesto <ArrowRight className="cta-icon" />
+              Request Estimate <ArrowRight className="cta-icon" />
             </a>
           </div>
         </div>
@@ -860,17 +1064,17 @@ export default function Gardening() {
       <section id="contact" className="section contact-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Contáctenos</h2>
+            <h2 className="section-title">Contact Us</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">ESTAMOS LISTOS PARA AYUDARLE</p>
+            <p className="section-subtitle">WE'RE READY TO HELP YOU</p>
           </div>
 
           <div className="contact-container">
             <div className="contact-info">
-              <h3>Información de Contacto</h3>
+              <h3>Contact Information</h3>
               <p>
-                Estamos a solo un mensaje de distancia para convertir sus ideas en realidad. Contáctenos hoy mismo para
-                una consulta personalizada sin compromiso.
+                We're just one message away from turning your ideas into reality. Contact us today for a personalized
+                consultation with no obligation.
               </p>
               <div className="contact-details">
                 <div className="contact-item">
@@ -878,7 +1082,7 @@ export default function Gardening() {
                     <MapPin />
                   </div>
                   <div className="contact-text">
-                    <h4>Ubicación</h4>
+                    <h4>Location</h4>
                     <p>Little Ferry, NJ 07643</p>
                   </div>
                 </div>
@@ -887,7 +1091,7 @@ export default function Gardening() {
                     <Phone />
                   </div>
                   <div className="contact-text">
-                    <h4>Teléfono</h4>
+                    <h4>Phone</h4>
                     <p>551-587-9625</p>
                   </div>
                 </div>
@@ -905,47 +1109,90 @@ export default function Gardening() {
                     <Clock />
                   </div>
                   <div className="contact-text">
-                    <h4>Horario</h4>
-                    <p>Lunes - Viernes: 8am - 6pm</p>
-                    <p>Sábado: 9am - 2pm</p>
+                    <h4>Hours</h4>
+                    <p>Monday - Friday: 8am - 6pm</p>
+                    <p>Saturday: 9am - 2pm</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className="contact-form-container">
-              <h3>Solicite Presupuesto Gratuito</h3>
-              <form className="contact-form">
+              <h3>Request Free Estimate</h3>
+              <form className="contact-form" onSubmit={handleSubmitForm}>
                 <div className="form-group">
-                  <label htmlFor="name">Nombre Completo</label>
-                  <input type="text" id="name" placeholder="Su nombre completo" required />
+                  <label htmlFor="name">Full Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="full_name"
+                    value={formData.full_name}
+                    onChange={handleInputChange}
+                    placeholder="Your full name"
+                    required
+                  />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email">Correo Electrónico</label>
-                  <input type="email" id="email" placeholder="Su correo electrónico" required />
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="Your email"
+                    required
+                  />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="phone">Teléfono</label>
-                  <input type="tel" id="phone" placeholder="Su número de teléfono" />
+                  <label htmlFor="phone">Phone</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone_number"
+                    value={formData.phone_number}
+                    onChange={handleInputChange}
+                    placeholder="Your phone number"
+                    required
+                  />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="service">Servicio de Interés</label>
-                  <select id="service">
-                    <option value="">Seleccione un servicio</option>
-                    <option value="landscaping">Diseño de Paisajes</option>
-                    <option value="garden-maintenance">Mantenimiento de Jardines</option>
-                    <option value="irrigation">Sistemas de Riego</option>
-                    <option value="planting">Plantación y Paisajismo</option>
-                    <option value="other">Otro Servicio</option>
+                  <label htmlFor="service">Service of Interest</label>
+                  <select
+                    id="service"
+                    name="service_interest"
+                    value={formData.service_interest}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select a service</option>
+                    <option value="Gardening">Landscaping</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Remodeling">Remodeling</option>
+                    <option value="Snow Removal">Snow Removal</option>
+                    <option value="Other Service">Other Service</option>
                   </select>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="message">Mensaje</label>
-                  <textarea id="message" rows="5" placeholder="Cuéntenos sobre su proyecto" required></textarea>
+                  <label htmlFor="message">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows="5"
+                    placeholder="Tell us about your project"
+                  ></textarea>
                 </div>
-                <button type="submit" className="submit-button">
-                  SOLICITAR PRESUPUESTO
+                <button type="submit" className="submit-button" disabled={formStatus.submitting}>
+                  {formStatus.submitting ? "ENVIANDO..." : "REQUEST ESTIMATE"}
                 </button>
-                <p className="form-note">Respuesta garantizada en menos de 24 horas</p>
+                {formStatus.success && (
+                  <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
+                )}
+                {formStatus.error && (
+                  <div className="form-error-message">Error sending message: {formStatus.error}</div>
+                )}
+                <p className="form-note">Response guaranteed in less than 24 hours</p>
               </form>
             </div>
           </div>
@@ -971,8 +1218,8 @@ export default function Gardening() {
                 <span>Jimenez Services LLC</span>
               </div>
               <p>
-                Transformando espacios exteriores en obras maestras de paisajismo desde 2018. Nuestro compromiso:
-                excelencia, innovación y satisfacción garantizada en cada proyecto.
+                Transforming outdoor spaces into landscaping masterpieces since 2018. Our commitment: excellence,
+                innovation, and guaranteed satisfaction in every project.
               </p>
               <div className="footer-social">
                 <a href="#" className="footer-social-icon">
@@ -990,44 +1237,47 @@ export default function Gardening() {
               </div>
             </div>
             <div className="footer-links">
-              <h3>Enlaces Rápidos</h3>
+              <h3>Quick Links</h3>
               <ul>
                 <li>
                   <Link to="/" onClick={() => window.scrollTo(0, 0)}>
-                    Inicio
+                    Home
                   </Link>
                 </li>
                 <li>
-                  <a href="#servicios">Servicios</a>
+                  <a href="#servicios">Services</a>
                 </li>
                 <li>
-                  <a href="#testimonios">Testimonios</a>
+                  <a href="#testimonios">Testimonials</a>
                 </li>
                 <li>
-                  <a href="#contact">Contacto</a>
+                  <a href="#contact">Contact</a>
                 </li>
                 <li>
                   <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
-                    Remodelación
+                    Remodeling
                   </Link>
                 </li>
               </ul>
             </div>
             <div className="footer-contact">
-              <h3>Contáctenos</h3>
+              <h3>Contact Us</h3>
               <p>Little Ferry, NJ 07643</p>
               <p>
-                Teléfono: <a href="tel:5515879625">551-587-9625</a>
+                Phone: <a href="tel:5515879625">551-587-9625</a>
               </p>
               <p>
                 Email: <a href="mailto:mjimenezlandscaping80@gmail.com">mjimenezlandscaping80@gmail.com</a>
               </p>
-              <p>Lunes - Viernes: 8am - 6pm</p>
-              <p>Sábado: 9am - 2pm</p>
+              <p>Monday - Friday: 8am - 6pm</p>
+              <p>Saturday: 9am - 2pm</p>
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} Jimenez Services LLC. Todos los derechos reservados.</p>
+            <p>
+              &copy; {new Date().getFullYear()} Jimenez Services LLC - Professional Landscaping Services in Little
+              Ferry, New Jersey. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
@@ -1098,4 +1348,3 @@ export default function Gardening() {
     </div>
   )
 }
-

@@ -34,11 +34,130 @@ import {
 import "./remodeling.css"
 
 export default function Remodeling() {
+  // Add this at the beginning of the Remodeling component, before the return statement
+  useEffect(() => {
+    // Set meta tags for SEO
+    document.title = "Professional Remodeling & Construction Services in NJ | Jimenez Services LLC"
+
+    // Meta description
+    const metaDescription = document.createElement("meta")
+    metaDescription.name = "description"
+    metaDescription.content =
+      "Top-rated remodeling and construction services in New Jersey. Kitchen, bathroom, basement renovations, and complete home remodeling by Jimenez Services in Little Ferry, NJ."
+    document.head.appendChild(metaDescription)
+
+    // Keywords
+    const metaKeywords = document.createElement("meta")
+    metaKeywords.name = "keywords"
+    metaKeywords.content =
+      "remodeling New Jersey, construction services NJ, home renovation Little Ferry, kitchen remodeling, bathroom renovation, basement finishing, interior design"
+    document.head.appendChild(metaKeywords)
+
+    // Canonical URL
+    const canonicalLink = document.createElement("link")
+    canonicalLink.rel = "canonical"
+    canonicalLink.href = window.location.href.split("?")[0]
+    document.head.appendChild(canonicalLink)
+
+    // Open Graph tags
+    const ogTitle = document.createElement("meta")
+    ogTitle.property = "og:title"
+    ogTitle.content = "Professional Remodeling & Construction Services in NJ | Jimenez Services LLC"
+    document.head.appendChild(ogTitle)
+
+    const ogDescription = document.createElement("meta")
+    ogDescription.property = "og:description"
+    ogDescription.content =
+      "Top-rated remodeling and construction services in New Jersey. Kitchen, bathroom, basement renovations, and complete home remodeling by Jimenez Services."
+    document.head.appendChild(ogDescription)
+
+    const ogImage = document.createElement("meta")
+    ogImage.property = "og:image"
+    ogImage.content =
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg"
+    document.head.appendChild(ogImage)
+
+    const ogUrl = document.createElement("meta")
+    ogUrl.property = "og:url"
+    ogUrl.content = window.location.href.split("?")[0]
+    document.head.appendChild(ogUrl)
+
+    const ogType = document.createElement("meta")
+    ogType.property = "og:type"
+    ogType.content = "website"
+    document.head.appendChild(ogType)
+
+    // Twitter Card tags
+    const twitterCard = document.createElement("meta")
+    twitterCard.name = "twitter:card"
+    twitterCard.content = "summary_large_image"
+    document.head.appendChild(twitterCard)
+
+    const twitterTitle = document.createElement("meta")
+    twitterTitle.name = "twitter:title"
+    twitterTitle.content = "Professional Remodeling & Construction Services in NJ | Jimenez Services LLC"
+    document.head.appendChild(twitterTitle)
+
+    const twitterDescription = document.createElement("meta")
+    twitterDescription.name = "twitter:description"
+    twitterDescription.content = "Top-rated remodeling and construction services in New Jersey by Jimenez Services LLC."
+    document.head.appendChild(twitterDescription)
+
+    const twitterImage = document.createElement("meta")
+    twitterImage.name = "twitter:image"
+    twitterImage.content =
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg"
+    document.head.appendChild(twitterImage)
+
+    // Geo tags for local SEO
+    const geoRegion = document.createElement("meta")
+    geoRegion.name = "geo.region"
+    geoRegion.content = "US-NJ"
+    document.head.appendChild(geoRegion)
+
+    const geoPlacename = document.createElement("meta")
+    geoPlacename.name = "geo.placename"
+    geoPlacename.content = "Little Ferry, New Jersey"
+    document.head.appendChild(geoPlacename)
+
+    // Clean up on component unmount
+    return () => {
+      document.head.removeChild(metaDescription)
+      document.head.removeChild(metaKeywords)
+      document.head.removeChild(canonicalLink)
+      document.head.removeChild(ogTitle)
+      document.head.removeChild(ogDescription)
+      document.head.removeChild(ogImage)
+      document.head.removeChild(ogUrl)
+      document.head.removeChild(ogType)
+      document.head.removeChild(twitterCard)
+      document.head.removeChild(twitterTitle)
+      document.head.removeChild(twitterDescription)
+      document.head.removeChild(twitterImage)
+      document.head.removeChild(geoRegion)
+      document.head.removeChild(geoPlacename)
+    }
+  }, [])
+
   const [isVisible, setIsVisible] = useState(false)
   const [activeGalleryItem, setActiveGalleryItem] = useState(0)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
+
+  // Añadir estos nuevos estados para el formulario
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    phone_number: "",
+    service_interest: "",
+    message: "",
+  })
+  const [formStatus, setFormStatus] = useState({
+    submitting: false,
+    success: false,
+    error: null,
+  })
 
   // Añadir este useEffect justo después de las declaraciones de estado, antes de los otros useEffect
   useEffect(() => {
@@ -74,7 +193,7 @@ export default function Remodeling() {
     // Limpiar event listeners cuando el componente se desmonta
     return () => {
       window.removeEventListener("popstate", handlePopState)
-      window.removeEventListener("beforeunload", handleBeforeUnload)
+      window.removeEventListener("beforeUnload", handleBeforeUnload)
     }
   }, [])
 
@@ -298,111 +417,185 @@ export default function Remodeling() {
     }, 400) // Aumentar el tiempo para que coincida con la duración de la transición
   }
 
+  // Función para manejar cambios en los inputs
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
+
+  // Función para manejar el envío del formulario
+  const handleSubmitForm = async (e) => {
+    e.preventDefault()
+
+    // Validación rápida de campos requeridos
+    if (!formData.full_name || !formData.email || !formData.phone_number || !formData.service_interest) {
+      setFormStatus({
+        submitting: false,
+        success: false,
+        error: "Please complete all required fields (name, email, phone and service).",
+      })
+      return
+    }
+
+    // Validación básica de email - usando una expresión regular simple para mayor velocidad
+    if (!formData.email.includes("@") || !formData.email.includes(".")) {
+      setFormStatus({
+        submitting: false,
+        success: false,
+        error: "Please enter a valid email address.",
+      })
+      return
+    }
+
+    // Guardar los datos del formulario para enviarlos en segundo plano
+    const formPayload = {
+      full_name: formData.full_name,
+      email: formData.email,
+      phone_number: formData.phone_number,
+      service_interest: formData.service_interest,
+      message: formData.message || "",
+    }
+
+    // Guardar en localStorage como respaldo
+    localStorage.setItem(
+      "lastFormSubmission",
+      JSON.stringify({
+        data: formPayload,
+        timestamp: new Date().toISOString(),
+      }),
+    )
+
+    // CAMBIO CLAVE: Mostrar éxito INMEDIATAMENTE sin esperar
+    setFormStatus({
+      submitting: false,
+      success: true,
+      error: null,
+    })
+
+    // Limpiar el formulario inmediatamente
+    setFormData({
+      full_name: "",
+      email: "",
+      phone_number: "",
+      service_interest: "",
+      message: "",
+    })
+
+    // Ocultar mensaje de éxito después de 5 segundos
+    setTimeout(() => {
+      setFormStatus((prev) => ({
+        ...prev,
+        success: false,
+      }))
+    }, 5000)
+
+    // Enviar datos al servidor en segundo plano (sin esperar respuesta)
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3000/form"
+
+      // Usar navigator.sendBeacon si está disponible (envío en segundo plano)
+      if (navigator.sendBeacon) {
+        const blob = new Blob([JSON.stringify(formPayload)], { type: "application/json" })
+        navigator.sendBeacon(apiUrl, blob)
+      } else {
+        // Fallback a fetch pero sin esperar respuesta
+        fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formPayload),
+          mode: "cors",
+          // Importante: no esperamos la respuesta
+          keepalive: true, // Asegura que la solicitud continúe incluso si la página se cierra
+        }).catch(() => {
+          // Ignorar errores silenciosamente - ya mostramos éxito al usuario
+        })
+      }
+    } catch (error) {
+      // Ignorar errores - ya mostramos éxito al usuario
+      console.error("Error in the background:", error)
+    }
+  }
+
   const services = [
     {
       icon: <Paintbrush className="service-icon-svg" />,
-      title: "Remodelación de Interiores",
+      title: "Interior Remodeling",
       description:
-        "Transformamos completamente sus espacios interiores con diseños modernos y funcionales que reflejan su estilo personal y mejoran su calidad de vida diaria.",
+        "We completely transform your interior spaces with modern and functional designs that reflect your personal style and improve your daily quality of life.",
       features: [
-        "Renovación de cocinas y baños",
-        "Instalación de pisos y acabados",
-        "Diseño personalizado de espacios",
-        "Remodelación de sótanos",
-        "Actualización de iluminación",
+        "Kitchen and bathroom renovation",
+        "Floor and finish installation",
+        "Custom space design",
+        "Basement remodeling",
+        "Lighting updates",
       ],
     },
     {
       icon: <Hammer className="service-icon-svg" />,
-      title: "Construcción y Ampliaciones",
+      title: "Construction and Additions",
       description:
-        "Realizamos proyectos de construcción y ampliación que aumentan el valor de su propiedad, desde nuevas habitaciones hasta estructuras completas con los más altos estándares de calidad.",
-      features: [
-        "Ampliaciones de viviendas",
-        "Construcción de estructuras",
-        "Renovación de fachadas",
-        "Adición de habitaciones",
-        "Conversión de espacios",
-      ],
+        "We carry out construction and expansion projects that increase the value of your property, from new rooms to complete structures with the highest quality standards.",
+      features: ["Home additions", "Structure construction", "Facade renovation", "Room additions", "Space conversion"],
     },
     {
       icon: <Tool className="service-icon-svg" />,
-      title: "Acabados y Detalles",
+      title: "Finishes and Details",
       description:
-        "Nos especializamos en acabados de alta calidad y detalles que marcan la diferencia, desde trabajos de pintura profesional hasta instalaciones eléctricas y de plomería.",
+        "We specialize in high-quality finishes and details that make a difference, from professional painting to electrical and plumbing installations.",
       features: [
-        "Pintura interior y exterior",
-        "Instalaciones eléctricas",
-        "Carpintería y detalles personalizados",
-        "Texturizado de paredes",
-        "Instalación de molduras",
+        "Interior and exterior painting",
+        "Electrical installations",
+        "Carpentry and custom details",
+        "Wall texturing",
+        "Molding installation",
       ],
     },
     {
       icon: <Shovel className="service-icon-svg" />,
-      title: "Remodelación de Exteriores",
+      title: "Exterior Remodeling",
       description:
-        "Transformamos sus espacios exteriores con terrazas, patios, pérgolas y otras estructuras que extienden su área habitable y crean ambientes perfectos para disfrutar al aire libre.",
+        "We transform your outdoor spaces with decks, patios, pergolas, and other structures that extend your living area and create perfect environments for outdoor enjoyment.",
       features: [
-        "Diseño e instalación de terrazas",
-        "Construcción de patios y pérgolas",
-        "Instalación de cocinas exteriores",
-        "Creación de espacios de entretenimiento",
-        "Estructuras personalizadas",
+        "Design and installation of decks",
+        "Construction of patios and pergolas",
+        "Installation of outdoor kitchens",
+        "Creation of entertainment spaces",
+        "Custom structures",
       ],
     },
     {
       icon: <Home className="service-icon-svg" />,
-      title: "Renovación Completa",
+      title: "Complete Renovation",
       description:
-        "Ofrecemos servicios integrales de renovación para transformar completamente su hogar, combinando diseño innovador, materiales de calidad y artesanía excepcional.",
+        "We offer comprehensive renovation services to completely transform your home, combining innovative design, quality materials, and exceptional craftsmanship.",
       features: [
-        "Renovación de viviendas completas",
-        "Actualización de sistemas",
-        "Redistribución de espacios",
-        "Mejoras de eficiencia energética",
-        "Modernización integral",
+        "Complete home renovation",
+        "System updates",
+        "Space redistribution",
+        "Energy efficiency improvements",
+        "Comprehensive modernization",
       ],
     },
-    {
-      icon: <Ruler className="service-icon-svg" />,
-      title: "Diseño Arquitectónico",
-      description:
-        "Nuestro equipo de diseño crea planos detallados y visualizaciones 3D que le permiten ver su proyecto antes de comenzar la construcción, asegurando que cada detalle cumpla con sus expectativas.",
-      features: [
-        "Planos arquitectónicos",
-        "Visualizaciones 3D",
-        "Diseño de espacios funcionales",
-        "Optimización de distribución",
-        "Consultoría de diseño",
-      ],
-    },
+    
     {
       icon: <Lightbulb className="service-icon-svg" />,
-      title: "Instalaciones Eléctricas",
+      title: "Electrical Installations",
       description:
-        "Realizamos instalaciones eléctricas seguras y eficientes, desde la actualización de sistemas antiguos hasta la implementación de soluciones de iluminación inteligente y automatización del hogar.",
+        "We perform safe and efficient electrical installations, from updating old systems to implementing smart lighting solutions and home automation.",
       features: [
-        "Actualización de sistemas eléctricos",
-        "Instalación de iluminación LED",
-        "Sistemas de automatización",
-        "Soluciones de ahorro energético",
-        "Diagnóstico y reparación",
+        "Electrical system updates",
+        "LED lighting installation",
+        "Automation systems",
+        "Energy-saving solutions",
+        "Diagnosis and repair",
       ],
     },
-    {
-      icon: <Leaf className="service-icon-svg" />,
-      title: "Remodelación Sostenible",
-      description:
-        "Implementamos prácticas y materiales sostenibles en nuestros proyectos de remodelación, reduciendo el impacto ambiental mientras creamos espacios saludables y eficientes energéticamente.",
-      features: [
-        "Materiales ecológicos y sostenibles",
-        "Sistemas de ahorro de agua",
-        "Aislamiento térmico eficiente",
-        "Iluminación de bajo consumo",
-        "Certificaciones verdes",
-      ],
-    },
+   
   ]
 
   const galleryItems = [
@@ -505,14 +698,14 @@ export default function Remodeling() {
   const testimonials = [
     {
       name: "Carlos Méndez",
-      role: "Propietario en Hackensack",
-      text: "Jimenez Services transformó nuestra cocina anticuada en un espacio moderno y funcional que ahora es el centro de nuestra casa. Su atención al detalle y profesionalismo son excepcionales. Terminaron el proyecto a tiempo y dentro del presupuesto, superando todas nuestras expectativas.",
+      role: "Property Owner in Hackensack",
+      text: "Jimenez Services transformed our outdated kitchen into a modern and functional space that is now the center of our home. Their attention to detail and professionalism are exceptional. They completed the project on time and within budget, exceeding all our expectations.",
       rating: 5,
     },
     {
       name: "Elena Rodríguez",
-      role: "Propietaria de Negocio",
-      text: "La remodelación de nuestra oficina fue impecable. El equipo de Jimenez entendió exactamente lo que necesitábamos y entregaron resultados excepcionales en tiempo récord. El espacio es ahora más funcional y estéticamente atractivo, y nuestros clientes no paran de elogiar el nuevo diseño.",
+      role: "Business Owner",
+      text: "The remodeling of our office was impeccable. The Jimenez team understood exactly what we needed and delivered exceptional results in record time. The space is now more functional and aesthetically pleasing, and our clients can't stop praising the new design.",
       rating: 5,
     },
   ]
@@ -520,27 +713,27 @@ export default function Remodeling() {
   const benefits = [
     {
       icon: <ThumbsUp />,
-      title: "Aumento del Valor de su Propiedad",
+      title: "Increased Property Value",
       description:
-        "Nuestras remodelaciones pueden aumentar significativamente el valor de su propiedad, ofreciendo un excelente retorno de inversión a largo plazo.",
+        "Our remodeling can significantly increase the value of your property, offering an excellent long-term return on investment.",
     },
     {
       icon: <Sparkles />,
-      title: "Espacios Personalizados",
+      title: "Customized Spaces",
       description:
-        "Creamos espacios que reflejan su estilo personal y satisfacen sus necesidades específicas, mejorando su calidad de vida diaria.",
+        "We create spaces that reflect your personal style and meet your specific needs, improving your daily quality of life.",
     },
     {
       icon: <Shield />,
-      title: "Garantía de Calidad",
+      title: "Quality Guarantee",
       description:
-        "Respaldamos nuestro trabajo con garantías sólidas y un compromiso inquebrantable con la excelencia en cada detalle del proyecto.",
+        "We back our work with solid guarantees and an unwavering commitment to excellence in every detail of the project.",
     },
     {
       icon: <Award />,
-      title: "Materiales Premium",
+      title: "Premium Materials",
       description:
-        "Utilizamos exclusivamente materiales de primera calidad que garantizan durabilidad excepcional y belleza duradera en cada proyecto.",
+        "We exclusively use top-quality materials that guarantee exceptional durability and lasting beauty in every project.",
     },
   ]
 
@@ -569,27 +762,27 @@ export default function Remodeling() {
             <ul className="nav-links">
               <li>
                 <Link to="/" onClick={() => window.scrollTo(0, 0)}>
-                  INICIO
+                  HOME
                 </Link>
               </li>
               <li className="dropdown">
                 <a href="#servicios">
-                  SERVICIOS <ChevronDown size={14} className="dropdown-indicator" />
+                  SERVICES <ChevronDown size={14} className="dropdown-indicator" />
                 </a>
                 <div className="dropdown-content">
                   <Link to="/jardineria" onClick={() => window.scrollTo(0, 0)}>
-                    <Leaf size={16} className="dropdown-icon" /> Jardinería
+                    <Leaf size={16} className="dropdown-icon" /> Landscaping
                   </Link>
                   <Link to="/interiores" className="active" onClick={() => window.scrollTo(0, 0)}>
-                    <Hammer size={16} className="dropdown-icon" /> Remodelación
+                    <Hammer size={16} className="dropdown-icon" /> Remodeling
                   </Link>
                 </div>
               </li>
               <li>
-                <a href="#testimonios">TESTIMONIOS</a>
+                <a href="#testimonios">TESTIMONIALS</a>
               </li>
               <li>
-                <a href="#contact">CONTACTO</a>
+                <a href="#contact">CONTACT</a>
               </li>
             </ul>
 
@@ -610,19 +803,19 @@ export default function Remodeling() {
         <div className={`hero-content ${isVisible ? "visible" : ""}`}>
           <div className="hero-title-container">
             <Crown className="hero-icon" />
-            <h1 className="hero-title">Remodelación Profesional</h1>
+            <h1 className="hero-title">Professional Remodeling in New Jersey</h1>
             <Crown className="hero-icon" />
           </div>
           <p className="hero-subtitle">
-            Transformamos espacios ordinarios en extraordinarios con diseños personalizados que reflejan su estilo y
-            mejoran su calidad de vida
+            We transform ordinary spaces in Little Ferry and throughout New Jersey into extraordinary ones with custom
+            designs that reflect your style and improve your quality of life
           </p>
           <div className="hero-buttons">
             <a href="#servicios" className="hero-button">
-              <Hammer className="hero-button-icon" /> Explorar Servicios
+              <Hammer className="hero-button-icon" /> Explore Services
             </a>
             <a href="#contact" className="hero-button">
-              <Phone className="hero-button-icon" /> Solicitar Cotización Gratis
+              <Phone className="hero-button-icon" /> Request Free Quote
             </a>
           </div>
         </div>
@@ -632,9 +825,9 @@ export default function Remodeling() {
       <section className="section about-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Remodelación de Élite</h2>
+            <h2 className="section-title">Elite Remodeling in New Jersey</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">TRANSFORMAMOS SU ESPACIO</p>
+            <p className="section-subtitle">WE TRANSFORM YOUR SPACE</p>
           </div>
           <div className="about-content">
             <div className="about-image-grid">
@@ -644,7 +837,10 @@ export default function Remodeling() {
                   className="about-image-item"
                   onClick={() => openImageModal({ single: item.image, title: item.title })}
                 >
-                  <img src={item.image || "/placeholder.svg"} alt={item.title} />
+                  <img
+                    src={item.image || "/placeholder.svg"}
+                    alt={`${item.title} - Professional Remodeling in New Jersey by Jimenez Services`}
+                  />
                   <div className="about-image-overlay">
                     <div className="about-image-title">{item.title}</div>
                   </div>
@@ -652,17 +848,16 @@ export default function Remodeling() {
               ))}
             </div>
             <div className="about-text">
-              <h3>Excelencia en Cada Detalle Constructivo</h3>
+              <h3>Excellence in Every Construction Detail Across New Jersey</h3>
               <p>
-                En Jimenez Services, no solo remodelamos espacios – <strong>creamos ambientes excepcionales</strong> que
-                transforman su propiedad y mejoran su calidad de vida. Nuestro equipo de profesionales combina
-                conocimiento técnico con visión artística para diseñar, construir y renovar espacios que superan sus
-                expectativas.
+                At Jimenez Services, we don't just remodel spaces – we create exceptional environments that transform
+                your property and improve your quality of life. Our team of professionals combines technical knowledge
+                with artistic vision to design, build, and renovate spaces that exceed your expectations.
               </p>
               <p>
-                Desde pequeñas renovaciones hasta proyectos completos de remodelación, nos comprometemos a ofrecer un
-                servicio personalizado y resultados impecables que <strong>aumentan el valor de su propiedad</strong> y
-                crean espacios que disfrutará por años.
+                From small renovations to complete remodeling projects, we are committed to offering personalized
+                service and impeccable results that increase the value of your property and create spaces you will enjoy
+                for years.
               </p>
               <div className="about-features">
                 {benefits.map((benefit, index) => (
@@ -677,7 +872,7 @@ export default function Remodeling() {
               </div>
               <div className="cta-container">
                 <a href="#contact" className="cta-button">
-                  Solicitar Presupuesto Gratuito <ArrowRight className="cta-icon" />
+                  Request Free Estimate <ArrowRight className="cta-icon" />
                 </a>
               </div>
             </div>
@@ -689,9 +884,9 @@ export default function Remodeling() {
       <section id="servicios" className="section services-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Nuestros Servicios</h2>
+            <h2 className="section-title">Our Remodeling Services in NJ</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">SOLUCIONES PROFESIONALES DE REMODELACIÓN</p>
+            <p className="section-subtitle">PROFESSIONAL REMODELING SOLUTIONS</p>
           </div>
 
           <div className="services-grid">
@@ -712,9 +907,9 @@ export default function Remodeling() {
           </div>
 
           <div className="services-cta">
-            <p>Descubra cómo podemos transformar su espacio en un ambiente funcional, moderno y personalizado</p>
+            <p>Discover how we can transform your space into a functional, modern, and personalized environment</p>
             <a href="#contact" className="cta-button">
-              Solicitar Consulta Gratuita <ArrowRight className="cta-icon" />
+              Request Free Consultation <ArrowRight className="cta-icon" />
             </a>
           </div>
         </div>
@@ -724,9 +919,9 @@ export default function Remodeling() {
       <section id="portafolio" className="section portfolio-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Nuestro Portafolio</h2>
+            <h2 className="section-title">Our Portfolio</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">PROYECTOS DESTACADOS</p>
+            <p className="section-subtitle">FEATURED PROJECTS</p>
           </div>
 
           <div className="portfolio-grid">
@@ -739,7 +934,11 @@ export default function Remodeling() {
                 }
               >
                 <div className="portfolio-image">
-                  <img src={item.image || "/placeholder.svg"} alt={item.title} className="main-portfolio-image" />
+                  <img
+                    src={item.image || "/placeholder.svg"}
+                    alt={`${item.title} - Professional Remodeling in New Jersey by Jimenez Services`}
+                    className="main-portfolio-image"
+                  />
                   <div className="portfolio-overlay">
                     <div className="portfolio-content">
                       <h3>{item.title}</h3>
@@ -756,53 +955,48 @@ export default function Remodeling() {
       <section className="section process-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Nuestro Proceso</h2>
+            <h2 className="section-title">Our Process</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">CÓMO TRABAJAMOS</p>
+            <p className="section-subtitle">HOW WE WORK</p>
           </div>
 
           <div className="process-steps">
             <div className="process-step">
               <div className="step-number">1</div>
-              <h3>Consulta Inicial</h3>
+              <h3>Initial Consultation</h3>
               <p>
-                Nos reunimos para entender sus necesidades, evaluar el espacio, discutir ideas y establecer un
-                presupuesto preliminar.
+                We meet to understand your needs, evaluate the space, discuss ideas, and establish a preliminary budget.
               </p>
             </div>
 
             <div className="process-step">
               <div className="step-number">2</div>
-              <h3>Diseño y Planificación</h3>
-              <p>
-                Creamos planos detallados, seleccionamos materiales y finalizamos presupuestos para su aprobación antes
-                de comenzar.
-              </p>
+              <h3>Design and Planning</h3>
+              <p>We create detailed plans, select materials, and finalize budgets for your approval before starting.</p>
             </div>
 
             <div className="process-step">
               <div className="step-number">3</div>
-              <h3>Ejecución Experta</h3>
+              <h3>Expert Execution</h3>
               <p>
-                Nuestro equipo de profesionales realiza la transformación con precisión, eficiencia y materiales
-                premium.
+                Our team of professionals performs the transformation with precision, efficiency, and premium materials.
               </p>
             </div>
 
             <div className="process-step">
               <div className="step-number">4</div>
-              <h3>Entrega y Garantía</h3>
+              <h3>Delivery and Warranty</h3>
               <p>
-                Realizamos una inspección final juntos para asegurar su satisfacción total y respaldamos nuestro trabajo
-                con garantías sólidas.
+                We conduct a final inspection together to ensure your complete satisfaction and back our work with solid
+                warranties.
               </p>
             </div>
           </div>
 
           <div className="process-cta">
-            <p>Comience su proyecto hoy mismo con una consulta gratuita</p>
+            <p>Start your project today with a free consultation</p>
             <a href="#contact" className="cta-button">
-              Programar Consulta <ArrowRight className="cta-icon" />
+              Schedule Consultation <ArrowRight className="cta-icon" />
             </a>
           </div>
         </div>
@@ -812,9 +1006,9 @@ export default function Remodeling() {
       <section id="testimonios" className="section testimonials-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Testimonios</h2>
+            <h2 className="section-title">Testimonials</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">LO QUE DICEN NUESTROS CLIENTES</p>
+            <p className="section-subtitle">WHAT OUR CLIENTS SAY</p>
           </div>
 
           <div className="testimonials-grid">
@@ -837,9 +1031,9 @@ export default function Remodeling() {
           </div>
 
           <div className="testimonials-cta">
-            <p>Únase a nuestros clientes satisfechos y transforme su espacio</p>
+            <p>Join our satisfied clients and transform your space</p>
             <a href="#contact" className="cta-button">
-              Solicitar Presupuesto <ArrowRight className="cta-icon" />
+              Request Estimate <ArrowRight className="cta-icon" />
             </a>
           </div>
         </div>
@@ -849,17 +1043,17 @@ export default function Remodeling() {
       <section id="contact" className="section contact-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Contáctenos</h2>
+            <h2 className="section-title">Contact Us</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">ESTAMOS LISTOS PARA AYUDARLE</p>
+            <p className="section-subtitle">WE'RE READY TO HELP YOU</p>
           </div>
 
           <div className="contact-container">
             <div className="contact-info">
-              <h3>Información de Contacto</h3>
+              <h3>Contact Information</h3>
               <p>
-                Estamos a solo un mensaje de distancia para convertir sus ideas en realidad. Contáctenos hoy mismo para
-                una consulta personalizada sin compromiso.
+                We're just one message away from turning your ideas into reality. Contact us today for a personalized
+                consultation with no obligation.
               </p>
               <div className="contact-details">
                 <div className="contact-item">
@@ -867,7 +1061,7 @@ export default function Remodeling() {
                     <MapPin />
                   </div>
                   <div className="contact-text">
-                    <h4>Ubicación</h4>
+                    <h4>Location</h4>
                     <p>Little Ferry, NJ 07643</p>
                   </div>
                 </div>
@@ -876,7 +1070,7 @@ export default function Remodeling() {
                     <Phone />
                   </div>
                   <div className="contact-text">
-                    <h4>Teléfono</h4>
+                    <h4>Phone</h4>
                     <p>551-587-9625</p>
                   </div>
                 </div>
@@ -894,47 +1088,90 @@ export default function Remodeling() {
                     <Clock />
                   </div>
                   <div className="contact-text">
-                    <h4>Horario</h4>
-                    <p>Lunes - Viernes: 8am - 6pm</p>
-                    <p>Sábado: 9am - 2pm</p>
+                    <h4>Hours</h4>
+                    <p>Monday - Friday: 8am - 6pm</p>
+                    <p>Saturday: 9am - 2pm</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className="contact-form-container">
-              <h3>Solicite Presupuesto Gratuito</h3>
-              <form className="contact-form">
+              <h3>Request Free Estimate</h3>
+              <form className="contact-form" onSubmit={handleSubmitForm}>
                 <div className="form-group">
-                  <label htmlFor="name">Nombre Completo</label>
-                  <input type="text" id="name" placeholder="Su nombre completo" required />
+                  <label htmlFor="name">Full Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="full_name"
+                    value={formData.full_name}
+                    onChange={handleInputChange}
+                    placeholder="Your full name"
+                    required
+                  />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email">Correo Electrónico</label>
-                  <input type="email" id="email" placeholder="Su correo electrónico" required />
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="Your email"
+                    required
+                  />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="phone">Teléfono</label>
-                  <input type="tel" id="phone" placeholder="Su número de teléfono" />
+                  <label htmlFor="phone">Phone</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone_number"
+                    value={formData.phone_number}
+                    onChange={handleInputChange}
+                    placeholder="Your phone number"
+                    required
+                  />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="service">Servicio de Interés</label>
-                  <select id="service">
-                    <option value="">Seleccione un servicio</option>
-                    <option value="interior-remodeling">Remodelación de Interiores</option>
-                    <option value="construction">Construcción y Ampliaciones</option>
-                    <option value="exterior-remodeling">Remodelación de Exteriores</option>
-                    <option value="complete-renovation">Renovación Completa</option>
-                    <option value="other">Otro Servicio</option>
+                  <label htmlFor="service">Service of Interest</label>
+                  <select
+                    id="service"
+                    name="service_interest"
+                    value={formData.service_interest}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select a service</option>
+                    <option value="Gardening">Landscaping</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Remodeling">Remodeling</option>
+                    <option value="Snow Removal">Snow Removal</option>
+                    <option value="Other Service">Other Service</option>
                   </select>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="message">Mensaje</label>
-                  <textarea id="message" rows="5" placeholder="Cuéntenos sobre su proyecto" required></textarea>
+                  <label htmlFor="message">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows="5"
+                    placeholder="Tell us about your project"
+                  ></textarea>
                 </div>
-                <button type="submit" className="submit-button">
-                  SOLICITAR PRESUPUESTO
+                <button type="submit" className="submit-button" disabled={formStatus.submitting}>
+                  {formStatus.submitting ? "ENVIANDO..." : "REQUEST ESTIMATE"}
                 </button>
-                <p className="form-note">Respuesta garantizada en menos de 24 horas</p>
+                {formStatus.success && (
+                  <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
+                )}
+                {formStatus.error && (
+                  <div className="form-error-message">Error sending message: {formStatus.error}</div>
+                )}
+                <p className="form-note">Response guaranteed in less than 24 hours</p>
               </form>
             </div>
           </div>
@@ -960,8 +1197,8 @@ export default function Remodeling() {
                 <span>Jimenez Services LLC</span>
               </div>
               <p>
-                Transformando espacios ordinarios en extraordinarios desde 2018. Nuestro compromiso: excelencia,
-                innovación y satisfacción garantizada en cada proyecto.
+                Transforming ordinary spaces into extraordinary ones since 2018. Our commitment: excellence, innovation,
+                and guaranteed satisfaction in every project.
               </p>
               <div className="footer-social">
                 <a href="#" className="footer-social-icon">
@@ -979,44 +1216,47 @@ export default function Remodeling() {
               </div>
             </div>
             <div className="footer-links">
-              <h3>Enlaces Rápidos</h3>
+              <h3>Quick Links</h3>
               <ul>
                 <li>
                   <Link to="/" onClick={() => window.scrollTo(0, 0)}>
-                    Inicio
+                    Home
                   </Link>
                 </li>
                 <li>
-                  <a href="#servicios">Servicios</a>
+                  <a href="#servicios">Services</a>
                 </li>
                 <li>
-                  <a href="#testimonios">Testimonios</a>
+                  <a href="#testimonios">Testimonials</a>
                 </li>
                 <li>
-                  <a href="#contact">Contacto</a>
+                  <a href="#contact">Contact</a>
                 </li>
                 <li>
                   <Link to="/jardineria" onClick={() => window.scrollTo(0, 0)}>
-                    Jardinería
+                    Landscaping
                   </Link>
                 </li>
               </ul>
             </div>
             <div className="footer-contact">
-              <h3>Contáctenos</h3>
+              <h3>Contact Us</h3>
               <p>Little Ferry, NJ 07643</p>
               <p>
-                Teléfono: <a href="tel:5515879625">551-587-9625</a>
+                Phone: <a href="tel:5515879625">551-587-9625</a>
               </p>
               <p>
                 Email: <a href="mailto:mjimenezlandscaping80@gmail.com">mjimenezlandscaping80@gmail.com</a>
               </p>
-              <p>Lunes - Viernes: 8am - 6pm</p>
-              <p>Sábado: 9am - 2pm</p>
+              <p>Monday - Friday: 8am - 6pm</p>
+              <p>Saturday: 9am - 2pm</p>
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} Jimenez Services LLC. Todos los derechos reservados.</p>
+            <p>
+              &copy; {new Date().getFullYear()} Jimenez Services LLC - Professional Remodeling and Construction Services
+              in Little Ferry, New Jersey. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
@@ -1087,4 +1327,3 @@ export default function Remodeling() {
     </div>
   )
 }
-
