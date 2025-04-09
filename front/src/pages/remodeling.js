@@ -602,96 +602,99 @@ export default function Remodeling() {
     {
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.25-CpCQmn9D9nAUd3qFaCTU2I9Iw9dKfo.jpeg",
-      title: "Transformación Completa de Baño",
-      description:
-        "Renovación total con diseño moderno que incluye azulejos en patrón de espiga, ducha con regadera tipo lluvia y mueble con acabado de madera.",
+      title: "Complete Bathroom Transformation",
     },
     {
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.28-dQrMCrAbMJVpnsehimsIoXyo0V3kwi.jpeg",
-      title: "Renovación de Ático",
-      description:
-        "Transformación de ático sin usar a un espacio habitable con pisos de madera, iluminación empotrada y acabados de alta calidad.",
+      title: "Attic Renovation",
     },
     {
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg",
-      title: "Renovación de Cocina Moderna",
-      description:
-        "Transformación completa con encimeras de cuarzo blanco, gabinetes de dos tonos, azulejos hexagonales de mármol y electrodomésticos de acero inoxidable.",
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27-u5yimx9QxZlCr8kcR53othrfFvn6qu.jpeg",
+      title: "Modern Kitchen Renovation",
     },
     {
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.30-reCfkY0qNcuPQoRYvWvbGyLWthgSqj.jpeg",
-      title: "Remodelación de Sótano",
-      description:
-        "Conversión de sótano en espacio habitable con sala de entretenimiento, iluminación empotrada y acabados modernos que maximizan el espacio.",
+      title: "Basement Remodeling",
     },
   ]
 
   // Nuevo array para la sección de portafolio
   const portfolioItems = [
     {
-      title: "Cocina Moderna con Gabinetes de Dos Tonos",
-      category: "cocina",
+      title: "Modern Kitchen with Two Tone Cabinets",
+      
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27-u5yimx9QxZlCr8kcR53othrfFvn6qu.jpeg",
-      description:
-        "Renovación completa de cocina con gabinetes de dos tonos (blanco y azul marino), encimeras de cuarzo blanco, salpicadero de mármol y electrodomésticos de acero inoxidable. Incluye pisos de madera clara y ventilador de techo moderno.",
+
     },
     {
-      title: "Transformación de Ático en Espacio Habitable",
-      category: "atico",
+      title: "Transformation of Attic into Living Space",
+
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27%20%281%29-j3q6JKzWEbaI48eIob0otnML7WRDLQ.jpeg",
-      description:
-        "Conversión de un ático sin utilizar en un espacio funcional y luminoso con paredes blancas, pisos de madera y techos inclinados. El proyecto incluyó aislamiento, instalación eléctrica, acabados de paredes y pisos de alta calidad.",
+
     },
     {
-      title: "Renovación de Habitación con Pisos de Madera",
-      category: "habitacion",
+      title: "Room Renovation with Hardwood Floors",
+
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-28%20at%2017.12.50%20%281%29-06LAwWxKzWV2s6vGtP50F9qqBg7njq.jpeg",
-      description:
-        "Renovación completa de habitación con paredes en tono neutro, molduras blancas y restauración de pisos de madera originales. Incluye ventanas con marcos blancos y radiadores actualizados para mayor eficiencia.",
+
     },
     {
-      title: "Baño Moderno con Azulejos Hexagonales",
-      category: "bano",
+      title: "Modern Bathroom with Hexagonal Tiles",
+
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-28%20at%2017.12.50-8tCZ0peN8UvAsNONLR57dTOFfrtt3A.jpeg",
-      description:
-        "Renovación de baño con azulejos hexagonales blancos, bañera moderna, vanidad gris con lavabo blanco, espejo negro enmarcado y apliques de pared contemporáneos. Incluye wainscoting blanco y paredes en tono neutro.",
+
     },
     {
-      title: "Transformación Completa de Baño",
-      category: "bano",
+      title: "Complete Bathroom Transformation",
+
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.25-CpCQmn9D9nAUd3qFaCTU2I9Iw9dKfo.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26-xCpRvT859Z09XQxaNHHY5tb13vMa6K.jpeg",
-      description:
-        "Renovación total de baño con diseño moderno que incluye azulejos en patrón de espiga, ducha con regadera tipo lluvia, mueble con acabado de madera y encimera de mármol blanco.",
+
     },
     {
-      title: "Renovación de Ático",
-      category: "atico",
+      title: "bathroom renovation",
+
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.28-dQrMCrAbMJVpnsehimsIoXyo0V3kwi.jpeg",
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.19%20%281%29-gTwkzZBtiipvKm30HuezCoyc9Feztn.jpeg",
       beforeImage:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27%20%281%29-2cc09hsVgCuxBXpuiRoxHEiAr4GH2v.jpeg",
-      description:
-        "Transformación completa de ático sin usar a un espacio habitable con pisos de madera, iluminación empotrada y acabados de alta calidad que maximizan el espacio disponible.",
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.19-tVM7KClsxcVCrjqcmQ2eSdoUeWTh6L.jpeg",
+ 
     },
     {
-      title: "Renovación de Cocina Moderna",
-      category: "cocina",
+      title: "Modern Kitchen Renovation",
+
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%281%29-3xLNhK99Bak6DL5NFisMyLQl1FUBbL.jpeg",
-      description:
-        "Transformación completa de cocina con encimeras de cuarzo blanco, gabinetes de dos tonos, azulejos hexagonales de mármol y electrodomésticos de acero inoxidable.",
+ 
+    },
+    {
+      title: "kitchen remodeling",
+
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-23%20at%2013.58.11-MbQOz2EPPFuYjpxwkW8cJSCSNmmjr0.jpeg",
+      beforeImage:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-23%20at%2013.58.11%20%281%29-fTgv63N4CcQOudG3k4y7d4CY6ek4Im.jpeg",
+ 
+    },
+    {
+      title: "exterior remodeling",
+
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-23%20at%2015.51.45%20%281%29-8GuhfNvzLpcbtguMW57Hn2o1ffXO77.jpeg",
+      beforeImage:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-23%20at%2015.51.45-S2TKiMlU4LsOROKsZeUoDRILY9T19O.jpeg",
+ 
     },
   ]
 
@@ -774,7 +777,7 @@ export default function Remodeling() {
                     <Leaf size={16} className="dropdown-icon" /> Landscaping
                   </Link>
                   <Link to="/interiores" className="active" onClick={() => window.scrollTo(0, 0)}>
-                    <Hammer size={16} className="dropdown-icon" /> Remodeling
+                    <Hammer size={16} className="dropdown-icon" /> Remodeling and Construction
                   </Link>
                 </div>
               </li>
@@ -802,14 +805,11 @@ export default function Remodeling() {
       <section className="hero-section remodeling-hero">
         <div className={`hero-content ${isVisible ? "visible" : ""}`}>
           <div className="hero-title-container">
-            <Crown className="hero-icon" />
+            
             <h1 className="hero-title">Professional Remodeling in New Jersey</h1>
-            <Crown className="hero-icon" />
+            
           </div>
-          <p className="hero-subtitle">
-            We transform ordinary spaces in Little Ferry and throughout New Jersey into extraordinary ones with custom
-            designs that reflect your style and improve your quality of life
-          </p>
+
           <div className="hero-buttons">
             <a href="#servicios" className="hero-button">
               <Hammer className="hero-button-icon" /> Explore Services
@@ -850,14 +850,17 @@ export default function Remodeling() {
             <div className="about-text">
               <h3>Excellence in Every Construction Detail Across New Jersey</h3>
               <p>
-                At Jimenez Services, we don't just remodel spaces – we create exceptional environments that transform
-                your property and improve your quality of life. Our team of professionals combines technical knowledge
-                with artistic vision to design, build, and renovate spaces that exceed your expectations.
+              At Jimenez Services, we don’t just renovate spaces — we craft exceptional environments that elevate
+               your home and your lifestyle.
+              Our expert team blends technical precision with creative vision to design, build, and remodel 
+              spaces that truly reflect your needs and exceed your expectations.
+
               </p>
               <p>
-                From small renovations to complete remodeling projects, we are committed to offering personalized
-                service and impeccable results that increase the value of your property and create spaces you will enjoy
-                for years.
+              From minor upgrades to full-scale remodeling and construction projects, we are dedicated to 
+              delivering personalized service, flawless results, and lasting value — creating spaces you’ll love
+               to live in for years to come.
+
               </p>
               <div className="about-features">
                 {benefits.map((benefit, index) => (
@@ -907,7 +910,7 @@ export default function Remodeling() {
           </div>
 
           <div className="services-cta">
-            <p>Discover how we can transform your space into a functional, modern, and personalized environment</p>
+            <p>Discover how we can transform your space into a customized environment to your liking.</p>
             <a href="#contact" className="cta-button">
               Request Free Consultation <ArrowRight className="cta-icon" />
             </a>

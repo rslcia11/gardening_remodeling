@@ -711,6 +711,13 @@ export default function Gardening() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.16-m4mdZynXol3pGXYAfu0NcaBvBeR3be.jpeg",
  
     },
+    {
+      title: "garden maintenance",
+      category: "estacional",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-04-04%20at%2009.48.05-YhptsdhrONHjVxowKeWvhb63O4JLM4.jpeg",
+ 
+    },
   ]
 
   const testimonials = [
