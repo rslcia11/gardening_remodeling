@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
+import emailjs from '@emailjs/browser';
 import {
   Leaf,
   HomeIcon,
@@ -674,7 +675,7 @@ export default function Home() {
     e.preventDefault()
 
     // Validación rápida de campos requeridos
-    if (!formData.full_name || !formData.email || !formData.phone_number || !formData.service_interest) {
+    if (!formData.fullName || !formData.email || !formData.phone || !formData.serviceInterest) {
       setFormStatus({
         submitting: false,
         success: false,
@@ -695,21 +696,24 @@ export default function Home() {
 
     // Guardar los datos del formulario para enviarlos en segundo plano
     const formPayload = {
-      full_name: formData.full_name,
+      fullName: formData.fullName,
       email: formData.email,
-      phone_number: formData.phone_number,
-      service_interest: formData.service_interest,
+      phone: formData.phone,
+      serviceInterest: formData.serviceInterest,
       message: formData.message || "",
     }
-
+    alert("Mensaje Enviado")
     // Guardar en localStorage como respaldo
-    localStorage.setItem(
-      "lastFormSubmission",
-      JSON.stringify({
-        data: formPayload,
-        timestamp: new Date().toISOString(),
-      }),
-    )
+    emailjs.send('service_pnhuu6g', 'template_9amkna5', formPayload, 'hg3WQb2Z3IEZrqhe8')
+                    .then((response) => {
+                        alert("Recibimos tu mensaje, te contactaremos a la brevedad")
+                        
+                        // window.location.reload()
+                    }, (err) => {
+                        console.log('FAILED...', err);
+                    });
+    
+                    
 
     // CAMBIO CLAVE: Mostrar éxito INMEDIATAMENTE sin esperar
     setFormStatus({
@@ -719,51 +723,9 @@ export default function Home() {
     })
 
     // Limpiar el formulario inmediatamente
-    setFormData({
-      full_name: "",
-      email: "",
-      phone_number: "",
-      service_interest: "",
-      message: "",
-    })
 
     // Ocultar mensaje de éxito después de 5 segundos
-    setTimeout(() => {
-      setFormStatus((prev) => ({
-        ...prev,
-        success: false,
-      }))
-    }, 5000)
-
-    // Enviar datos al servidor en segundo plano (sin esperar respuesta)
-    try {
-      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3000/form"
-
-      // Usar navigator.sendBeacon si está disponible (envío en segundo plano)
-      if (navigator.sendBeacon) {
-        const blob = new Blob([JSON.stringify(formPayload)], { type: "application/json" })
-        navigator.sendBeacon(apiUrl, blob)
-      } else {
-        // Fallback a fetch pero sin esperar respuesta
-        fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formPayload),
-          mode: "cors",
-          // Importante: no esperamos la respuesta
-          keepalive: true, // Asegura que la solicitud continúe incluso si la página se cierra
-        }).catch(() => {
-          // Ignorar errores silenciosamente - ya mostramos éxito al usuario
-        })
-      }
-    } catch (error) {
-      // Ignorar errores - ya mostramos éxito al usuario
-      console.error("Error en segundo plano:", error)
-    }
-  }
-
+  
   // Función alternativa para simular el envío del formulario sin backend
   const handleSubmitFormSimulated = (e) => {
     e.preventDefault()
@@ -1222,14 +1184,14 @@ export default function Home() {
 
             <div className="contact-form-container">
               <h3>Send Us a Message</h3>
-              <form className="contact-form" onSubmit={handleSubmitForm}>
+              <form className="contact-form" >
                 <div className="form-group">
                   <label htmlFor="name">Full Name</label>
                   <input
                     type="text"
                     id="name"
-                    name="full_name"
-                    value={formData.full_name}
+                    name="fullName"
+                    value={formData.fullName}
                     onChange={handleInputChange}
                     placeholder="Your full name"
                     required
@@ -1252,8 +1214,8 @@ export default function Home() {
                   <input
                     type="tel"
                     id="phone"
-                    name="phone_number"
-                    value={formData.phone_number}
+                    name="phone"
+                    value={formData.phone}
                     onChange={handleInputChange}
                     placeholder="Your phone number"
                     required
@@ -1263,8 +1225,8 @@ export default function Home() {
                   <label htmlFor="service">Service of Interest</label>
                   <select
                     id="service"
-                    name="service_interest"
-                    value={formData.service_interest}
+                    name="serviceInterest"
+                    value={formData.serviceInterest}
                     onChange={handleInputChange}
                     required
                   >
@@ -1287,7 +1249,7 @@ export default function Home() {
                     placeholder="Tell us about your project"
                   ></textarea>
                 </div>
-                <button type="submit" disabled={formStatus.submitting}>
+                <button onClick={(e) => handleSubmitForm(e)} disabled={formStatus.submitting}>
                   {formStatus.submitting ? "ENVIANDO..." : "GET A FREE QUOTE"}
                 </button>
                 {formStatus.success && (
@@ -1491,4 +1453,5 @@ export default function Home() {
       )}
     </div>
   )
+} 
 }
