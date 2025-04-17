@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
+import emailjs from '@emailjs/browser';
 import {
   CheckCircle,
   Paintbrush,
@@ -431,11 +432,11 @@ export default function Remodeling() {
     e.preventDefault()
 
     // Validación rápida de campos requeridos
-    if (!formData.full_name || !formData.email || !formData.phone_number || !formData.service_interest) {
+    if (!formData.fullName || !formData.email || !formData.phone || !formData.serviceInterest) {
       setFormStatus({
         submitting: false,
         success: false,
-        error: "Please complete all required fields (name, email, phone and service).",
+        error: "Por favor complete todos los campos requeridos (nombre, email, teléfono y servicio).",
       })
       return
     }
@@ -445,28 +446,40 @@ export default function Remodeling() {
       setFormStatus({
         submitting: false,
         success: false,
-        error: "Please enter a valid email address.",
+        error: "Por favor ingrese un correo electrónico válido.",
       })
       return
     }
 
     // Guardar los datos del formulario para enviarlos en segundo plano
     const formPayload = {
-      full_name: formData.full_name,
+      fullName: formData.fullName,
       email: formData.email,
-      phone_number: formData.phone_number,
-      service_interest: formData.service_interest,
+      phone: formData.phone,
+      serviceInterest: formData.serviceInterest,
       message: formData.message || "",
     }
-
+    alert("Mensaje Enviado")
     // Guardar en localStorage como respaldo
-    localStorage.setItem(
-      "lastFormSubmission",
-      JSON.stringify({
-        data: formPayload,
-        timestamp: new Date().toISOString(),
-      }),
-    )
+    emailjs.send('service_pnhuu6g', 'template_9amkna5', formPayload, 'hg3WQb2Z3IEZrqhe8')
+                    .then((response) => {
+                        alert("Recibimos tu mensaje, te contactaremos a la brevedad");
+                        setFormData({
+                          fullName: '',
+                          email: '',
+                          phone: '',
+                          serviceInterest: '',
+                          message: '',
+                        });
+                        setFormStatus({ submitting: false, success: true, error: null });
+                        
+                        // window.location.reload()
+                    }, (err) => {
+                      console.error('FAILED...', err);
+                      setFormStatus({ submitting: false, success: false, error: "Hubo un problema al enviar el mensaje. Inténtalo de nuevo." });
+                    });
+    
+
 
     // CAMBIO CLAVE: Mostrar éxito INMEDIATAMENTE sin esperar
     setFormStatus({
@@ -1099,15 +1112,15 @@ export default function Remodeling() {
               </div>
             </div>
             <div className="contact-form-container">
-              <h3>Request Free Estimate</h3>
-              <form className="contact-form" onSubmit={handleSubmitForm}>
+              <h3>Send Us a Message</h3>
+              <form className="contact-form" >
                 <div className="form-group">
                   <label htmlFor="name">Full Name</label>
                   <input
                     type="text"
                     id="name"
-                    name="full_name"
-                    value={formData.full_name}
+                    name="fullName"
+                    value={formData.fullName}
                     onChange={handleInputChange}
                     placeholder="Your full name"
                     required
@@ -1130,8 +1143,8 @@ export default function Remodeling() {
                   <input
                     type="tel"
                     id="phone"
-                    name="phone_number"
-                    value={formData.phone_number}
+                    name="phone"
+                    value={formData.phone}
                     onChange={handleInputChange}
                     placeholder="Your phone number"
                     required
@@ -1141,8 +1154,8 @@ export default function Remodeling() {
                   <label htmlFor="service">Service of Interest</label>
                   <select
                     id="service"
-                    name="service_interest"
-                    value={formData.service_interest}
+                    name="serviceInterest"
+                    value={formData.serviceInterest}
                     onChange={handleInputChange}
                     required
                   >
@@ -1165,8 +1178,8 @@ export default function Remodeling() {
                     placeholder="Tell us about your project"
                   ></textarea>
                 </div>
-                <button type="submit" className="submit-button" disabled={formStatus.submitting}>
-                  {formStatus.submitting ? "ENVIANDO..." : "REQUEST ESTIMATE"}
+                <button onClick={(e) => handleSubmitForm(e)} disabled={formStatus.submitting}>
+                  {formStatus.submitting ? "ENVIANDO..." : "GET A FREE QUOTE"}
                 </button>
                 {formStatus.success && (
                   <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
@@ -1174,7 +1187,6 @@ export default function Remodeling() {
                 {formStatus.error && (
                   <div className="form-error-message">Error sending message: {formStatus.error}</div>
                 )}
-                <p className="form-note">Response guaranteed in less than 24 hours</p>
               </form>
             </div>
           </div>

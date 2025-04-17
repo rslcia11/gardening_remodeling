@@ -58,6 +58,7 @@ a {
 /* Actualizar los estilos de la barra de navegación para que se parezca a la referencia */
 .main-nav {
   background-color: white;
+  
   position: fixed;
   top: 0;
   left: 0;
@@ -2973,4 +2974,3 @@ span.services-text,
   -webkit-text-fill-color: #d4af37   !important;
 }
 
-/*#d4af37*/

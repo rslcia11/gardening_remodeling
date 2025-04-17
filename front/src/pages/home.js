@@ -667,10 +667,7 @@ export default function Home() {
       [name]: value,
     }))
   }
-
-  // Función para manejar el envío del formulario
-  // Modificar la función handleSubmitForm para usar la URL correcta
-  // Reemplazar la función handleSubmitForm con esta versión ultra-optimizada
+  
   const handleSubmitForm = async (e) => {
     e.preventDefault()
 
@@ -679,7 +676,7 @@ export default function Home() {
       setFormStatus({
         submitting: false,
         success: false,
-        error: "Por favor complete todos los campos requeridos (nombre, email, teléfono y servicio).",
+        error: "Please complete all required fields (name, email, phone and service).",
       })
       return
     }
@@ -689,7 +686,7 @@ export default function Home() {
       setFormStatus({
         submitting: false,
         success: false,
-        error: "Por favor ingrese un correo electrónico válido.",
+        error: "Please enter a valid email address.",
       })
       return
     }
@@ -702,81 +699,30 @@ export default function Home() {
       serviceInterest: formData.serviceInterest,
       message: formData.message || "",
     }
-    alert("Mensaje Enviado")
+    
+    //alert("One moment please, your data is being sent.")
     // Guardar en localStorage como respaldo
     emailjs.send('service_pnhuu6g', 'template_9amkna5', formPayload, 'hg3WQb2Z3IEZrqhe8')
                     .then((response) => {
-                        alert("Recibimos tu mensaje, te contactaremos a la brevedad")
+                        setFormData({
+                          fullName: '',
+                          email: '',
+                          phone: '',
+                          serviceInterest: '',
+                          message: '',
+                        });
+                        setFormStatus({ submitting: false, success: true, error: null });
                         
                         // window.location.reload()
                     }, (err) => {
-                        console.log('FAILED...', err);
+                      console.error('FAILED...', err);
+                      setFormStatus({ submitting: false, success: false, error: "There was a problem sending the message. Please try again." });
                     });
+                     
     
-                    
-
-    // CAMBIO CLAVE: Mostrar éxito INMEDIATAMENTE sin esperar
-    setFormStatus({
-      submitting: false,
-      success: true,
-      error: null,
-    })
-
-    // Limpiar el formulario inmediatamente
-
-    // Ocultar mensaje de éxito después de 5 segundos
-  
+                  }
   // Función alternativa para simular el envío del formulario sin backend
-  const handleSubmitFormSimulated = (e) => {
-    e.preventDefault()
-
-    // Validar el formulario
-    if (!formData.full_name || !formData.email) {
-      setFormStatus({
-        submitting: false,
-        success: false,
-        error: "Por favor complete todos los campos requeridos.",
-      })
-      return
-    }
-
-    // Actualizar estado a "enviando"
-    setFormStatus({
-      submitting: true,
-      success: false,
-      error: null,
-    })
-
-    // Simular una demora en la respuesta
-    console.log("Simulando envío de formulario:", formData)
-
-    setTimeout(() => {
-      // Simular respuesta exitosa
-      setFormStatus({
-        submitting: false,
-        success: true,
-        error: null,
-      })
-
-      // Limpiar el formulario
-      setFormData({
-        full_name: "",
-        email: "",
-        phone_number: "",
-        service_interest: "",
-        message: "",
-      })
-
-      // Opcional: Mostrar mensaje de éxito por un tiempo limitado
-      setTimeout(() => {
-        setFormStatus((prev) => ({
-          ...prev,
-          success: false,
-        }))
-      }, 5000)
-    }, 1500)
-  }
-
+  
   return (
     <div className="home-container">
       {/* Navegación estilo Westlake */}
@@ -1250,7 +1196,7 @@ export default function Home() {
                   ></textarea>
                 </div>
                 <button onClick={(e) => handleSubmitForm(e)} disabled={formStatus.submitting}>
-                  {formStatus.submitting ? "ENVIANDO..." : "GET A FREE QUOTE"}
+                  {formStatus.submitting ? "SENDING..." : "GET A FREE QUOTE"}
                 </button>
                 {formStatus.success && (
                   <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
@@ -1454,4 +1400,4 @@ export default function Home() {
     </div>
   )
 } 
-}
+
