@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser"
 import {
   CheckCircle,
   Leaf,
@@ -13,7 +13,6 @@ import {
   Mail,
   MapPin,
   Award,
-  Crown,
   ChevronDown,
   Menu,
   X,
@@ -33,9 +32,37 @@ import {
   Truck,
 } from "lucide-react"
 import "./gardening.css"
+// Add the Modal component import at the top with the other imports
+import Modal from "./Modal"
 
 export default function Gardening() {
-  // Add this at the beginning of the Gardening component, before the return statement
+  // State declarations
+  const [isVisible, setIsVisible] = useState(false)
+  const [activeGalleryItem, setActiveGalleryItem] = useState(0)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(null)
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    phone_number: "",
+    service_interest: "",
+    message: "",
+  })
+  const [formStatus, setFormStatus] = useState({
+    submitting: false,
+    success: false,
+    error: null,
+  })
+  // Add these state variables in the state declarations section, after the existing formStatus state
+  const [sendingMessage, setSendingMessage] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalMessage, setModalMessage] = useState("")
+  const [showModal, setShowModal] = useState(false)
+  const [modalSuccess, setModalSuccess] = useState(false)
+  const [modalType, setModalType] = useState("")
+
+  // SEO meta tags
   useEffect(() => {
     // Set meta tags for SEO
     document.title = "Professional Landscaping Services in New Jersey | Jimenez Services LLC"
@@ -140,31 +167,7 @@ export default function Gardening() {
     }
   }, [])
 
-  const [isVisible, setIsVisible] = useState(false)
-  const [activeGalleryItem, setActiveGalleryItem] = useState(0)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(null)
-
-  // Añadir estos nuevos estados para el formulario
-  const [formData, setFormData] = useState({
-    full_name: "",
-    email: "",
-    phone_number: "",
-    service_interest: "",
-    message: "",
-  })
-  const [formStatus, setFormStatus] = useState({
-    submitting: false,
-    success: false,
-    error: null,
-  })
-
-  // Eliminar el estado activeFilter y la función filteredPortfolio
-  //const [activeFilter, setActiveFilter] = useState("all")
-  // Eliminar esta línea ya que no necesitamos el estado de filtro
-
-  // Añadir este useEffect justo después de las declaraciones de estado, antes de los otros useEffect
+  // Scroll to top effect
   useEffect(() => {
     // Función para desplazar al inicio de la página
     const scrollToTop = () => {
@@ -202,6 +205,7 @@ export default function Gardening() {
     }
   }, [])
 
+  // Animation and gallery effects
   useEffect(() => {
     setIsVisible(true)
 
@@ -237,7 +241,7 @@ export default function Gardening() {
     }
   }, [])
 
-  // Nuevo useEffect para corregir los modales
+  // Modal fix effect
   useEffect(() => {
     // Función para corregir los modales cuando se abren
     function fixModals() {
@@ -305,7 +309,7 @@ export default function Gardening() {
     return () => clearInterval(interval)
   }, [])
 
-  // Añadir este useEffect para corregir el modal cuando está abierto
+  // Image modal effect
   useEffect(() => {
     if (isImageModalOpen) {
       // Función para aplicar estilos al modal
@@ -347,11 +351,12 @@ export default function Gardening() {
     }
   }, [isImageModalOpen])
 
+  // Helper functions
   const scrollToContact = () => {
     document.getElementById("contact").scrollIntoView({ behavior: "smooth" })
   }
 
-  // Función mejorada para abrir el modal con cualquier tipo de imagen
+  // Image modal functions
   const openImageModal = (image) => {
     // Si la imagen es un string (URL directa), convertirla al formato adecuado
     if (typeof image === "string") {
@@ -408,7 +413,6 @@ export default function Gardening() {
     }, 10)
   }
 
-  // Función para cerrar el modal
   const closeImageModal = () => {
     // Seleccionar el overlay y remover la clase open para la animación
     const overlay = document.querySelector(".image-modal-overlay")
@@ -422,7 +426,7 @@ export default function Gardening() {
     }, 400) // Aumentar el tiempo para que coincida con la duración de la transición
   }
 
-  // Función para manejar cambios en los inputs
+  // Form handling
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData((prevData) => ({
@@ -431,7 +435,7 @@ export default function Gardening() {
     }))
   }
 
-  // Función para manejar el envío del formulario
+  // Replace the handleSubmitForm function with this updated version
   const handleSubmitForm = async (e) => {
     e.preventDefault()
 
@@ -440,20 +444,23 @@ export default function Gardening() {
       setFormStatus({
         submitting: false,
         success: false,
-        error: "Por favor complete todos los campos requeridos (nombre, email, teléfono y servicio).",
+        error: "Please complete all required fields (name, email, phone and service).",
       })
+      setModalMessage("Please complete all required fields.")
+      setModalType("error")
       return
     }
 
     // Validación básica de email - usando una expresión regular simple para mayor velocidad
     if (!formData.email.includes("@") || !formData.email.includes(".")) {
-      setFormStatus({
-        submitting: false,
-        success: false,
-        error: "Por favor ingrese un correo electrónico válido.",
-      })
+      setFormStatus({ submitting: false, success: false, error: "Please enter a valid email address." })
+      setModalMessage("Please enter a valid email address.")
+      setModalType("error")
       return
     }
+    setFormStatus({ submitting: true, success: false, error: null })
+    setModalMessage("Sending your message...")
+    setModalType("success")
 
     // Guardar los datos del formulario para enviarlos en segundo plano
     const formPayload = {
@@ -463,26 +470,33 @@ export default function Gardening() {
       serviceInterest: formData.serviceInterest,
       message: formData.message || "",
     }
-    alert("Mensaje Enviado")
+
     // Guardar en localStorage como respaldo
-    emailjs.send('service_pnhuu6g', 'template_9amkna5', formPayload, 'hg3WQb2Z3IEZrqhe8')
-                    .then((response) => {
-                        alert("Recibimos tu mensaje, te contactaremos a la brevedad");
-                        setFormData({
-                          fullName: '',
-                          email: '',
-                          phone: '',
-                          serviceInterest: '',
-                          message: '',
-                        });
-                        setFormStatus({ submitting: false, success: true, error: null });
-                        
-                        // window.location.reload()
-                    }, (err) => {
-                      console.error('FAILED...', err);
-                      setFormStatus({ submitting: false, success: false, error: "Hubo un problema al enviar el mensaje. Inténtalo de nuevo." });
-                    });
-    
+    emailjs.send("service_pnhuu6g", "template_9amkna5", formPayload, "hg3WQb2Z3IEZrqhe8").then(
+      (response) => {
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          serviceInterest: "",
+          message: "",
+        })
+        setFormStatus({ submitting: false, success: true, error: null })
+        setModalMessage("Message sent successfully!")
+        setModalType("success")
+        // window.location.reload()
+      },
+      (err) => {
+        console.error("FAILED...", err)
+        setFormStatus({
+          submitting: false,
+          success: false,
+          error: "Hubo un problema al enviar el mensaje. Inténtalo de nuevo.",
+        })
+        setModalMessage("There was a problem sending the message.")
+        setModalType("error")
+      },
+    )
 
     // CAMBIO CLAVE: Mostrar éxito INMEDIATAMENTE sin esperar
     setFormStatus({
@@ -533,10 +547,11 @@ export default function Gardening() {
       }
     } catch (error) {
       // Ignorar errores - ya mostramos éxito al usuario
-      console.error("Error en segundo plano:", error)
+      console.error("Error in the background:", error)
     }
   }
 
+  // Data arrays
   const services = [
     {
       icon: <Leaf className="service-icon-svg" />,
@@ -664,11 +679,9 @@ export default function Gardening() {
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-reGHppaVaFo7D6fo18RaHa6dmO06M4.jpeg",
       title: "Professional Mulch Installation",
-
     },
   ]
 
-  // Nuevo array para la sección de portafolio
   const portfolioItems = [
     {
       title: "Black Mulch Installation",
@@ -721,14 +734,12 @@ export default function Gardening() {
       category: "estacional",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.16-m4mdZynXol3pGXYAfu0NcaBvBeR3be.jpeg",
- 
     },
     {
       title: "garden maintenance",
       category: "estacional",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-04-04%20at%2009.48.05-YhptsdhrONHjVxowKeWvhb63O4JLM4.jpeg",
- 
     },
   ]
 
@@ -773,10 +784,6 @@ export default function Gardening() {
         "We exclusively use top-quality materials and selected plants that guarantee exceptional durability and lasting beauty.",
     },
   ]
-
-  // Filtrar los elementos del portafolio según la categoría seleccionada
-  //const filteredPortfolio =
-  //  activeFilter === "all" ? portfolioItems : portfolioItems.filter((item) => item.category === activeFilter)
 
   return (
     <div className="page-container">
@@ -843,9 +850,7 @@ export default function Gardening() {
       <section className="hero-section gardening-hero">
         <div className={`hero-content ${isVisible ? "visible" : ""}`}>
           <div className="hero-title-container">
-            
             <h1 className="hero-title">Professional Landscaping in New Jersey</h1>
-           
           </div>
 
           <div className="hero-buttons">
@@ -858,6 +863,8 @@ export default function Gardening() {
           </div>
         </div>
       </section>
+      {/* Add this line right after the hero section, before the About section */}
+      {modalMessage && <Modal message={modalMessage} type={modalType} />}
 
       {/* About Section */}
       <section className="section about-section animate-on-scroll">
@@ -888,17 +895,14 @@ export default function Gardening() {
             <div className="about-text">
               <h3>Excellence in Every Green Detail Across New Jerse</h3>
               <p>
-              At Jimenez Services, we don't just maintain gardens — we craft outdoor experiences 
-              that elevate your lifestyle and transform your property's appearance.
-              Our skilled team blends expert knowledge with creative vision to design, build, 
-              and care for exceptional green spaces tailored to your needs.
-
+                At Jimenez Services, we don't just maintain gardens — we craft outdoor experiences that elevate your
+                lifestyle and transform your property's appearance. Our skilled team blends expert knowledge with
+                creative vision to design, build, and care for exceptional green spaces tailored to your needs.
               </p>
               <p>
-              From routine maintenance to full-scale landscaping projects, we’re committed to delivering 
-              personalized service and flawless results that boost your property’s value and create welcoming 
-              outdoor areas you'll love for years to come.
-             
+                From routine maintenance to full-scale landscaping projects, we're committed to delivering personalized
+                service and flawless results that boost your property's value and create welcoming outdoor areas you'll
+                love for years to come.
               </p>
               <div className="about-features">
                 {benefits.map((benefit, index) => (
@@ -1137,7 +1141,7 @@ export default function Gardening() {
             </div>
             <div className="contact-form-container">
               <h3>Send Us a Message</h3>
-              <form className="contact-form" >
+              <form className="contact-form">
                 <div className="form-group">
                   <label htmlFor="name">Full Name</label>
                   <input

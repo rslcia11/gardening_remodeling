@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser"
 import {
   CheckCircle,
   Paintbrush,
@@ -12,7 +12,6 @@ import {
   Mail,
   MapPin,
   Award,
-  Crown,
   ChevronDown,
   Menu,
   X,
@@ -27,15 +26,15 @@ import {
   ThumbsUp,
   Sparkles,
   Home,
-  Ruler,
   Lightbulb,
   Leaf,
   Shovel,
 } from "lucide-react"
 import "./remodeling.css"
+import Modal from "./Modal"
 
 export default function Remodeling() {
-  // Add this at the beginning of the Remodeling component, before the return statement
+  // SEO meta tags
   useEffect(() => {
     // Set meta tags for SEO
     document.title = "Professional Remodeling & Construction Services in NJ | Jimenez Services LLC"
@@ -140,13 +139,12 @@ export default function Remodeling() {
     }
   }, [])
 
+  // State declarations
   const [isVisible, setIsVisible] = useState(false)
   const [activeGalleryItem, setActiveGalleryItem] = useState(0)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
-
-  // Añadir estos nuevos estados para el formulario
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -159,8 +157,24 @@ export default function Remodeling() {
     success: false,
     error: null,
   })
+  const [sendingMessage, setSendingMessage] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalMessage, setModalMessage] = useState("")
+  const [showModal, setShowModal] = useState(false)
+  const [modalSuccess, setModalSuccess] = useState(false)
+  const [modalType, setModalType] = useState("")
 
-  // Añadir este useEffect justo después de las declaraciones de estado, antes de los otros useEffect
+  // Reset success message after timeout
+  useEffect(() => {
+    if (formStatus.success) {
+      const timer = setTimeout(() => {
+        setFormStatus((prevStatus) => ({ ...prevStatus, success: false }))
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [formStatus.success])
+
+  // Scroll to top effect
   useEffect(() => {
     // Función para desplazar al inicio de la página
     const scrollToTop = () => {
@@ -194,10 +208,11 @@ export default function Remodeling() {
     // Limpiar event listeners cuando el componente se desmonta
     return () => {
       window.removeEventListener("popstate", handlePopState)
-      window.removeEventListener("beforeUnload", handleBeforeUnload)
+      window.removeEventListener("beforeunload", handleBeforeUnload)
     }
   }, [])
 
+  // Animation and gallery effects
   useEffect(() => {
     setIsVisible(true)
 
@@ -233,7 +248,7 @@ export default function Remodeling() {
     }
   }, [])
 
-  // Nuevo useEffect para corregir los modales
+  // Modal fix effect
   useEffect(() => {
     // Función para corregir los modales cuando se abren
     function fixModals() {
@@ -301,7 +316,7 @@ export default function Remodeling() {
     return () => clearInterval(interval)
   }, [])
 
-  // Añadir este useEffect para corregir el modal cuando está abierto
+  // Image modal effect
   useEffect(() => {
     if (isImageModalOpen) {
       // Función para aplicar estilos al modal
@@ -343,11 +358,12 @@ export default function Remodeling() {
     }
   }, [isImageModalOpen])
 
+  // Helper functions
   const scrollToContact = () => {
     document.getElementById("contact").scrollIntoView({ behavior: "smooth" })
   }
 
-  // Función mejorada para abrir el modal con cualquier tipo de imagen
+  // Image modal functions
   const openImageModal = (image) => {
     // Si la imagen es un string (URL directa), convertirla al formato adecuado
     if (typeof image === "string") {
@@ -404,7 +420,6 @@ export default function Remodeling() {
     }, 10)
   }
 
-  // Función para cerrar el modal
   const closeImageModal = () => {
     // Seleccionar el overlay y remover la clase open para la animación
     const overlay = document.querySelector(".image-modal-overlay")
@@ -418,7 +433,7 @@ export default function Remodeling() {
     }, 400) // Aumentar el tiempo para que coincida con la duración de la transición
   }
 
-  // Función para manejar cambios en los inputs
+  // Form handling
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData((prevData) => ({
@@ -427,7 +442,7 @@ export default function Remodeling() {
     }))
   }
 
-  // Función para manejar el envío del formulario
+  // Update the handleSubmitForm function to ensure it's consistent with the home component
   const handleSubmitForm = async (e) => {
     e.preventDefault()
 
@@ -436,20 +451,23 @@ export default function Remodeling() {
       setFormStatus({
         submitting: false,
         success: false,
-        error: "Por favor complete todos los campos requeridos (nombre, email, teléfono y servicio).",
+        error: "Please complete all required fields (name, email, phone and service).",
       })
+      setModalMessage("Please complete all required fields.")
+      setModalType("error")
       return
     }
 
     // Validación básica de email - usando una expresión regular simple para mayor velocidad
     if (!formData.email.includes("@") || !formData.email.includes(".")) {
-      setFormStatus({
-        submitting: false,
-        success: false,
-        error: "Por favor ingrese un correo electrónico válido.",
-      })
+      setFormStatus({ submitting: false, success: false, error: "Please enter a valid email address." })
+      setModalMessage("Please enter a valid email address.")
+      setModalType("error")
       return
     }
+    setFormStatus({ submitting: true, success: false, error: null })
+    setModalMessage("Sending your message...")
+    setModalType("success")
 
     // Guardar los datos del formulario para enviarlos en segundo plano
     const formPayload = {
@@ -459,27 +477,33 @@ export default function Remodeling() {
       serviceInterest: formData.serviceInterest,
       message: formData.message || "",
     }
-    alert("Mensaje Enviado")
-    // Guardar en localStorage como respaldo
-    emailjs.send('service_pnhuu6g', 'template_9amkna5', formPayload, 'hg3WQb2Z3IEZrqhe8')
-                    .then((response) => {
-                        alert("Recibimos tu mensaje, te contactaremos a la brevedad");
-                        setFormData({
-                          fullName: '',
-                          email: '',
-                          phone: '',
-                          serviceInterest: '',
-                          message: '',
-                        });
-                        setFormStatus({ submitting: false, success: true, error: null });
-                        
-                        // window.location.reload()
-                    }, (err) => {
-                      console.error('FAILED...', err);
-                      setFormStatus({ submitting: false, success: false, error: "Hubo un problema al enviar el mensaje. Inténtalo de nuevo." });
-                    });
-    
 
+    // Guardar en localStorage como respaldo
+    emailjs.send("service_pnhuu6g", "template_9amkna5", formPayload, "hg3WQb2Z3IEZrqhe8").then(
+      (response) => {
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          serviceInterest: "",
+          message: "",
+        })
+        setFormStatus({ submitting: false, success: true, error: null })
+        setModalMessage("Message sent successfully!")
+        setModalType("success")
+        // window.location.reload()
+      },
+      (err) => {
+        console.error("FAILED...", err)
+        setFormStatus({
+          submitting: false,
+          success: false,
+          error: "Hubo un problema al enviar el mensaje. Inténtalo de nuevo.",
+        })
+        setModalMessage("There was a problem sending the message.")
+        setModalType("error")
+      },
+    )
 
     // CAMBIO CLAVE: Mostrar éxito INMEDIATAMENTE sin esperar
     setFormStatus({
@@ -534,6 +558,7 @@ export default function Remodeling() {
     }
   }
 
+  // Data arrays
   const services = [
     {
       icon: <Paintbrush className="service-icon-svg" />,
@@ -594,7 +619,7 @@ export default function Remodeling() {
         "Comprehensive modernization",
       ],
     },
-    
+
     {
       icon: <Lightbulb className="service-icon-svg" />,
       title: "Electrical Installations",
@@ -608,7 +633,6 @@ export default function Remodeling() {
         "Diagnosis and repair",
       ],
     },
-   
   ]
 
   const galleryItems = [
@@ -634,35 +658,30 @@ export default function Remodeling() {
     },
   ]
 
-  // Nuevo array para la sección de portafolio
   const portfolioItems = [
     {
       title: "Modern Kitchen with Two Tone Cabinets",
-      
+
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27-u5yimx9QxZlCr8kcR53othrfFvn6qu.jpeg",
-
     },
     {
       title: "Transformation of Attic into Living Space",
 
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.27%20%281%29-j3q6JKzWEbaI48eIob0otnML7WRDLQ.jpeg",
-
     },
     {
       title: "Room Renovation with Hardwood Floors",
 
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-28%20at%2017.12.50%20%281%29-06LAwWxKzWV2s6vGtP50F9qqBg7njq.jpeg",
-
     },
     {
       title: "Modern Bathroom with Hexagonal Tiles",
 
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-28%20at%2017.12.50-8tCZ0peN8UvAsNONLR57dTOFfrtt3A.jpeg",
-
     },
     {
       title: "Complete Bathroom Transformation",
@@ -671,7 +690,6 @@ export default function Remodeling() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.25-CpCQmn9D9nAUd3qFaCTU2I9Iw9dKfo.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26-xCpRvT859Z09XQxaNHHY5tb13vMa6K.jpeg",
-
     },
     {
       title: "bathroom renovation",
@@ -680,7 +698,6 @@ export default function Remodeling() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.19%20%281%29-gTwkzZBtiipvKm30HuezCoyc9Feztn.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-14%20at%2023.05.19-tVM7KClsxcVCrjqcmQ2eSdoUeWTh6L.jpeg",
- 
     },
     {
       title: "Modern Kitchen Renovation",
@@ -689,7 +706,6 @@ export default function Remodeling() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%282%29-nwEi3wEpYWn6f0dEjqWPsC77Q6q1jo.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-19%20at%2018.20.26%20%281%29-3xLNhK99Bak6DL5NFisMyLQl1FUBbL.jpeg",
- 
     },
     {
       title: "kitchen remodeling",
@@ -698,7 +714,6 @@ export default function Remodeling() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-23%20at%2013.58.11-MbQOz2EPPFuYjpxwkW8cJSCSNmmjr0.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-23%20at%2013.58.11%20%281%29-fTgv63N4CcQOudG3k4y7d4CY6ek4Im.jpeg",
- 
     },
     {
       title: "exterior remodeling",
@@ -707,7 +722,6 @@ export default function Remodeling() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-23%20at%2015.51.45%20%281%29-8GuhfNvzLpcbtguMW57Hn2o1ffXO77.jpeg",
       beforeImage:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-23%20at%2015.51.45-S2TKiMlU4LsOROKsZeUoDRILY9T19O.jpeg",
- 
     },
   ]
 
@@ -818,9 +832,7 @@ export default function Remodeling() {
       <section className="hero-section remodeling-hero">
         <div className={`hero-content ${isVisible ? "visible" : ""}`}>
           <div className="hero-title-container">
-            
             <h1 className="hero-title">Professional Remodeling in New Jersey</h1>
-            
           </div>
 
           <div className="hero-buttons">
@@ -833,6 +845,7 @@ export default function Remodeling() {
           </div>
         </div>
       </section>
+      {modalMessage && <Modal message={modalMessage} type={modalType} />}
 
       {/* About Section */}
       <section className="section about-section animate-on-scroll">
@@ -863,17 +876,14 @@ export default function Remodeling() {
             <div className="about-text">
               <h3>Excellence in Every Construction Detail Across New Jersey</h3>
               <p>
-              At Jimenez Services, we don’t just renovate spaces — we craft exceptional environments that elevate
-               your home and your lifestyle.
-              Our expert team blends technical precision with creative vision to design, build, and remodel 
-              spaces that truly reflect your needs and exceed your expectations.
-
+                At Jimenez Services, we don't just renovate spaces — we craft exceptional environments that elevate your
+                home and your lifestyle. Our expert team blends technical precision with creative vision to design,
+                build, and remodel spaces that truly reflect your needs and exceed your expectations.
               </p>
               <p>
-              From minor upgrades to full-scale remodeling and construction projects, we are dedicated to 
-              delivering personalized service, flawless results, and lasting value — creating spaces you’ll love
-               to live in for years to come.
-
+                From minor upgrades to full-scale remodeling and construction projects, we are dedicated to delivering
+                personalized service, flawless results, and lasting value — creating spaces you'll love to live in for
+                years to come.
               </p>
               <div className="about-features">
                 {benefits.map((benefit, index) => (
@@ -1113,7 +1123,7 @@ export default function Remodeling() {
             </div>
             <div className="contact-form-container">
               <h3>Send Us a Message</h3>
-              <form className="contact-form" >
+              <form className="contact-form">
                 <div className="form-group">
                   <label htmlFor="name">Full Name</label>
                   <input
@@ -1179,8 +1189,11 @@ export default function Remodeling() {
                   ></textarea>
                 </div>
                 <button onClick={(e) => handleSubmitForm(e)} disabled={formStatus.submitting}>
-                  {formStatus.submitting ? "ENVIANDO..." : "GET A FREE QUOTE"}
+                  {formStatus.submitting ? "SENDING..." : "GET A FREE QUOTE"}
                 </button>
+                {sendingMessage && <div className="sending-message">One moment please, your data is being sent...</div>}
+                <Modal isOpen={modalOpen} message={modalMessage} onClose={() => setModalOpen(false)} />
+
                 {formStatus.success && (
                   <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
                 )}

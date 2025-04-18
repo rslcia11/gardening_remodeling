@@ -34,6 +34,7 @@ import {
 } from "lucide-react"
 import "./home.css" // Importamos el archivo CSS existente
 import { Link } from "react-router-dom" // Cambiado a react-router-dom
+import Modal from './Modal';
 
 export default function Home() {
   // Add this at the beginning of the Home component, before the return statement
@@ -161,6 +162,15 @@ export default function Home() {
     success: false,
     error: null,
   })
+  useEffect(() => {
+    if (formStatus.success) {
+      const timer = setTimeout(() => {
+        setFormStatus((prevStatus) => ({ ...prevStatus, success: false }));
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [formStatus.success]);
+  
 
   const heroRef = useRef(null)
   const aboutRef = useRef(null)
@@ -453,10 +463,10 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.26-78p413j3LMqwgT63kJy72TCkUe4WGZ.jpeg",
     },
     {
-      title: "Mulch Installation",
+      title: "gardening",
       category: "gardening",
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/178992858_4887242881302590_6606751715914796420_n.jpg-SO1uzOSv574OMbCkD6aeSIWTJqec7R.jpeg",
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/gardening-dA4wUJhJ1Ao0vhT88c5bBNsUZ0WFH8.jpeg",
     },
     {
       title: "Maintenance and decoration of a garden during the Halloween Season",
@@ -667,31 +677,36 @@ export default function Home() {
       [name]: value,
     }))
   }
+  const [sendingMessage, setSendingMessage] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [modalSuccess, setModalSuccess] = useState(false);
+  const [modalType, setModalType] = useState("")
+
+
   
   const handleSubmitForm = async (e) => {
     e.preventDefault()
-
-    // Validación rápida de campos requeridos
+  
     if (!formData.fullName || !formData.email || !formData.phone || !formData.serviceInterest) {
-      setFormStatus({
-        submitting: false,
-        success: false,
-        error: "Please complete all required fields (name, email, phone and service).",
-      })
+      setFormStatus({ submitting: false, success: false, error: "Please complete all required fields (name, email, phone and service)." })
+      setModalMessage("Please complete all required fields.")
+      setModalType("error")
       return
     }
-
-    // Validación básica de email - usando una expresión regular simple para mayor velocidad
+  
     if (!formData.email.includes("@") || !formData.email.includes(".")) {
-      setFormStatus({
-        submitting: false,
-        success: false,
-        error: "Please enter a valid email address.",
-      })
+      setFormStatus({ submitting: false, success: false, error: "Please enter a valid email address." })
+      setModalMessage("Please enter a valid email address.")
+      setModalType("error")
       return
     }
-
-    // Guardar los datos del formulario para enviarlos en segundo plano
+  
+    setFormStatus({ submitting: true, success: false, error: null })
+    setModalMessage("Sending your message...")
+    setModalType("success")
+  
     const formPayload = {
       fullName: formData.fullName,
       email: formData.email,
@@ -699,31 +714,33 @@ export default function Home() {
       serviceInterest: formData.serviceInterest,
       message: formData.message || "",
     }
-    
-    //alert("One moment please, your data is being sent.")
-    // Guardar en localStorage como respaldo
-    emailjs.send('service_pnhuu6g', 'template_9amkna5', formPayload, 'hg3WQb2Z3IEZrqhe8')
-                    .then((response) => {
-                        setFormData({
-                          fullName: '',
-                          email: '',
-                          phone: '',
-                          serviceInterest: '',
-                          message: '',
-                        });
-                        setFormStatus({ submitting: false, success: true, error: null });
-                        
-                        // window.location.reload()
-                    }, (err) => {
-                      console.error('FAILED...', err);
-                      setFormStatus({ submitting: false, success: false, error: "There was a problem sending the message. Please try again." });
-                    });
-                     
-    
-                  }
+  
+    try {
+      await emailjs.send('service_pnhuu6g', 'template_9amkna5', formPayload, 'hg3WQb2Z3IEZrqhe8')
+  
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        serviceInterest: '',
+        message: '',
+      })
+  
+      setFormStatus({ submitting: false, success: true, error: null })
+      setModalMessage("Message sent successfully!")
+      setModalType("success")
+    } catch (error) {
+      console.error("FAILED...", error)
+      setFormStatus({ submitting: false, success: false, error: "There was a problem sending the message." })
+      setModalMessage("There was a problem sending the message.")
+      setModalType("error")
+    }
+  }
+  
   // Función alternativa para simular el envío del formulario sin backend
   
   return (
+    
     <div className="home-container">
       {/* Navegación estilo Westlake */}
       <nav className="main-nav">
@@ -1072,6 +1089,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {modalMessage && <Modal message={modalMessage} type={modalType} />}
 
       <section ref={contactRef} className="section contact-section animate-on-scroll">
         <div className="container">
@@ -1198,12 +1216,20 @@ export default function Home() {
                 <button onClick={(e) => handleSubmitForm(e)} disabled={formStatus.submitting}>
                   {formStatus.submitting ? "SENDING..." : "GET A FREE QUOTE"}
                 </button>
-                {formStatus.success && (
-                  <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
-                )}
-                {formStatus.error && (
-                  <div className="form-error-message">Error sending message: {formStatus.error}</div>
-                )}
+                {sendingMessage && (
+  <div className="sending-message">
+    One moment please, your data is being sent...
+  </div>
+)}
+                <Modal isOpen={modalOpen} message={modalMessage} onClose={() => setModalOpen(false)} />
+
+{formStatus.success && (
+  <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
+)}
+{formStatus.error && (
+  <div className="form-error-message">Error sending message: {formStatus.error}</div>
+)}
+
               </form>
             </div>
           </div>
