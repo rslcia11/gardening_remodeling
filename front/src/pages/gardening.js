@@ -22,7 +22,6 @@ import {
   Linkedin,
   Clock,
   Shield,
-  Star,
   ArrowRight,
   ThumbsUp,
   Sparkles,
@@ -32,7 +31,6 @@ import {
   Truck,
 } from "lucide-react"
 import "./gardening.css"
-// Add the Modal component import at the top with the other imports
 import Modal from "./Modal"
 
 export default function Gardening() {
@@ -43,10 +41,10 @@ export default function Gardening() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
   const [formData, setFormData] = useState({
-    full_name: "",
+    fullName: "",
     email: "",
-    phone_number: "",
-    service_interest: "",
+    phone: "",
+    serviceInterest: "",
     message: "",
   })
   const [formStatus, setFormStatus] = useState({
@@ -54,13 +52,13 @@ export default function Gardening() {
     success: false,
     error: null,
   })
-  // Add these state variables in the state declarations section, after the existing formStatus state
+  // Modal state variables
   const [sendingMessage, setSendingMessage] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMessage, setModalMessage] = useState("")
+  const [modalType, setModalType] = useState("")
   const [showModal, setShowModal] = useState(false)
   const [modalSuccess, setModalSuccess] = useState(false)
-  const [modalType, setModalType] = useState("")
 
   // SEO meta tags
   useEffect(() => {
@@ -435,7 +433,7 @@ export default function Gardening() {
     }))
   }
 
-  // Replace the handleSubmitForm function with this updated version
+  // Form submission handler
   const handleSubmitForm = async (e) => {
     e.preventDefault()
 
@@ -507,10 +505,10 @@ export default function Gardening() {
 
     // Limpiar el formulario inmediatamente
     setFormData({
-      full_name: "",
+      fullName: "",
       email: "",
-      phone_number: "",
-      service_interest: "",
+      phone: "",
+      serviceInterest: "",
       message: "",
     })
 
@@ -743,21 +741,6 @@ export default function Gardening() {
     },
   ]
 
-  const testimonials = [
-    {
-      name: "Laura Martínez",
-      role: "Property Owner in Little Ferry",
-      text: "Jimenez Services transformed our garden into a paradise that exceeds all our expectations. Their attention to detail and professionalism are unmatched. We now spend more time outdoors than inside our house, it's like having a private resort!",
-      rating: 5,
-    },
-    {
-      name: "Roberto Sánchez",
-      role: "Property Manager",
-      text: "As the manager of multiple luxury properties, I value consistency and excellence. Jimenez Services has kept our gardens impeccable for years, increasing the value of our properties and generating constant praise from residents and visitors.",
-      rating: 5,
-    },
-  ]
-
   const benefits = [
     {
       icon: <ThumbsUp />,
@@ -827,9 +810,6 @@ export default function Gardening() {
                 </div>
               </li>
               <li>
-                <a href="#testimonios">TESTIMONIALS</a>
-              </li>
-              <li>
                 <a href="#contact">CONTACT</a>
               </li>
             </ul>
@@ -839,9 +819,45 @@ export default function Gardening() {
               <span className="phone-number">551.587.9625</span>
             </div>
 
-            <button className="mobile-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button className="mobile-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
               <Menu size={24} />
             </button>
+            <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>
+              <ul className="mobile-nav-links">
+                <li>
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      window.scrollTo(0, 0)
+                      setIsMenuOpen(false)
+                    }}
+                  >
+                    HOME
+                  </Link>
+                </li>
+                <li>
+                  <a href="#servicios" onClick={() => setIsMenuOpen(false)}>
+                    SERVICES
+                  </a>
+                </li>
+                <li>
+                  <a href="#contact" onClick={() => setIsMenuOpen(false)}>
+                    CONTACT
+                  </a>
+                </li>
+                <li>
+                  <Link
+                    to="/interiores"
+                    onClick={() => {
+                      window.scrollTo(0, 0)
+                      setIsMenuOpen(false)
+                    }}
+                  >
+                    REMODELING
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </nav>
@@ -863,7 +879,7 @@ export default function Gardening() {
           </div>
         </div>
       </section>
-      {/* Add this line right after the hero section, before the About section */}
+      {/* Modal component for messages */}
       {modalMessage && <Modal message={modalMessage} type={modalType} />}
 
       {/* About Section */}
@@ -893,7 +909,7 @@ export default function Gardening() {
               ))}
             </div>
             <div className="about-text">
-              <h3>Excellence in Every Green Detail Across New Jerse</h3>
+              <h3>Excellence in Every Green Detail Across New Jersey</h3>
               <p>
                 At Jimenez Services, we don't just maintain gardens — we craft outdoor experiences that elevate your
                 lifestyle and transform your property's appearance. Our skilled team blends expert knowledge with
@@ -960,7 +976,7 @@ export default function Gardening() {
         </div>
       </section>
 
-      {/* Portfolio Section - Nueva sección añadida */}
+      {/* Portfolio Section */}
       <section id="portafolio" className="section portfolio-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
@@ -1041,43 +1057,6 @@ export default function Gardening() {
             <p>Start your project today with a free consultation</p>
             <a href="#contact" className="cta-button">
               Schedule Consultation <ArrowRight className="cta-icon" />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section id="testimonios" className="section testimonials-section animate-on-scroll">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Testimonials</h2>
-            <div className="section-underline"></div>
-            <p className="section-subtitle">WHAT OUR CLIENTS SAY</p>
-          </div>
-
-          <div className="testimonials-grid">
-            {testimonials.map((testimonial, index) => (
-              <div className="testimonial-card" key={index}>
-                <div className="testimonial-rating">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className={`rating-star ${i < testimonial.rating ? "filled" : ""}`} size={18} />
-                  ))}
-                </div>
-                <p className="testimonial-text">{testimonial.text}</p>
-                <div className="testimonial-author">
-                  <div className="testimonial-author-info">
-                    <h4>{testimonial.name}</h4>
-                    <p>{testimonial.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="testimonials-cta">
-            <p>Join our satisfied clients and transform your outdoor space</p>
-            <a href="#contact" className="cta-button">
-              Request Estimate <ArrowRight className="cta-icon" />
             </a>
           </div>
         </div>
@@ -1207,7 +1186,7 @@ export default function Gardening() {
                   ></textarea>
                 </div>
                 <button onClick={(e) => handleSubmitForm(e)} disabled={formStatus.submitting}>
-                  {formStatus.submitting ? "ENVIANDO..." : "GET A FREE QUOTE"}
+                  {formStatus.submitting ? "SENDING..." : "GET A FREE QUOTE"}
                 </button>
                 {formStatus.success && (
                   <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
@@ -1220,6 +1199,7 @@ export default function Gardening() {
           </div>
         </div>
       </section>
+      {formStatus.submitting && <div className="sending-message">Sending your message...</div>}
 
       {/* Footer */}
       <footer className="main-footer">
@@ -1270,9 +1250,6 @@ export default function Gardening() {
                   <a href="#servicios">Services</a>
                 </li>
                 <li>
-                  <a href="#testimonios">Testimonials</a>
-                </li>
-                <li>
                   <a href="#contact">Contact</a>
                 </li>
                 <li>
@@ -1304,13 +1281,13 @@ export default function Gardening() {
         </div>
       </footer>
 
-      {/* Botón flotante de cotización */}
+      {/* Floating estimate button */}
       <div className="new-floating-estimate-btn" onClick={() => scrollToContact()}>
         <Mail className="estimate-btn-icon" />
         <span className="estimate-btn-text">Free Estimate</span>
       </div>
 
-      {/* Modal de imagen - MODIFICADO para eliminar bordes blancos y hacer imágenes más grandes */}
+      {/* Image Modal */}
       {isImageModalOpen && (
         <div
           className="image-modal-overlay"

@@ -284,7 +284,7 @@ html {
 }
 
 .gardening-hero {
-  background-image: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.30-sSuA8aE5YRtU40hUQT3wjnyT8obYmO.jpeg");
+  background-image: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-04-01%20at%2020.41.45-kIgik1AHSsobocu7Ba0TtbGPjia2PG.jpeg");
 }
 
 .hero-section::before {
@@ -330,8 +330,21 @@ html {
   height: 2.5rem;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
 }
+
+/* Updated hero title styles with responsive design */
 section.gardening-hero .hero-title {
-  font-size: 5.5rem !important;
+  font-family: "Cinzel", serif !important;
+  font-size: 4.5rem !important;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  margin: 0;
+  text-transform: capitalize;
+  max-width: 100%;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .hero-title {
@@ -344,6 +357,7 @@ section.gardening-hero .hero-title {
   line-height: 1.2;
   margin: 0;
 }
+
 .hero-title-smaller {
   font-size: 3.5rem;
 }
@@ -397,12 +411,12 @@ section.gardening-hero .hero-title {
 
 /* Secciones */
 .section {
-  padding: 5rem 0;
+  padding: 3rem 0; /* Reducido de 5rem a 3rem */
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem; /* Reducido de 3rem a 2rem */
 }
 
 .section-title {
@@ -443,8 +457,7 @@ section.gardening-hero .hero-title {
 .about-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  gap: 2rem; /* Reducido para mantener consistencia */
 }
 
 .about-image-grid {
@@ -737,7 +750,7 @@ section.gardening-hero .hero-title {
 .process-steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  gap: 1.5rem; /* Si existe, reducir el espacio entre los pasos */
 }
 
 .process-step {
@@ -911,7 +924,7 @@ section.gardening-hero .hero-title {
 .contact-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: 2rem; /* Reducido para mantener consistencia */
   background: white;
   border-radius: var(--border-radius-xl);
   overflow: hidden;
@@ -964,7 +977,7 @@ section.gardening-hero .hero-title {
   background: rgba(0, 0, 0, 0.1);
   width: 3.5rem;
   height: 3.5rem;
-  border-radius: 50%;
+  border-radiuss: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1374,6 +1387,10 @@ section.gardening-hero .hero-title {
   .step-number::after {
     display: none;
   }
+
+  section.gardening-hero .hero-title {
+    font-size: 3.8rem !important;
+  }
 }
 
 @media (max-width: 992px) {
@@ -1407,6 +1424,10 @@ section.gardening-hero .hero-title {
 
   .modal-before-after {
     flex-direction: column;
+  }
+
+  section.gardening-hero .hero-title {
+    font-size: 3.2rem !important;
   }
 }
 
@@ -1460,6 +1481,16 @@ section.gardening-hero .hero-title {
   .footer-about {
     grid-column: span 1;
   }
+
+  section.gardening-hero .hero-title {
+    font-size: 2.5rem !important;
+    padding: 0 0.5rem;
+  }
+
+  .hero-content {
+    padding: 2rem 1rem;
+    max-width: 95%;
+  }
 }
 
 @media (max-width: 576px) {
@@ -1490,6 +1521,29 @@ section.gardening-hero .hero-title {
     width: 20px;
     height: 20px;
   }
+
+  section.gardening-hero .hero-title {
+    font-size: 2rem !important;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+  }
+}
+
+@media (max-width: 480px) {
+  section.gardening-hero .hero-title {
+    font-size: 1.8rem !important;
+    word-break: break-word;
+  }
+}
+
+@media (max-width: 375px) {
+  section.gardening-hero .hero-title {
+    font-size: 1.6rem !important;
+  }
+
+  .hero-content {
+    padding: 1.5rem 1rem;
+  }
 }
 
 /* Animaciones */
@@ -1504,80 +1558,141 @@ section.gardening-hero .hero-title {
   transform: translateY(0);
 }
 
-
 /* Importamos la fuente Cinzel de Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap");
 
-/* Modificamos la clase hero-title para usar Cinzel */
-.remodeling-hero .hero-title {
-  font-family: 'Cinzel', serif !important;
-  font-size: 1.5rem;
-  font-weight: 700;
+/* Mobile menu styles */
+.mobile-menu {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  padding: 1rem;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: all 0.3s ease;
+  visibility: hidden;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+.mobile-menu.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.sending-message {
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  letter-spacing: 0.03em; /* Aumentamos ligeramente el espaciado para Cinzel */
-  line-height: 1.2;
-  margin: 0;
-  text-transform: capitalize; /* Opcional: capitaliza cada palabra para un aspecto más monumental */
+  padding: 10px;
+  border-radius: 5px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  font-size: 16px;
+  text-align: center;
 }
 
-/* También aplicamos Cinzel a la sección de jardinería */
-section.gardening-hero .hero-title {
-  font-family: 'Cinzel', serif !important;
-  font-size: 5.5rem !important;
-  font-weight: 700;
-  color: white;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  letter-spacing: 0.03em;
-  line-height: 1.2;
-  margin: 0;
-  text-transform: capitalize;
+/* New floating estimate button */
+.new-floating-estimate-btn {
+  position: fixed !important;
+  bottom: 30px !important;
+  right: 30px !important;
+  width: auto !important;
+  min-width: 180px !important;
+  height: 56px !important;
+  background-color: #2e7d32 !important; /* Verde elegante */
+  color: white !important;
+  border-radius: 8px !important; /* Rectangular con bordes redondeados */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 20px rgba(46, 125, 50, 0.4) !important;
+  z-index: 9999 !important;
+  padding: 0 24px !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  overflow: hidden !important;
+  font-family: var(--font-sans) !important;
+  animation: pulse 2s infinite !important;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Reducir el espacio entre secciones */
-.section {
-  padding: 3rem 0; /* Reducido de 5rem a 3rem */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 20px rgba(46, 125, 50, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(46, 125, 50, 0.6);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 4px 20px rgba(46, 125, 50, 0.4);
+    transform: scale(1);
+  }
 }
 
-/* Reducir el espacio entre el encabezado de sección y el contenido */
-.section-header {
-  margin-bottom: 2rem; /* Reducido de 3rem a 2rem */
+.estimate-btn-icon {
+  font-size: 20px !important;
+  margin-right: 12px !important;
+  color: white !important;
+  position: relative !important;
+  z-index: 2 !important;
+  animation: bounce 2s infinite !important;
 }
 
-/* Reducir el espacio entre elementos dentro de las secciones */
-.about-content,
-.services-grid,
-.testimonials-grid,
-.contact-container {
-  gap: 2rem; /* Reducido para mantener consistencia */
+.estimate-btn-text {
+  font-family: var(--font-sans) !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  letter-spacing: 0.5px !important;
+  white-space: nowrap !important;
+  color: white !important;
+  position: relative !important;
+  z-index: 2 !important;
 }
 
-/* Reducir el espacio entre los pasos del proceso */
-.process-steps {
-  gap: 1.5rem; /* Si existe, reducir el espacio entre los pasos */
+@media (max-width: 768px) {
+  .new-floating-estimate-btn {
+    width: auto !important;
+    min-width: 160px !important;
+    height: 48px !important;
+    padding: 0 18px !important;
+    bottom: 20px !important;
+    right: 20px !important;
+  }
+
+  .estimate-btn-text {
+    font-size: 14px !important;
+  }
+
+  .estimate-btn-icon {
+    font-size: 18px !important;
+    margin-right: 8px !important;
+  }
 }
 
-/* Actualizar la imagen de fondo de la sección hero de jardinería */
-.gardening-hero {
-  background-image: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-04-01%20at%2020.41.45-kIgik1AHSsobocu7Ba0TtbGPjia2PG.jpeg");
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
+@media (max-width: 480px) {
+  .new-floating-estimate-btn {
+    min-width: 140px !important;
+    height: 44px !important;
+    padding: 0 12px !important;
+    bottom: 15px !important;
+    right: 15px !important;
+  }
 
+  .estimate-btn-text {
+    font-size: 12px !important;
+  }
+
+  .estimate-btn-icon {
+    font-size: 16px !important;
+    margin-right: 6px !important;
+  }
+}

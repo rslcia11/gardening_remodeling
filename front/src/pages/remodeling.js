@@ -21,7 +21,6 @@ import {
   Linkedin,
   Clock,
   Shield,
-  Star,
   ArrowRight,
   ThumbsUp,
   Sparkles,
@@ -725,21 +724,6 @@ export default function Remodeling() {
     },
   ]
 
-  const testimonials = [
-    {
-      name: "Carlos Méndez",
-      role: "Property Owner in Hackensack",
-      text: "Jimenez Services transformed our outdated kitchen into a modern and functional space that is now the center of our home. Their attention to detail and professionalism are exceptional. They completed the project on time and within budget, exceeding all our expectations.",
-      rating: 5,
-    },
-    {
-      name: "Elena Rodríguez",
-      role: "Business Owner",
-      text: "The remodeling of our office was impeccable. The Jimenez team understood exactly what we needed and delivered exceptional results in record time. The space is now more functional and aesthetically pleasing, and our clients can't stop praising the new design.",
-      rating: 5,
-    },
-  ]
-
   const benefits = [
     {
       icon: <ThumbsUp />,
@@ -809,9 +793,6 @@ export default function Remodeling() {
                 </div>
               </li>
               <li>
-                <a href="#testimonios">TESTIMONIALS</a>
-              </li>
-              <li>
                 <a href="#contact">CONTACT</a>
               </li>
             </ul>
@@ -821,9 +802,45 @@ export default function Remodeling() {
               <span className="phone-number">551.587.9625</span>
             </div>
 
-            <button className="mobile-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button className="mobile-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
               <Menu size={24} />
             </button>
+            <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>
+              <ul className="mobile-nav-links">
+                <li>
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      window.scrollTo(0, 0)
+                      setIsMenuOpen(false)
+                    }}
+                  >
+                    HOME
+                  </Link>
+                </li>
+                <li>
+                  <a href="#servicios" onClick={() => setIsMenuOpen(false)}>
+                    SERVICES
+                  </a>
+                </li>
+                <li>
+                  <a href="#contact" onClick={() => setIsMenuOpen(false)}>
+                    CONTACT
+                  </a>
+                </li>
+                <li>
+                  <Link
+                    to="/jardineria"
+                    onClick={() => {
+                      window.scrollTo(0, 0)
+                      setIsMenuOpen(false)
+                    }}
+                  >
+                    LANDSCAPING
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </nav>
@@ -1028,43 +1045,6 @@ export default function Remodeling() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonios" className="section testimonials-section animate-on-scroll">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Testimonials</h2>
-            <div className="section-underline"></div>
-            <p className="section-subtitle">WHAT OUR CLIENTS SAY</p>
-          </div>
-
-          <div className="testimonials-grid">
-            {testimonials.map((testimonial, index) => (
-              <div className="testimonial-card" key={index}>
-                <div className="testimonial-rating">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className={`rating-star ${i < testimonial.rating ? "filled" : ""}`} size={18} />
-                  ))}
-                </div>
-                <p className="testimonial-text">{testimonial.text}</p>
-                <div className="testimonial-author">
-                  <div className="testimonial-author-info">
-                    <h4>{testimonial.name}</h4>
-                    <p>{testimonial.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="testimonials-cta">
-            <p>Join our satisfied clients and transform your space</p>
-            <a href="#contact" className="cta-button">
-              Request Estimate <ArrowRight className="cta-icon" />
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* Contact Section */}
       <section id="contact" className="section contact-section animate-on-scroll">
         <div className="container">
@@ -1170,9 +1150,9 @@ export default function Remodeling() {
                     required
                   >
                     <option value="">Select a service</option>
-                    <option value="Gardening">Landscaping</option>
-                    <option value="Construction">Construction</option>
                     <option value="Remodeling">Remodeling</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Gardening">Landscaping</option>
                     <option value="Snow Removal">Snow Removal</option>
                     <option value="Other Service">Other Service</option>
                   </select>
@@ -1191,9 +1171,6 @@ export default function Remodeling() {
                 <button onClick={(e) => handleSubmitForm(e)} disabled={formStatus.submitting}>
                   {formStatus.submitting ? "SENDING..." : "GET A FREE QUOTE"}
                 </button>
-                {sendingMessage && <div className="sending-message">One moment please, your data is being sent...</div>}
-                <Modal isOpen={modalOpen} message={modalMessage} onClose={() => setModalOpen(false)} />
-
                 {formStatus.success && (
                   <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
                 )}
@@ -1205,6 +1182,7 @@ export default function Remodeling() {
           </div>
         </div>
       </section>
+      {formStatus.submitting && <div className="sending-message">Sending your message...</div>}
 
       {/* Footer */}
       <footer className="main-footer">
@@ -1253,9 +1231,6 @@ export default function Remodeling() {
                 </li>
                 <li>
                   <a href="#servicios">Services</a>
-                </li>
-                <li>
-                  <a href="#testimonios">Testimonials</a>
                 </li>
                 <li>
                   <a href="#contact">Contact</a>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser"
 import {
   Leaf,
   HomeIcon,
@@ -31,13 +31,14 @@ import {
   Snowflake,
   AlertTriangle,
   Truck,
+  Star,
 } from "lucide-react"
-import "./home.css" // Importamos el archivo CSS existente
-import { Link } from "react-router-dom" // Cambiado a react-router-dom
-import Modal from './Modal';
+import "./home.css"
+import { Link } from "react-router-dom"
+import Modal from "./Modal"
 
 export default function Home() {
-  // Add this at the beginning of the Home component, before the return statement
+  // SEO meta tags
   useEffect(() => {
     // Set meta tags for SEO
     document.title = "Jimenez Services LLC | Professional Landscaping & Remodeling in New Jersey"
@@ -149,29 +150,40 @@ export default function Home() {
   const [activeFilter, setActiveFilter] = useState("all")
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
 
-  // Añadir estos nuevos estados para el formulario
+  // Form state
   const [formData, setFormData] = useState({
-    full_name: "",
+    fullName: "",
     email: "",
-    phone_number: "",
-    service_interest: "",
+    phone: "",
+    serviceInterest: "",
     message: "",
   })
+
   const [formStatus, setFormStatus] = useState({
     submitting: false,
     success: false,
     error: null,
   })
+
+  // Reset success message after timeout
   useEffect(() => {
     if (formStatus.success) {
       const timer = setTimeout(() => {
-        setFormStatus((prevStatus) => ({ ...prevStatus, success: false }));
-      }, 3000);
-      return () => clearTimeout(timer);
+        setFormStatus((prevStatus) => ({ ...prevStatus, success: false }))
+      }, 3000)
+      return () => clearTimeout(timer)
     }
-  }, [formStatus.success]);
-  
+  }, [formStatus.success])
 
+  // Modal state
+  const [sendingMessage, setSendingMessage] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalMessage, setModalMessage] = useState("")
+  const [modalType, setModalType] = useState("")
+  const [showModal, setShowModal] = useState(false)
+  const [modalSuccess, setModalSuccess] = useState(false)
+
+  // Section refs for smooth scrolling
   const heroRef = useRef(null)
   const aboutRef = useRef(null)
   const servicesRef = useRef(null)
@@ -179,16 +191,13 @@ export default function Home() {
   const testimonialsRef = useRef(null)
   const contactRef = useRef(null)
 
-  // Añadir un nuevo estado para controlar el modal de imagen ampliada
+  // Image modal state
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
 
-  // Reemplazar el useEffect existente que agregué anteriormente con esta implementación más completa
-  // Añadir este useEffect justo después de las declaraciones de estado, antes de los otros useEffect
-
-  // Añadir este useEffect al inicio del componente para optimizar la carga de imágenes
+  // Optimize image loading
   useEffect(() => {
-    // Optimización de imágenes - Precargar imágenes críticas
+    // Preload critical images
     const preloadImages = () => {
       const criticalImages = [
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-04%20at%2021.14.20-doLb43PNbRsdNXYnmyLK5ZKJQK8ySK.jpeg",
@@ -201,10 +210,9 @@ export default function Home() {
       })
     }
 
-    // Ejecutar precarga de imágenes
     preloadImages()
 
-    // Optimizar scroll y animaciones
+    // Optimize scroll and animations
     let scrollTimeout
     const handleOptimizedScroll = () => {
       if (!scrollTimeout) {
@@ -218,7 +226,6 @@ export default function Home() {
       }
     }
 
-    // Reemplazar el listener de scroll con la versión optimizada
     window.addEventListener("scroll", handleOptimizedScroll, { passive: true })
 
     return () => {
@@ -227,44 +234,37 @@ export default function Home() {
     }
   }, [])
 
+  // Scroll to top on page load
   useEffect(() => {
-    // Función para desplazar al inicio de la página
     const scrollToTop = () => {
       window.scrollTo(0, 0)
     }
 
-    // Ejecutar inmediatamente cuando el componente se monta
     scrollToTop()
 
-    // Manejar el evento de historial para cuando se navega con el botón atrás/adelante
     const handlePopState = () => {
       scrollToTop()
     }
 
-    // Manejar el evento beforeunload para cuando se refresca la página
     const handleBeforeUnload = () => {
-      // Guardar una marca en sessionStorage para indicar que la página debe desplazarse al inicio
       sessionStorage.setItem("scrollToTop", "true")
     }
 
-    // Verificar si debemos desplazarnos al inicio (después de un refresco)
     if (sessionStorage.getItem("scrollToTop") === "true") {
       scrollToTop()
       sessionStorage.removeItem("scrollToTop")
     }
 
-    // Agregar event listeners
     window.addEventListener("popstate", handlePopState)
     window.addEventListener("beforeunload", handleBeforeUnload)
 
-    // Limpiar event listeners cuando el componente se desmonta
     return () => {
       window.removeEventListener("popstate", handlePopState)
       window.removeEventListener("beforeunload", handleBeforeUnload)
     }
   }, [])
 
-  // Efecto parallax para la sección hero
+  // Parallax effect for hero section
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY
@@ -277,11 +277,10 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Animación al cargar
+  // Animation on scroll
   useEffect(() => {
     setIsVisible(true)
 
-    // Animar secciones al hacer scroll
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -304,15 +303,12 @@ export default function Home() {
     }
   }, [])
 
-  // Nuevo useEffect para corregir los modales
+  // Fix modals
   useEffect(() => {
-    // Función para corregir los modales cuando se abren
     function fixModals() {
-      // Seleccionar todos los modales
       const modals = document.querySelectorAll(".modal, .image-modal-overlay")
 
       modals.forEach((modal) => {
-        // Eliminar cualquier contenedor blanco
         const containers = modal.querySelectorAll("div, section, article, main, aside, figure")
         containers.forEach((container) => {
           container.style.backgroundColor = "transparent"
@@ -328,7 +324,6 @@ export default function Home() {
           container.style.alignItems = "center"
         })
 
-        // Hacer que las imágenes sean más grandes
         const images = modal.querySelectorAll("img")
         images.forEach((img) => {
           img.style.maxWidth = "90vw"
@@ -343,7 +338,6 @@ export default function Home() {
           img.style.padding = "0"
         })
 
-        // Asegurar que el botón de cierre sea visible
         const closeButton = modal.querySelector(".modal-close-button")
         if (closeButton) {
           closeButton.style.position = "fixed"
@@ -354,32 +348,26 @@ export default function Home() {
       })
     }
 
-    // Ejecutar la función cuando se abre un modal
     document.addEventListener("click", (e) => {
       if (e.target.closest("[data-modal-trigger]")) {
-        // Esperar a que el modal se abra
         setTimeout(fixModals, 100)
       }
     })
 
-    // También ejecutar al cargar la página por si hay modales abiertos
     fixModals()
-
-    // Y ejecutar periódicamente para asegurar que los modales se corrijan
     const interval = setInterval(fixModals, 1000)
 
-    // Limpiar el intervalo cuando el componente se desmonte
     return () => clearInterval(interval)
   }, [])
 
+  // Smooth scroll to section
   const scrollToSection = (ref) => {
     if (ref && ref.current) {
       ref.current.scrollIntoView({ behavior: "smooth", block: "start" })
     }
   }
 
-  // Reemplazar con la definición directa de los arrays dentro del componente Home:
-
+  // Testimonials data
   const testimonials = [
     {
       name: "Maria Rodriguez",
@@ -407,9 +395,9 @@ export default function Home() {
     },
   ]
 
-  // Modificar el array portfolioItems para incluir el nuevo proyecto de baño
+  // Portfolio items data
   const portfolioItems = [
-    // Proyectos de remodelación con imágenes reales
+    // Remodeling projects
     {
       title: "Complete Bathroom Transformation",
       category: "remodeling",
@@ -441,7 +429,7 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-28%20at%2017.12.50-M1R7RXgPPB4pwHkApQfiDlJVCZSNe9.jpeg",
     },
 
-    // Proyectos de jardinería con imágenes reales
+    // Landscaping projects
     {
       title: "Complete Garden Transformation",
       category: "gardening",
@@ -463,27 +451,26 @@ export default function Home() {
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2020.40.26-78p413j3LMqwgT63kJy72TCkUe4WGZ.jpeg",
     },
     {
-      title: "gardening",
+      title: "Professional Landscaping",
       category: "gardening",
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/gardening-dA4wUJhJ1Ao0vhT88c5bBNsUZ0WFH8.jpeg",
+      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/gardening-dA4wUJhJ1Ao0vhT88c5bBNsUZ0WFH8.jpeg",
     },
     {
-      title: "Maintenance and decoration of a garden during the Halloween Season",
+      title: "Seasonal Garden Decoration",
       category: "gardening",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-22%20at%2022.24.16-CcEtkb5DKce0jIl6eigpcUT5MkrOM6.jpeg",
     },
   ]
 
-  // Reemplazar el objeto services con los nuevos servicios en español
+  // Services data
   const services = {
     gardening: [
       {
         icon: <Leaf className="service-icon-svg" />,
         title: "Lawn Maintenance",
         description:
-          "We cardes cutting, fertilization, and customized treatments to keep your lawn green and healthy all year round.",
+          "We provide professional cutting, fertilization, and customized treatments to keep your lawn green and healthy all year round.",
         features: ["Professional lawn cutting", "Scheduled fertilization", "Weed treatment"],
       },
       {
@@ -491,7 +478,11 @@ export default function Home() {
         title: "Irrigation Systems",
         description:
           "We install and repair efficient irrigation systems that ensure proper hydration of your garden, saving water and keeping your plants in optimal condition.",
-        features: ["Installation of automatic sprinkler systems", "Repair and maintenance of existing systems", "Seasonal system adjustments and optimization"],
+        features: [
+          "Installation of automatic sprinkler systems",
+          "Repair and maintenance of existing systems",
+          "Seasonal system adjustments and optimization",
+        ],
       },
       {
         icon: <Shovel className="service-icon-svg" />,
@@ -549,6 +540,7 @@ export default function Home() {
     ],
   }
 
+  // Features data
   const features = [
     {
       icon: <Award />,
@@ -575,32 +567,26 @@ export default function Home() {
     },
   ]
 
-  // Función mejorada para abrir el modal con cualquier tipo de imagen
+  // Open image modal
   const openImageModal = (image) => {
-    // Si la imagen es un string (URL directa), convertirla al formato adecuado
     if (typeof image === "string") {
       setSelectedImage({
         single: image,
-        title: "Imagen de Jimenez Services",
+        title: "Jimenez Services",
       })
-    }
-    // Si la imagen tiene beforeImage, configurar before/after correctamente
-    else if (image.beforeImage) {
+    } else if (image.beforeImage) {
       setSelectedImage({
         title: image.title,
         before: image.beforeImage,
         after: image.image,
       })
-    }
-    // Si es un objeto con single, usarlo directamente
-    else {
+    } else {
       setSelectedImage(image)
     }
 
     setIsImageModalOpen(true)
     document.body.classList.add("modal-open")
 
-    // Usar requestAnimationFrame para optimizar la animación
     requestAnimationFrame(() => {
       const overlay = document.querySelector(".image-modal-overlay")
       if (overlay) {
@@ -610,16 +596,14 @@ export default function Home() {
     })
   }
 
-  // Añadir este useEffect para corregir el modal cuando está abierto
+  // Fix image modal styles
   useEffect(() => {
     if (isImageModalOpen) {
-      // Función para aplicar estilos al modal
       const fixModal = () => {
         const overlay = document.querySelector(".image-modal-overlay")
         if (overlay) {
           overlay.style.backgroundColor = "rgba(0, 0, 0, 0.95)"
 
-          // Eliminar cualquier fondo blanco de los contenedores
           const containers = overlay.querySelectorAll("div")
           containers.forEach((container) => {
             container.style.backgroundColor = "transparent"
@@ -628,7 +612,6 @@ export default function Home() {
             container.style.boxShadow = "none"
           })
 
-          // Hacer que las imágenes sean más grandes
           const images = overlay.querySelectorAll("img")
           images.forEach((img) => {
             img.style.maxWidth = "90vw"
@@ -643,33 +626,30 @@ export default function Home() {
         }
       }
 
-      // Ejecutar inmediatamente y luego cada 100ms para asegurar que se apliquen los estilos
       fixModal()
       const interval = setInterval(fixModal, 100)
 
-      // Limpiar el intervalo cuando el modal se cierre
       return () => clearInterval(interval)
     }
   }, [isImageModalOpen])
 
-  // Añadir esta función para cerrar el modal
+  // Close image modal
   const closeImageModal = () => {
-    // Seleccionar el overlay y remover la clase open para la animación
     const overlay = document.querySelector(".image-modal-overlay")
     if (overlay) overlay.classList.remove("open")
 
-    // Añadir un pequeño retraso para permitir que la animación termine antes de cerrar el modal
     setTimeout(() => {
       document.body.classList.remove("modal-open")
       setIsImageModalOpen(false)
       setSelectedImage(null)
-    }, 300) // Reducir el tiempo para que coincida con la duración de la transición
+    }, 300)
   }
 
+  // Filter portfolio items
   const filteredPortfolio =
     activeFilter === "all" ? portfolioItems : portfolioItems.filter((item) => item.category === activeFilter)
 
-  // Función para manejar cambios en los inputs
+  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData((prevData) => ({
@@ -677,36 +657,33 @@ export default function Home() {
       [name]: value,
     }))
   }
-  const [sendingMessage, setSendingMessage] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [modalSuccess, setModalSuccess] = useState(false);
-  const [modalType, setModalType] = useState("")
 
-
-  
+  // Handle form submission
   const handleSubmitForm = async (e) => {
     e.preventDefault()
-  
+
     if (!formData.fullName || !formData.email || !formData.phone || !formData.serviceInterest) {
-      setFormStatus({ submitting: false, success: false, error: "Please complete all required fields (name, email, phone and service)." })
+      setFormStatus({
+        submitting: false,
+        success: false,
+        error: "Please complete all required fields (name, email, phone and service).",
+      })
       setModalMessage("Please complete all required fields.")
       setModalType("error")
       return
     }
-  
+
     if (!formData.email.includes("@") || !formData.email.includes(".")) {
       setFormStatus({ submitting: false, success: false, error: "Please enter a valid email address." })
       setModalMessage("Please enter a valid email address.")
       setModalType("error")
       return
     }
-  
+
     setFormStatus({ submitting: true, success: false, error: null })
     setModalMessage("Sending your message...")
     setModalType("success")
-  
+
     const formPayload = {
       fullName: formData.fullName,
       email: formData.email,
@@ -714,18 +691,18 @@ export default function Home() {
       serviceInterest: formData.serviceInterest,
       message: formData.message || "",
     }
-  
+
     try {
-      await emailjs.send('service_pnhuu6g', 'template_9amkna5', formPayload, 'hg3WQb2Z3IEZrqhe8')
-  
+      await emailjs.send("service_pnhuu6g", "template_9amkna5", formPayload, "hg3WQb2Z3IEZrqhe8")
+
       setFormData({
-        fullName: '',
-        email: '',
-        phone: '',
-        serviceInterest: '',
-        message: '',
+        fullName: "",
+        email: "",
+        phone: "",
+        serviceInterest: "",
+        message: "",
       })
-  
+
       setFormStatus({ submitting: false, success: true, error: null })
       setModalMessage("Message sent successfully!")
       setModalType("success")
@@ -736,13 +713,10 @@ export default function Home() {
       setModalType("error")
     }
   }
-  
-  // Función alternativa para simular el envío del formulario sin backend
-  
+
   return (
-    
     <div className="home-container">
-      {/* Navegación estilo Westlake */}
+      {/* Navigation */}
       <nav className="main-nav">
         <div className="nav-container">
           <div className="main-nav-content">
@@ -761,7 +735,6 @@ export default function Home() {
                 Jimenez <span className="services-text">Services</span> LLC
               </span>
             </div>
-
 
             <ul className="nav-links">
               <li>
@@ -834,13 +807,102 @@ export default function Home() {
               <span className="phone-number">551.587.9625</span>
             </div>
 
-            <button className="mobile-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button className="mobile-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
               <Menu size={24} />
             </button>
           </div>
         </div>
       </nav>
 
+      {/* Mobile Menu */}
+      <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>
+        <ul className="mobile-nav-links">
+          <li>
+            <a
+              href="#inicio"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection(heroRef)
+                setIsMenuOpen(false)
+              }}
+            >
+              HOME
+            </a>
+          </li>
+          <li>
+            <a
+              href="#nosotros"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection(aboutRef)
+                setIsMenuOpen(false)
+              }}
+            >
+              ABOUT US
+            </a>
+          </li>
+          <li>
+            <Link
+              to="/jardineria"
+              onClick={() => {
+                window.scrollTo(0, 0)
+                setIsMenuOpen(false)
+              }}
+            >
+              LANDSCAPING
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/interiores"
+              onClick={() => {
+                window.scrollTo(0, 0)
+                setIsMenuOpen(false)
+              }}
+            >
+              REMODELING AND CONSTRUCTION
+            </Link>
+          </li>
+          <li>
+            <a
+              href="#portafolio"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection(galleryRef)
+                setIsMenuOpen(false)
+              }}
+            >
+              PORTFOLIO
+            </a>
+          </li>
+          <li>
+            <a
+              href="#testimonios"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection(testimonialsRef)
+                setIsMenuOpen(false)
+              }}
+            >
+              TESTIMONIALS
+            </a>
+          </li>
+          <li>
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection(contactRef)
+                setIsMenuOpen(false)
+              }}
+            >
+              CONTACT
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      {/* Hero Section */}
       <section
         ref={heroRef}
         className="hero-section"
@@ -855,9 +917,7 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
         <div className="hero-content z-10" onClick={(e) => e.stopPropagation()}>
-          <h1 className="mb-16 text-4xl font-light tracking-wide text-white md:text-5xl">
-          Select the service you need
-          </h1>
+        <h3 className="service-option-title">Select the service you need</h3>
 
           <div className="service-options">
             <Link to="/jardineria" className="service-option" onClick={() => window.scrollTo(0, 0)}>
@@ -865,7 +925,6 @@ export default function Home() {
                 <Leaf className="service-option-icon" />
               </div>
               <h3 className="service-option-title">Landscaping</h3>
-              <p className="service-option-desc"></p>
               <div className="service-option-button">
                 Explore Services
                 <ArrowRight className="service-option-arrow" size={16} />
@@ -877,7 +936,6 @@ export default function Home() {
                 <Hammer className="service-option-icon" />
               </div>
               <h3 className="service-option-title">Remodeling and Construction</h3>
-              <p className="service-option-desc"></p>
               <div className="service-option-button">
                 Explore Services
                 <ArrowRight className="service-option-arrow" size={16} />
@@ -887,12 +945,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Section */}
       <section ref={aboutRef} className="section about-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">About Jimenez Services in New Jersey</h2>
             <div className="section-underline"></div>
-            <p className="section-subtitle">Our history</p>
+            <p className="section-subtitle">OUR HISTORY</p>
           </div>
           <div className="about-content">
             <div className="about-image-grid">
@@ -902,7 +961,7 @@ export default function Home() {
                   title: "Professional Equipment",
                 },
                 {
-                  src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-04-01%20at%2020.42.36%20%281%29-icj0LHrAp3Na1gonwQXS3YZih71nq0.jpeg",                
+                  src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-04-01%20at%2020.42.36%20%281%29-icj0LHrAp3Na1gonwQXS3YZih71nq0.jpeg",
                   title: "Winter equipment",
                 },
                 {
@@ -924,7 +983,7 @@ export default function Home() {
                     })
                   }
                 >
-                  <img src={image.src || "/placeholder.svg"} alt={image.alt} />
+                  <img src={image.src || "/placeholder.svg"} alt={image.title} />
                   <div className="about-image-overlay">
                     <div className="about-image-title">{image.title}</div>
                   </div>
@@ -934,14 +993,14 @@ export default function Home() {
             <div className="about-text">
               <h3>Passion for Excellence in Every Project</h3>
               <p>
-              At Jimenez Services LLC, we don’t just improve homes — we bring your vision to life. Our expert team 
-              blends creativity with craftsmanship to deliver stunning results in landscaping, remodeling, construction,
-              and snow removal.
+                At Jimenez Services LLC, we don't just improve homes — we bring your vision to life. Our expert team
+                blends creativity with craftsmanship to deliver stunning results in landscaping, remodeling,
+                construction, and snow removal.
               </p>
               <p>
-              Based in Little Ferry, New Jersey, we proudly serve the entire metropolitan area. With a strong
-              reputation built on exceptional quality, trust, and attention to detail, we go beyond expectations — 
-              turning spaces into experiences that last.
+                Based in Little Ferry, New Jersey, we proudly serve the entire metropolitan area. With a strong
+                reputation built on exceptional quality, trust, and attention to detail, we go beyond expectations —
+                turning spaces into experiences that last.
               </p>
               <div className="about-features">
                 {features.map((feature, index) => (
@@ -959,6 +1018,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Services Section */}
       <section ref={servicesRef} className="section services-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
@@ -1008,6 +1068,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Portfolio Section */}
       <section ref={galleryRef} className="section portfolio-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
@@ -1051,7 +1112,7 @@ export default function Home() {
                     <div className="portfolio-content">
                       <h3>{item.title}</h3>
                       <div className="portfolio-button">
-                        {item.category === "gardening" ? "Jardinería" : "Remodelación"}
+                        {item.category === "gardening" ? "Landscaping" : "Remodeling"}
                       </div>
                     </div>
                   </div>
@@ -1062,6 +1123,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials Section */}
       <section ref={testimonialsRef} className="section testimonials-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
@@ -1072,6 +1134,11 @@ export default function Home() {
           <div className="testimonials-grid">
             {testimonials.map((testimonial, index) => (
               <div className="testimonial-card" key={index}>
+                <div className="testimonial-rating">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className={`rating-star ${i < testimonial.rating ? "filled" : ""}`} size={18} />
+                  ))}
+                </div>
                 <p className="testimonial-text">{testimonial.text}</p>
                 <div className="testimonial-author">
                   {testimonial.image && (
@@ -1091,6 +1158,7 @@ export default function Home() {
       </section>
       {modalMessage && <Modal message={modalMessage} type={modalType} />}
 
+      {/* Contact Section */}
       <section ref={contactRef} className="section contact-section animate-on-scroll">
         <div className="container">
           <div className="section-header">
@@ -1148,7 +1216,7 @@ export default function Home() {
 
             <div className="contact-form-container">
               <h3>Send Us a Message</h3>
-              <form className="contact-form" >
+              <form className="contact-form">
                 <div className="form-group">
                   <label htmlFor="name">Full Name</label>
                   <input
@@ -1216,26 +1284,22 @@ export default function Home() {
                 <button onClick={(e) => handleSubmitForm(e)} disabled={formStatus.submitting}>
                   {formStatus.submitting ? "SENDING..." : "GET A FREE QUOTE"}
                 </button>
-                {sendingMessage && (
-  <div className="sending-message">
-    One moment please, your data is being sent...
-  </div>
-)}
+                {sendingMessage && <div className="sending-message">One moment please, your data is being sent...</div>}
                 <Modal isOpen={modalOpen} message={modalMessage} onClose={() => setModalOpen(false)} />
 
-{formStatus.success && (
-  <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
-)}
-{formStatus.error && (
-  <div className="form-error-message">Error sending message: {formStatus.error}</div>
-)}
-
+                {formStatus.success && (
+                  <div className="form-success-message">Message sent successfully! We will contact you soon.</div>
+                )}
+                {formStatus.error && (
+                  <div className="form-error-message">Error sending message: {formStatus.error}</div>
+                )}
               </form>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="main-footer">
         <div className="container">
           <div className="footer-grid">
@@ -1363,10 +1427,13 @@ export default function Home() {
         </div>
       </footer>
 
+      {/* Floating Estimate Button */}
       <div className="new-floating-estimate-btn" onClick={() => scrollToSection(contactRef)}>
         <Mail className="estimate-btn-icon" />
         <span className="estimate-btn-text">Free Estimate</span>
       </div>
+
+      {/* Image Modal */}
       {isImageModalOpen && (
         <div
           className="image-modal-overlay"
@@ -1399,14 +1466,14 @@ export default function Home() {
                 <div className="modal-before" style={{ flex: 1, background: "transparent", border: "none" }}>
                   <img
                     src={selectedImage.before || "/placeholder.svg"}
-                    alt={`Antes: ${selectedImage.title}`}
+                    alt={`Before: ${selectedImage.title}`}
                     style={{ maxWidth: "45vw", maxHeight: "85vh", objectFit: "contain", border: "none" }}
                   />
                 </div>
                 <div className="modal-after" style={{ flex: 1, background: "transparent", border: "none" }}>
                   <img
                     src={selectedImage.after || "/placeholder.svg"}
-                    alt={`Después: ${selectedImage.title}`}
+                    alt={`After: ${selectedImage.title}`}
                     style={{ maxWidth: "45vw", maxHeight: "85vh", objectFit: "contain", border: "none" }}
                   />
                 </div>
@@ -1425,5 +1492,4 @@ export default function Home() {
       )}
     </div>
   )
-} 
-
+}
