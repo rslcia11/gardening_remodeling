@@ -29,6 +29,8 @@ import {
   Cloud,
   Flower,
   Truck,
+  HomeIcon,
+  Hammer,
 } from "lucide-react"
 import "./gardening.css"
 import Modal from "./Modal"
@@ -489,7 +491,7 @@ export default function Gardening() {
         setFormStatus({
           submitting: false,
           success: false,
-          error: "Hubo un problema al enviar el mensaje. Inténtalo de nuevo.",
+          error: "There was a problem sending the message. Please try again.",
         })
         setModalMessage("There was a problem sending the message.")
         setModalType("error")
@@ -520,33 +522,8 @@ export default function Gardening() {
       }))
     }, 5000)
 
-    // Enviar datos al servidor en segundo plano (sin esperar respuesta)
-    try {
-      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3000/form"
-
-      // Usar navigator.sendBeacon si está disponible (envío en segundo plano)
-      if (navigator.sendBeacon) {
-        const blob = new Blob([JSON.stringify(formPayload)], { type: "application/json" })
-        navigator.sendBeacon(apiUrl, blob)
-      } else {
-        // Fallback a fetch pero sin esperar respuesta
-        fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formPayload),
-          mode: "cors",
-          // Importante: no esperamos la respuesta
-          keepalive: true, // Asegura que la solicitud continúe incluso si la página se cierra
-        }).catch(() => {
-          // Ignorar errores silenciosamente - ya mostramos éxito al usuario
-        })
-      }
-    } catch (error) {
-      // Ignorar errores - ya mostramos éxito al usuario
-      console.error("Error in the background:", error)
-    }
+    // Remove backend API call code
+    // The emailjs call above is kept as it's client-side
   }
 
   // Data arrays
@@ -768,12 +745,54 @@ export default function Gardening() {
     },
   ]
 
+  // Update the mobile menu component to be more interactive
+  const mobileMenuComponent = (
+    <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>
+      <ul className="mobile-nav-links">
+        <li>
+          <Link
+            to="/"
+            onClick={() => {
+              window.scrollTo(0, 0)
+              setIsMenuOpen(false)
+            }}
+          >
+            <HomeIcon size={18} className="menu-icon" /> HOME
+          </Link>
+        </li>
+        <li>
+          <a href="#servicios" onClick={() => setIsMenuOpen(false)}>
+            <Leaf size={18} className="menu-icon" /> SERVICES
+          </a>
+        </li>
+        <li>
+          <a href="#contact" onClick={() => setIsMenuOpen(false)}>
+            <Mail size={18} className="menu-icon" /> CONTACT
+          </a>
+        </li>
+        <li>
+          <Link
+            to="/interiores"
+            onClick={() => {
+              window.scrollTo(0, 0)
+              setIsMenuOpen(false)
+            }}
+          >
+            <Hammer size={18} className="menu-icon" /> REMODELING
+          </Link>
+        </li>
+      </ul>
+    </div>
+  )
+
   return (
     <div className="page-container">
       {/* Navegación */}
       <nav className="main-nav">
         <div className="nav-container">
           <div className="main-nav-content">
+            {/* Fix the logo display on desktop by ensuring the logo-image class is properly styled */}
+            {/* Update the logo section in the main-nav-content div */}
             <div className="logo">
               <img
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-04%20at%2021.14.20-doLb43PNbRsdNXYnmyLK5ZKJQK8ySK.jpeg"
@@ -822,42 +841,8 @@ export default function Gardening() {
             <button className="mobile-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
               <Menu size={24} />
             </button>
-            <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>
-              <ul className="mobile-nav-links">
-                <li>
-                  <Link
-                    to="/"
-                    onClick={() => {
-                      window.scrollTo(0, 0)
-                      setIsMenuOpen(false)
-                    }}
-                  >
-                    HOME
-                  </Link>
-                </li>
-                <li>
-                  <a href="#servicios" onClick={() => setIsMenuOpen(false)}>
-                    SERVICES
-                  </a>
-                </li>
-                <li>
-                  <a href="#contact" onClick={() => setIsMenuOpen(false)}>
-                    CONTACT
-                  </a>
-                </li>
-                <li>
-                  <Link
-                    to="/interiores"
-                    onClick={() => {
-                      window.scrollTo(0, 0)
-                      setIsMenuOpen(false)
-                    }}
-                  >
-                    REMODELING
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            {/* Replace the existing mobile menu with this enhanced version */}
+            {mobileMenuComponent}
           </div>
         </div>
       </nav>
@@ -901,6 +886,7 @@ export default function Gardening() {
                   <img
                     src={item.image || "/placeholder.svg"}
                     alt={`${item.title} - Professional Landscaping in New Jersey by Jimenez Services`}
+                    loading="lazy"
                   />
                   <div className="about-image-overlay">
                     <div className="about-image-title">{item.title}</div>
@@ -999,6 +985,7 @@ export default function Gardening() {
                     src={item.image || "/placeholder.svg"}
                     alt={`${item.title} - Professional Landscaping in New Jersey by Jimenez Services`}
                     className="main-portfolio-image"
+                    loading="lazy"
                   />
                   <div className="portfolio-overlay">
                     <div className="portfolio-content">

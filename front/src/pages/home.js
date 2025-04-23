@@ -714,6 +714,47 @@ export default function Home() {
     }
   }
 
+  // Add sticky header on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const nav = document.querySelector(".main-nav")
+      if (nav) {
+        if (window.scrollY > 100) {
+          nav.classList.add("sticky")
+        } else {
+          nav.classList.remove("sticky")
+        }
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  // Add form field animation
+  useEffect(() => {
+    const inputs = document.querySelectorAll(".contact-form input, .contact-form textarea, .contact-form select")
+
+    inputs.forEach((input) => {
+      const label = input.previousElementSibling
+      if (label && label.tagName === "LABEL") {
+        if (input.value) {
+          label.classList.add("active")
+        }
+
+        input.addEventListener("focus", () => {
+          label.classList.add("active")
+        })
+
+        input.addEventListener("blur", () => {
+          if (!input.value) {
+            label.classList.remove("active")
+          }
+        })
+      }
+    })
+  }, [])
+
   return (
     <div className="home-container">
       {/* Navigation */}
@@ -900,6 +941,12 @@ export default function Home() {
             </a>
           </li>
         </ul>
+
+        {/* Add phone button to mobile menu */}
+        <a href="tel:5515879625" className="mobile-phone-button">
+          <Phone size={18} className="mobile-phone-icon" />
+          <span className="mobile-phone-number">551.587.9625</span>
+        </a>
       </div>
 
       {/* Hero Section */}
@@ -1107,7 +1154,12 @@ export default function Home() {
                 }
               >
                 <div className="portfolio-image">
-                  <img src={item.image || "/placeholder.svg"} alt={item.title} className="main-portfolio-image" />
+                  <img
+                    src={item.image || "/placeholder.svg"}
+                    alt={item.title}
+                    className="main-portfolio-image"
+                    loading="lazy"
+                  />
                   <div className="portfolio-overlay">
                     <div className="portfolio-content">
                       <h3>{item.title}</h3>
@@ -1218,43 +1270,42 @@ export default function Home() {
               <h3>Send Us a Message</h3>
               <form className="contact-form">
                 <div className="form-group">
-                  <label htmlFor="name">Full Name</label>
                   <input
                     type="text"
                     id="name"
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleInputChange}
-                    placeholder="Your full name"
+                    placeholder=" "
                     required
                   />
+                  <label htmlFor="name">Full Name</label>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email">Email</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="Your email"
+                    placeholder=" "
                     required
                   />
+                  <label htmlFor="email">Email</label>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="phone">Phone</label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="Your phone number"
+                    placeholder=" "
                     required
                   />
+                  <label htmlFor="phone">Phone</label>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="service">Service of Interest</label>
                   <select
                     id="service"
                     name="serviceInterest"
@@ -1269,20 +1320,29 @@ export default function Home() {
                     <option value="Snow Removal">Snow Removal</option>
                     <option value="Other Service">Other Service</option>
                   </select>
+                  <label htmlFor="service">Service of Interest</label>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="message">Message</label>
                   <textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
-                    rows="5"
-                    placeholder="Tell us about your project"
+                    rows="4"
+                    placeholder=" "
                   ></textarea>
+                  <label htmlFor="message">Message</label>
                 </div>
                 <button onClick={(e) => handleSubmitForm(e)} disabled={formStatus.submitting}>
-                  {formStatus.submitting ? "SENDING..." : "GET A FREE QUOTE"}
+                  {formStatus.submitting ? (
+                    <>
+                      <span className="spinner"></span> SENDING...
+                    </>
+                  ) : (
+                    <>
+                      <Mail size={18} /> GET A FREE QUOTE
+                    </>
+                  )}
                 </button>
                 {sendingMessage && <div className="sending-message">One moment please, your data is being sent...</div>}
                 <Modal isOpen={modalOpen} message={modalMessage} onClose={() => setModalOpen(false)} />
