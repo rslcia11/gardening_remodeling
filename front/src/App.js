@@ -14,8 +14,8 @@ function App() {
 
         {/* Home page route */}
         <Route path="/home" element={<Home />} />
-        <Route path="/interiores" element={<Remodeling />} />
-        <Route path="/jardineria" element={<Gardening />} />
+        <Route path="/remodeling" element={<Remodeling />} />
+        <Route path="/landscaping" element={<Gardening />} />
 
 
         {/* Add more routes here as needed */}

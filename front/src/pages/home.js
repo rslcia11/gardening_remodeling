@@ -811,10 +811,10 @@ export default function Home() {
                   SERVICES <ChevronDown size={14} className="dropdown-indicator" />
                 </a>
                 <div className="dropdown-content">
-                  <Link to="/jardineria" onClick={() => window.scrollTo(0, 0)}>
+                  <Link to="/landscaping" onClick={() => window.scrollTo(0, 0)}>
                     <TreePine size={16} className="dropdown-icon" /> Landscaping
                   </Link>
-                  <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
+                  <Link to="/remodeling" onClick={() => window.scrollTo(0, 0)}>
                     <Hammer size={16} className="dropdown-icon" /> Remodeling and Construction
                   </Link>
                 </div>
@@ -884,7 +884,7 @@ export default function Home() {
           </li>
           <li>
             <Link
-              to="/jardineria"
+              to="/landscaping"
               onClick={() => {
                 window.scrollTo(0, 0)
                 setIsMenuOpen(false)
@@ -895,7 +895,7 @@ export default function Home() {
           </li>
           <li>
             <Link
-              to="/interiores"
+              to="/remodeling"
               onClick={() => {
                 window.scrollTo(0, 0)
                 setIsMenuOpen(false)
@@ -967,7 +967,7 @@ export default function Home() {
         <h3 className="service-option-title">Select the service you need</h3>
 
           <div className="service-options">
-            <Link to="/jardineria" className="service-option" onClick={() => window.scrollTo(0, 0)}>
+            <Link to="/landscaping" className="service-option" onClick={() => window.scrollTo(0, 0)}>
               <div className="service-option-icon-container">
                 <Leaf className="service-option-icon" />
               </div>
@@ -978,7 +978,7 @@ export default function Home() {
               </div>
             </Link>
 
-            <Link to="/interiores" className="service-option" onClick={() => window.scrollTo(0, 0)}>
+            <Link to="/remodeling" className="service-option" onClick={() => window.scrollTo(0, 0)}>
               <div className="service-option-icon-container">
                 <Hammer className="service-option-icon" />
               </div>
@@ -1422,12 +1422,12 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <Link to="/jardineria" onClick={() => window.scrollTo(0, 0)}>
+                  <Link to="/landscaping" onClick={() => window.scrollTo(0, 0)}>
                     Landscaping
                   </Link>
                 </li>
                 <li>
-                  <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
+                  <Link to="/remodeling" onClick={() => window.scrollTo(0, 0)}>
                     Remodeling
                   </Link>
                 </li>

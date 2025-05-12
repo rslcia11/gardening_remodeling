@@ -760,10 +760,10 @@ export default function Remodeling() {
                   SERVICES <ChevronDown size={14} className="dropdown-indicator" />
                 </a>
                 <div className="dropdown-content">
-                  <Link to="/jardineria" onClick={() => window.scrollTo(0, 0)}>
+                  <Link to="/landscaping" onClick={() => window.scrollTo(0, 0)}>
                     <Leaf size={16} className="dropdown-icon" /> Landscaping
                   </Link>
-                  <Link to="/interiores" className="active" onClick={() => window.scrollTo(0, 0)}>
+                  <Link to="/remodeling" className="active" onClick={() => window.scrollTo(0, 0)}>
                     <Hammer size={16} className="dropdown-icon" /> Remodeling and Construction
                   </Link>
                 </div>

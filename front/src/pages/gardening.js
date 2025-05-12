@@ -772,7 +772,7 @@ export default function Gardening() {
         </li>
         <li>
           <Link
-            to="/interiores"
+            to="/remodeling"
             onClick={() => {
               window.scrollTo(0, 0)
               setIsMenuOpen(false)
@@ -820,10 +820,10 @@ export default function Gardening() {
                   SERVICES <ChevronDown size={14} className="dropdown-indicator" />
                 </a>
                 <div className="dropdown-content">
-                  <Link to="/jardineria" className="active" onClick={() => window.scrollTo(0, 0)}>
+                  <Link to="/landscaping" className="active" onClick={() => window.scrollTo(0, 0)}>
                     <Leaf size={16} className="dropdown-icon" /> Landscaping
                   </Link>
-                  <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
+                  <Link to="/remodeling" onClick={() => window.scrollTo(0, 0)}>
                     <Shovel size={16} className="dropdown-icon" /> Remodeling and Construction
                   </Link>
                 </div>
@@ -1240,7 +1240,7 @@ export default function Gardening() {
                   <a href="#contact">Contact</a>
                 </li>
                 <li>
-                  <Link to="/interiores" onClick={() => window.scrollTo(0, 0)}>
+                  <Link to="/remodeling" onClick={() => window.scrollTo(0, 0)}>
                     Remodeling
                   </Link>
                 </li>
