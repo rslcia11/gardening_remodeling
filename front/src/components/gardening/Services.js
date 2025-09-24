@@ -1,0 +1,43 @@
+
+import { services } from "../../data/gardening";
+import { CheckCircle, ArrowRight } from "lucide-react";
+
+const Services = () => {
+  return (
+    <section id="servicios" className="section services-section animate-on-scroll">
+      <div className="container">
+        <div className="section-header">
+          <h2 className="section-title">Our Landscaping Services in NJ</h2>
+          <div className="section-underline"></div>
+          <p className="section-subtitle">PROFESSIONAL LANDSCAPING SOLUTIONS</p>
+        </div>
+
+        <div className="services-grid">
+          {services.map((service, index) => (
+            <div className="service-card" key={index}>
+              <div className="service-icon">{service.icon}</div>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+              <ul className="service-features">
+                {service.features.map((feature, idx) => (
+                  <li key={idx}>
+                    <CheckCircle className="check-icon" /> {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div className="services-cta">
+          <p>Discover how we can transform your outdoor space into an oasis of beauty and functionality</p>
+          <a href="#contact" className="cta-button">
+            Request Free Consultation <ArrowRight className="cta-icon" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Services;

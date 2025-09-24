@@ -961,3 +961,157 @@ a {
     padding: 1rem 0.75rem;
   }
 }
+
+
+
+
+
+
+/* === Portfolio Filter Buttons === */
+.portfolio-filter {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0 2.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-button {
+  padding: 0.65rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-button:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.filter-button.active {
+  background: var(--primary-color);
+  color: var(--text_white);
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Responsive: en móviles, botones más pequeños y centrados */
+@media (max-width: 768px) {
+  .portfolio-filter {
+    gap: 0.75rem;
+  }
+
+  .filter-button {
+    padding: 0.55rem 1.2rem;
+    font-size: 0.9rem;
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    min-width: 100px;
+  }
+}
+
+
+
+
+/* === Services Tab Buttons === */
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0 2.5rem;
+  flex-wrap: wrap;
+}
+
+.tab-button {
+  padding: 0.65rem 1.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.tab-button .tab-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  color: currentColor;
+  transition: transform 0.3s ease;
+}
+
+.tab-button:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.tab-button.active {
+  background: var(--primary-color);
+  color: var(--text_white);
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-button:hover .tab-icon {
+  transform: scale(1.1);
+}
+
+/* Responsive: en móviles, botones más pequeños y centrados */
+@media (max-width: 768px) {
+  .tab-buttons {
+    gap: 0.75rem;
+  }
+
+  .tab-button {
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
+    min-width: 150px;
+    gap: 0.5rem;
+  }
+
+  .tab-button .tab-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-button {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    min-width: 120px;
+    gap: 0.4rem;
+  }
+
+  .tab-button .tab-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+}
