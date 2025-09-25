@@ -1,4 +1,3 @@
-
 import { portfolioItems } from "../../data/remodeling";
 
 const Portfolio = ({ openImageModal }) => {

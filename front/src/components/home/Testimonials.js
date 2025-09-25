@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 
 const Testimonials = ({ openImageModal }) => {
   return (
-    <section id="testimonios" className="section testimonials-section animate-on-scroll">
+    <section id="testimonials" className="section testimonials-section animate-on-scroll">
       <div className="container">
         <div className="section-header">
           <h2 className="section-title">Testimonials</h2>
